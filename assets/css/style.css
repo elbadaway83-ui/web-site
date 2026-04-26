@@ -841,3 +841,17 @@ footer {
   .stat-item { min-width: 80px; padding: 10px 12px; }
   .stat-num { font-size: 1.2rem; }
 }
+/* ===== Star Rating Icons ===== */
+.star-icons i { font-size: .85rem; }
+.broker-rating .bi-star-fill,
+.broker-rating .bi-star,
+.review-stars .bi-star-fill,
+.review-stars .bi-star { font-size: .85rem; }
+
+/* ===== Step Icon (how-it-works) ===== */
+.step-icon { font-size: 1.8rem; margin-bottom: 12px; display:block; color: var(--primary); }
+.step-icon .bi { font-size: 1.8rem; }
+
+/* ===== Broker Tag dot ===== */
+.online-dot { width:8px;height:8px;background:#16a34a;border-radius:50%;display:inline-block;margin-left:4px; }
+.offline-dot { width:8px;height:8px;background:#d97706;border-radius:50%;display:inline-block;margin-left:4px; }
