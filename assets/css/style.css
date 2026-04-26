@@ -855,3 +855,9 @@ footer {
 /* ===== Broker Tag dot ===== */
 .online-dot { width:8px;height:8px;background:#16a34a;border-radius:50%;display:inline-block;margin-left:4px; }
 .offline-dot { width:8px;height:8px;background:#d97706;border-radius:50%;display:inline-block;margin-left:4px; }
+
+/* ===== Star Icons Color Fix ===== */
+.star-icons .bi-star-fill { color: #f59e0b; }
+.star-icons .bi-star      { color: #f59e0b; }
+.review-stars .bi-star-fill { color: #f59e0b; }
+.review-stars .bi-star      { color: #f59e0b; }

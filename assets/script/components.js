@@ -3,23 +3,28 @@
    ===================================================== */
 
 (function () {
+  // Detect if we're inside /pages/ subdirectory
+  const inPages = location.pathname.includes('/pages/');
+  const base   = inPages ? '' : 'pages/';   // pages link to each other directly
+  const toRoot = inPages ? '../' : '';       // path back to root (index.html)
+
   const PAGES = {
-    home: 'index.html',
-    store: 'store.html',
-    escrow: 'escrow-center.html',
-    postAd: 'post-ad.html',
-    brokers: 'brokers.html',
-    login: 'login.html',
-    register: 'register.html',
-    profile: 'profile.html',
-    notifications: 'notifications.html',
-    howItWorks: 'how-it-works.html',
-    faq: 'faq.html',
-    privacy: 'privacy.html',
-    terms: 'terms.html',
-    contact: 'contact.html',
-    escrowRoom: 'escrow-room.html',
-    listingDetails: 'listing-details.html',
+    home:           toRoot + 'index.html',
+    store:          base + 'store.html',
+    escrow:         base + 'escrow-center.html',
+    postAd:         base + 'post-ad.html',
+    brokers:        base + 'brokers.html',
+    login:          base + 'login.html',
+    register:       base + 'register.html',
+    profile:        base + 'profile.html',
+    notifications:  base + 'notifications.html',
+    howItWorks:     base + 'how-it-works.html',
+    faq:            base + 'faq.html',
+    privacy:        base + 'privacy.html',
+    terms:          base + 'terms.html',
+    contact:        base + 'contact.html',
+    escrowRoom:     base + 'escrow-room.html',
+    listingDetails: base + 'listing-details.html',
   };
 
   function currentPage() {
@@ -28,7 +33,7 @@
   }
 
   function isActive(href) {
-    return currentPage() === href ? 'active' : '';
+    return currentPage() === href.split('/').pop() ? 'active' : '';
   }
 
   /* ===== TICKER ===== */
