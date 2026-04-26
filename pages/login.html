@@ -1,4 +1,4 @@
-﻿﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8"/>
@@ -8,294 +8,169 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../assets/css/style.css"/>
   <style>
-    body { min-height:100vh; display:flex; flex-direction:column; padding-bottom:0 !important; }
-    /* ===== Split layout ===== */
-    .auth-page {
-      flex: 1; display: flex; min-height: calc(100vh - 36px);
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;padding-bottom:0!important;}
+    /* SPLIT */
+    .split{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;}
+    /* RIGHT = real photo */
+    .s-photo{position:relative;overflow:hidden;}
+    .s-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+    .s-photo-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(160deg,rgba(15,36,96,.82) 0%,rgba(26,111,255,.55) 60%,rgba(13,148,136,.45) 100%);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:40px 36px;
     }
-    /* RIGHT = decorative image panel */
-    .auth-panel-img {
-      flex: 1;
-      background: linear-gradient(145deg, #0f2460 0%, #1a6fff 55%, #0d9488 100%);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 48px 40px; position: relative; overflow: hidden;
+    .brand-wrap{text-align:center;color:#fff;position:relative;z-index:2;}
+    .brand-logo-row{display:inline-flex;align-items:center;gap:12px;margin-bottom:28px;}
+    .brand-icon{width:52px;height:52px;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.28);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;backdrop-filter:blur(8px);}
+    .brand-name{font-size:1.9rem;font-weight:900;color:#fff;}
+    .brand-name span{color:#86efac;}
+    .brand-tagline{font-size:1.2rem;font-weight:800;margin-bottom:10px;}
+    .brand-desc{font-size:.88rem;color:rgba(255,255,255,.8);line-height:1.7;max-width:300px;margin:0 auto 28px;}
+    .feat-list{display:flex;flex-direction:column;gap:10px;}
+    .feat-item{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:10px 14px;backdrop-filter:blur(6px);}
+    .feat-item i{color:#86efac;font-size:1.1rem;flex-shrink:0;}
+    .feat-item span{font-size:.85rem;color:#fff;font-weight:600;}
+    /* LEFT = form */
+    .s-form{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 44px;overflow-y:auto;}
+    .form-inner{width:100%;max-width:380px;}
+    .form-logo{display:flex;align-items:center;gap:9px;justify-content:center;margin-bottom:22px;}
+    .form-logo .li{width:44px;height:44px;background:linear-gradient(135deg,var(--primary),#4f8ef7);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.35rem;}
+    .form-logo .lt{font-size:1.5rem;font-weight:900;color:var(--text);}
+    .form-logo .lt span{color:var(--primary);}
+    h1.form-title{font-size:1.35rem;font-weight:900;color:var(--text);text-align:center;margin-bottom:5px;}
+    .form-sub{font-size:.87rem;color:var(--text-muted);text-align:center;margin-bottom:22px;}
+    .form-sub a{color:var(--primary);font-weight:700;text-decoration:none;}
+    .role-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--bg);border-radius:10px;padding:4px;}
+    .rtab{flex:1;padding:8px 6px;border:none;border-radius:7px;background:transparent;font-family:'Cairo',sans-serif;font-size:.78rem;font-weight:700;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .18s;}
+    .rtab.active{background:#fff;color:var(--primary);box-shadow:0 1px 6px rgba(0,0,0,.08);}
+    .rtab i{font-size:.9rem;}
+    .fg{margin-bottom:14px;}
+    .fg label{display:block;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:6px;}
+    .fw{position:relative;}
+    .fw .fi{position:absolute;top:50%;transform:translateY(-50%);right:13px;color:var(--text-muted);font-size:.95rem;pointer-events:none;}
+    .fw input{width:100%;padding:11px 40px 11px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:'Cairo',sans-serif;font-size:.9rem;color:var(--text);background:var(--bg);outline:none;transition:border-color .2s,box-shadow .2s;}
+    .fw input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);background:#fff;}
+    .extras-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:.82rem;}
+    .rem-label{display:flex;align-items:center;gap:6px;color:var(--text-muted);cursor:pointer;}
+    .rem-label input{width:14px;height:14px;accent-color:var(--primary);}
+    .forgot-link{color:var(--primary);font-weight:700;text-decoration:none;}
+    .forgot-link:hover{text-decoration:underline;}
+    .btn-login{width:100%;padding:13px;background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;border:none;border-radius:9px;font-family:'Cairo',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;transition:all .2s;margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:8px;}
+    .btn-login:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.35);}
+    .or-div{display:flex;align-items:center;gap:10px;color:var(--text-muted);font-size:.78rem;margin-bottom:12px;}
+    .or-div::before,.or-div::after{content:'';flex:1;height:1px;background:var(--border);}
+    .social-row{display:flex;gap:8px;margin-bottom:18px;}
+    .btn-soc{flex:1;padding:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface);cursor:pointer;font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:700;color:var(--text);display:flex;align-items:center;justify-content:center;gap:7px;transition:all .18s;}
+    .btn-soc:hover{border-color:var(--primary);background:var(--primary-light);}
+    .auth-sw{text-align:center;font-size:.85rem;color:var(--text-muted);}
+    .auth-sw a{color:var(--primary);font-weight:700;text-decoration:none;}
+    /* MOBILE */
+    @media(max-width:900px){
+      .split{grid-template-columns:1fr;min-height:auto;}
+      .s-photo{height:260px;}
+      .s-photo img{height:260px;}
+      .feat-list{display:none;}
+      .brand-desc{display:none;}
+      .s-form{padding:28px 20px 84px;}
     }
-    .auth-panel-img::before {
-      content: ''; position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 30% 40%, rgba(255,255,255,.08) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 70% 70%, rgba(0,194,168,.15) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .auth-panel-img::after {
-      content: ''; position: absolute; bottom:-60px; right:-60px;
-      width:320px; height:320px; border-radius:50%;
-      background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
-    }
-    .img-brand {
-      display:flex; align-items:center; gap:12px; margin-bottom:40px; position:relative; z-index:2;
-    }
-    .img-brand .b-icon {
-      width:52px; height:52px;
-      background:rgba(255,255,255,.15); border:1.5px solid rgba(255,255,255,.25);
-      border-radius:14px; display:flex; align-items:center; justify-content:center;
-      color:#fff; font-size:1.5rem; backdrop-filter:blur(10px);
-    }
-    .img-brand .b-name { font-size:1.7rem; font-weight:900; color:#fff; }
-    .img-brand .b-name span { color:#86efac; }
-    .img-hero { text-align:center; position:relative; z-index:2; max-width:380px; }
-    .img-hero .big-icon {
-      width:90px; height:90px;
-      background:rgba(255,255,255,.12); border:2px solid rgba(255,255,255,.2);
-      border-radius:24px; display:flex; align-items:center; justify-content:center;
-      font-size:2.8rem; color:#fff; margin:0 auto 28px;
-      backdrop-filter:blur(10px); box-shadow:0 20px 60px rgba(0,0,0,.2);
-    }
-    .img-hero h2 {
-      font-size:clamp(1.3rem,2.4vw,1.9rem); font-weight:900; color:#fff;
-      margin-bottom:12px; line-height:1.3;
-    }
-    .img-hero p { font-size:.92rem; color:rgba(255,255,255,.75); line-height:1.7; margin-bottom:32px; }
-    .img-features { display:flex; flex-direction:column; gap:12px; width:100%; max-width:310px; }
-    .img-feat {
-      display:flex; align-items:center; gap:12px;
-      background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15);
-      border-radius:12px; padding:12px 16px; backdrop-filter:blur(8px);
-    }
-    .img-feat i { font-size:1.2rem; color:#86efac; flex-shrink:0; }
-    .img-feat span { font-size:.88rem; color:rgba(255,255,255,.9); font-weight:600; }
-
-    /* LEFT = form panel */
-    .auth-panel-form {
-      width:460px; flex-shrink:0;
-      display:flex; flex-direction:column;
-      align-items:center; justify-content:center;
-      padding:48px 44px; background:var(--surface);
-      overflow-y:auto;
-    }
-    .auth-form-inner { width:100%; max-width:370px; }
-    .form-logo {
-      display:flex; align-items:center; gap:9px; justify-content:center; margin-bottom:22px;
-    }
-    .form-logo .logo-icon {
-      width:44px; height:44px; background:linear-gradient(135deg,var(--primary),#4f8ef7);
-      border-radius:12px; display:flex; align-items:center; justify-content:center;
-      color:#fff; font-size:1.35rem; box-shadow:0 4px 14px rgba(37,99,235,.3);
-    }
-    .form-logo .logo-text { font-size:1.5rem; font-weight:900; color:var(--text); }
-    .form-logo .logo-text span { color:var(--primary); }
-    .form-title { font-size:1.35rem; font-weight:900; color:var(--text); text-align:center; margin-bottom:5px; }
-    .form-sub { font-size:.88rem; color:var(--text-muted); text-align:center; margin-bottom:24px; }
-
-    /* Role tabs */
-    .role-tabs {
-      display:flex; gap:5px; margin-bottom:22px;
-      background:var(--bg); border-radius:10px; padding:4px;
-    }
-    .role-tab {
-      flex:1; padding:8px 6px; border:none; border-radius:7px;
-      background:transparent; font-family:var(--font); font-size:.79rem; font-weight:700;
-      color:var(--text-muted); cursor:pointer;
-      display:flex; align-items:center; justify-content:center; gap:5px;
-      transition:all .18s;
-    }
-    .role-tab.active { background:var(--surface); color:var(--primary); box-shadow:0 1px 6px rgba(0,0,0,.08); }
-    .role-tab i { font-size:.92rem; }
-
-    .form-group { margin-bottom:16px; }
-    .form-group label { display:block; font-size:.83rem; font-weight:700; color:var(--text); margin-bottom:7px; }
-    .input-wrap { position:relative; }
-    .input-wrap .fi {
-      position:absolute; top:50%; transform:translateY(-50%);
-      right:14px; color:var(--text-muted); font-size:1rem; pointer-events:none;
-    }
-    .input-wrap input {
-      width:100%; padding:11px 42px 11px 14px;
-      border:1.5px solid var(--border); border-radius:9px;
-      font-family:var(--font); font-size:.9rem; color:var(--text);
-      background:var(--bg); outline:none;
-      transition:border-color .2s, box-shadow .2s;
-    }
-    .input-wrap input:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(37,99,235,.1); background:#fff; }
-    .eye-btn {
-      position:absolute; top:50%; transform:translateY(-50%);
-      left:12px; background:none; border:none; cursor:pointer;
-      color:var(--text-muted); font-size:1rem; padding:4px;
-      transition:color .18s;
-    }
-    .eye-btn:hover { color:var(--primary); }
-
-    .auth-row {
-      display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;
-    }
-    .remember-row { display:flex; align-items:center; gap:8px; font-size:.83rem; color:var(--text); }
-    .remember-row input { width:16px; height:16px; accent-color:var(--primary); }
-    .forgot-link { font-size:.82rem; color:var(--primary); font-weight:600; }
-    .forgot-link:hover { text-decoration:underline; }
-
-    .btn-auth {
-      width:100%; padding:13px;
-      background:linear-gradient(135deg,var(--primary),#4f8ef7);
-      color:#fff; border:none; border-radius:9px;
-      font-family:var(--font); font-size:.95rem; font-weight:800;
-      cursor:pointer; transition:all .2s; margin-bottom:18px;
-      display:flex; align-items:center; justify-content:center; gap:8px;
-    }
-    .btn-auth:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(37,99,235,.35); }
-    .divider { display:flex; align-items:center; gap:10px; margin-bottom:14px; color:var(--text-muted); font-size:.8rem; }
-    .divider::before,.divider::after { content:''; flex:1; height:1px; background:var(--border); }
-    .social-auth { display:flex; gap:10px; margin-bottom:22px; }
-    .btn-social {
-      flex:1; padding:10px; border:1.5px solid var(--border); border-radius:8px;
-      background:var(--surface); cursor:pointer; font-family:var(--font);
-      font-size:.82rem; font-weight:700; color:var(--text);
-      display:flex; align-items:center; justify-content:center; gap:7px; transition:all .18s;
-    }
-    .btn-social:hover { border-color:var(--primary); background:var(--primary-light); color:var(--primary); }
-    .auth-switch { text-align:center; font-size:.85rem; color:var(--text-muted); }
-    .auth-switch a { color:var(--primary); font-weight:700; }
-
-    /* Responsive */
-    @media (max-width:900px) {
-      .auth-page { flex-direction:column; }
-      .auth-panel-img {
-        flex:none; min-height:240px; padding:28px 20px;
-      }
-      .img-hero p,.img-features { display:none; }
-      .img-hero .big-icon { width:60px; height:60px; font-size:1.8rem; margin-bottom:12px; }
-      .img-hero h2 { font-size:1.2rem; }
-      .img-brand { margin-bottom:20px; }
-      .auth-panel-form { width:100%; padding:32px 24px 80px; }
-    }
-    @media (max-width:480px) {
-      .auth-panel-form { padding:24px 16px 80px; }
-      .auth-form-inner { max-width:100%; }
+    @media(max-width:480px){
+      .s-form{padding:20px 14px 84px;}
     }
   </style>
 </head>
 <body>
+<div class="split">
 
-<div class="auth-page">
-
-  <!-- RIGHT: Image / Brand Panel -->
-  <div class="auth-panel-img">
-    <div class="img-brand">
-      <div class="b-icon"><i class="bi bi-shield-fill-check"></i></div>
-      <div class="b-name">وسيط<span>ي</span></div>
-    </div>
-    <div class="img-hero">
-      <div class="big-icon"><i class="bi bi-shield-lock-fill"></i></div>
-      <h2>صفقاتك في أمان تام مع وسيطي</h2>
-      <p>منصة الوساطة الرقمية التي تجمع البائع والمشتري بوسيط موثوق يضمن حق الجميع.</p>
-      <div class="img-features">
-        <div class="img-feat">
-          <i class="bi bi-shield-check-fill"></i>
-          <span>أموالك محمية حتى اكتمال الصفقة</span>
+  <!-- RIGHT: Real Photo -->
+  <div class="s-photo">
+    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=80&auto=format&fit=crop" alt="فريق عمل احترافي"/>
+    <div class="s-photo-overlay">
+      <div class="brand-wrap">
+        <div class="brand-logo-row">
+          <div class="brand-icon"><i class="bi bi-shield-fill-check"></i></div>
+          <div class="brand-name">وسيط<span>ي</span></div>
         </div>
-        <div class="img-feat">
-          <i class="bi bi-patch-check-fill"></i>
-          <span>وسطاء موثقون ومُعتمدون</span>
-        </div>
-        <div class="img-feat">
-          <i class="bi bi-headset"></i>
-          <span>دعم فني متاح ٢٤/٧</span>
+        <div class="brand-tagline">صفقاتك في أمان تام</div>
+        <div class="brand-desc">منصة الوساطة الرقمية التي تجمع البائع والمشتري بوسيط موثوق يضمن حق الجميع.</div>
+        <div class="feat-list">
+          <div class="feat-item"><i class="bi bi-shield-check-fill"></i><span>أموالك محمية حتى اكتمال الصفقة</span></div>
+          <div class="feat-item"><i class="bi bi-patch-check-fill"></i><span>وسطاء موثقون ومُعتمدون</span></div>
+          <div class="feat-item"><i class="bi bi-headset"></i><span>دعم فني متاح ٢٤/٧</span></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- LEFT: Form Panel -->
-  <div class="auth-panel-form">
-    <div class="auth-form-inner">
+  <!-- LEFT: Form -->
+  <div class="s-form">
+    <div class="form-inner">
       <div class="form-logo">
-        <div class="logo-icon"><i class="bi bi-shield-fill-check"></i></div>
-        <div class="logo-text">وسيط<span>ي</span></div>
+        <div class="li"><i class="bi bi-shield-fill-check"></i></div>
+        <div class="lt">وسيط<span>ي</span></div>
       </div>
-      <div class="form-title">مرحباً بعودتك!</div>
-      <div class="form-sub">سجّل دخولك للوصول إلى حسابك وصفقاتك</div>
+      <h1 class="form-title">مرحباً بعودتك</h1>
+      <p class="form-sub">ليس لديك حساب؟ <a href="register.html">إنشاء حساب مجاني</a></p>
 
-      <!-- Role Tabs -->
       <div class="role-tabs">
-        <button class="role-tab active" onclick="setRole(this,'buyer')" id="tab-buyer">
-          <i class="bi bi-bag-check"></i> مشترٍ
-        </button>
-        <button class="role-tab" onclick="setRole(this,'seller')" id="tab-seller">
-          <i class="bi bi-shop-window"></i> بائع
-        </button>
-        <button class="role-tab" onclick="setRole(this,'broker')" id="tab-broker">
-          <i class="bi bi-person-badge"></i> وسيط
-        </button>
+        <button class="rtab active" onclick="setRole(this,'buyer')" id="rt-buyer"><i class="bi bi-bag-check"></i> مشترٍ</button>
+        <button class="rtab" onclick="setRole(this,'seller')" id="rt-seller"><i class="bi bi-shop-window"></i> بائع</button>
+        <button class="rtab" onclick="setRole(this,'broker')" id="rt-broker"><i class="bi bi-person-badge"></i> وسيط</button>
       </div>
 
-      <div class="form-group">
-        <label for="loginEmail">البريد الإلكتروني أو رقم الهاتف</label>
-        <div class="input-wrap">
+      <div class="fg">
+        <label>البريد الإلكتروني</label>
+        <div class="fw">
           <i class="bi bi-envelope fi"></i>
           <input type="email" placeholder="example@email.com" id="loginEmail"/>
         </div>
       </div>
-
-      <div class="form-group">
-        <label for="loginPass">كلمة المرور</label>
-        <div class="input-wrap">
+      <div class="fg">
+        <label>كلمة المرور</label>
+        <div class="fw">
           <i class="bi bi-lock fi"></i>
           <input type="password" placeholder="••••••••" id="loginPass"/>
-          <button class="eye-btn" type="button" onclick="togglePass('loginPass',this)">
-            <i class="bi bi-eye"></i>
-          </button>
         </div>
       </div>
-
-      <div class="auth-row">
-        <div class="remember-row">
-          <input type="checkbox" id="rememberMe" checked/>
-          <label for="rememberMe">تذكرني</label>
-        </div>
-        <a href="#" class="forgot-link">نسيت كلمة المرور؟</a>
+      <div class="extras-row">
+        <label class="rem-label"><input type="checkbox" id="rememberMe"/> تذكرني</label>
+        <a href="#" class="forgot-link" onclick="showToast('سيتم إرسال رابط استعادة كلمة المرور لبريدك')">نسيت كلمة المرور؟</a>
       </div>
-
-      <button class="btn-auth" onclick="doLogin()" id="btnLogin">
+      <button class="btn-login" onclick="doLogin()" id="btnLogin">
         <i class="bi bi-box-arrow-in-right"></i> تسجيل الدخول
       </button>
-
-      <div class="divider">أو تسجيل عبر</div>
-      <div class="social-auth">
-        <button class="btn-social" onclick="showToast('تسجيل الدخول بجوجل قريباً!')" id="btnGoogleLogin">
-          <i class="bi bi-google" style="color:#ea4335;"></i> جوجل
-        </button>
-        <button class="btn-social" onclick="showToast('تسجيل الدخول بتويتر قريباً!')" id="btnTwitterLogin">
-          <i class="bi bi-twitter-x"></i> تويتر X
-        </button>
+      <div class="or-div">أو الدخول عبر</div>
+      <div class="social-row">
+        <button class="btn-soc" onclick="showToast('الدخول بجوجل قريباً!')"><i class="bi bi-google" style="color:#ea4335;"></i> جوجل</button>
+        <button class="btn-soc" onclick="showToast('الدخول بتويتر قريباً!')"><i class="bi bi-twitter-x"></i> تويتر X</button>
       </div>
-      <div class="auth-switch">ليس لديك حساب؟ <a href="register.html">إنشاء حساب مجاني</a></div>
+      <div class="auth-sw">ليس لديك حساب؟ <a href="register.html">إنشاء حساب الآن</a></div>
     </div>
   </div>
+
 </div>
 
 <script src="../assets/script/components.js"></script>
 <script>
-let currentRole = 'buyer';
+var currentRole = 'buyer';
 function setRole(el, role) {
-  document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
   currentRole = role;
-}
-function togglePass(id, btn) {
-  const inp = document.getElementById(id);
-  const icon = btn.querySelector('i');
-  if (inp.type === 'password') { inp.type='text'; icon.className='bi bi-eye-slash'; }
-  else { inp.type='password'; icon.className='bi bi-eye'; }
+  document.querySelectorAll('.rtab').forEach(function(t){ t.classList.remove('active'); });
+  el.classList.add('active');
 }
 function doLogin() {
-  const email = document.getElementById('loginEmail').value;
-  const pass  = document.getElementById('loginPass').value;
-  if (!email || !pass) { showToast('يرجى ملء جميع الحقول', 'error'); return; }
-  showToast('تم تسجيل الدخول بنجاح!');
-  const dest = currentRole === 'broker' ? 'broker-profile.html'
-             : currentRole === 'seller' ? 'seller-profile.html'
-             : 'buyer-profile.html';
-  setTimeout(() => location.href = dest, 1500);
+  var email = document.getElementById('loginEmail').value.trim();
+  var pass  = document.getElementById('loginPass').value;
+  if (!email || !pass) { showToast('يرجى إدخال البريد وكلمة المرور', 'error'); return; }
+  var btn = document.getElementById('btnLogin');
+  btn.innerHTML = '<i class="bi bi-hourglass-split"></i> جاري الدخول...';
+  btn.disabled = true;
+  var dest = { buyer: 'buyer-profile.html', seller: 'seller-profile.html', broker: 'broker-profile.html' };
+  setTimeout(function(){
+    showToast('تم تسجيل الدخول بنجاح!');
+    setTimeout(function(){ location.href = dest[currentRole] || 'buyer-profile.html'; }, 900);
+  }, 1000);
 }
 </script>
 </body>

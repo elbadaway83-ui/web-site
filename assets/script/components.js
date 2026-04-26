@@ -75,8 +75,8 @@
       <div class="nav-links">
         <a href="${p.home}" class="${isActive(p.home)}"><i class="bi bi-house-door"></i> الرئيسية</a>
         <a href="${p.store}" class="${isActive(p.store)}"><i class="bi bi-shop"></i> المتجر</a>
+        <a href="${p.brokers}" class="${isActive(p.brokers)}"><i class="bi bi-person-badge"></i> الوسطاء</a>
         <a href="${p.escrow}" class="${isActive(p.escrow)}"><i class="bi bi-arrows-angle-contract"></i> الوساطة</a>
-        <a href="${p.notifications}" class="${isActive(p.notifications)}"><i class="bi bi-bell"></i> الإشعارات</a>
       </div>
       <div class="nav-actions">
         <a href="${p.cart}" class="nav-cart-btn" id="navCartBtn" title="السلة" style="position:relative;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-size:1.1rem;transition:all .18s;">
@@ -91,10 +91,14 @@
     <div class="mobile-menu" id="mobileMenu">
       <a href="${p.home}" class="${isActive(p.home)}"><i class="bi bi-house-door"></i> الرئيسية</a>
       <a href="${p.store}" class="${isActive(p.store)}"><i class="bi bi-shop"></i> المتجر</a>
-      <a href="${p.escrow}" class="${isActive(p.escrow)}"><i class="bi bi-arrows-angle-contract"></i> الوساطة</a>
       <a href="${p.brokers}" class="${isActive(p.brokers)}"><i class="bi bi-person-badge"></i> الوسطاء</a>
+      <a href="${p.escrow}" class="${isActive(p.escrow)}"><i class="bi bi-arrows-angle-contract"></i> مركز الوساطة</a>
       <a href="${p.cart}" class="${isActive(p.cart)}"><i class="bi bi-cart3"></i> السلة <span class="cart-badge" style="display:none;background:#dc2626;color:#fff;border-radius:50%;padding:1px 6px;font-size:.7rem;font-weight:800;">0</span></a>
-      <a href="${p.notifications}" class="${isActive(p.notifications)}"><i class="bi bi-bell"></i> الإشعارات</a>
+      <hr/>
+      <span style="font-size:.75rem;font-weight:700;color:var(--text-muted);padding:4px 0;display:block;">الملفات الشخصية</span>
+      <a href="${p.buyerProfile}" class="${isActive(p.buyerProfile)}"><i class="bi bi-bag-check"></i> ملف المشتري</a>
+      <a href="${p.sellerProfile}" class="${isActive(p.sellerProfile)}"><i class="bi bi-shop-window"></i> ملف البائع</a>
+      <a href="${p.brokerProfile}" class="${isActive(p.brokerProfile)}"><i class="bi bi-person-badge"></i> ملف الوسيط</a>
       <hr/>
       <a href="${p.login}" class="btn-outline" style="text-align:center;">تسجيل الدخول</a>
       <a href="${p.register}" class="btn-primary" style="text-align:center;"><i class="bi bi-person-plus"></i> إنشاء حساب</a>

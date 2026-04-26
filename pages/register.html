@@ -4,263 +4,159 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>إنشاء حساب - وسيطي</title>
-  <meta name="description" content="أنشئ حسابك في وسيطي وابدأ صفقاتك الرقمية بأمان مع حماية كاملة بالضمان."/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../assets/css/style.css"/>
   <style>
-    /* ── RESET ── */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    html,body{height:100%;}
-
-    /* ── SPLIT WRAPPER ── */
-    .split-page{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      min-height:100vh;
-    }
-
-    /* ─── RIGHT PANEL (decorative) ─── */
-    .split-right{
-      background:linear-gradient(160deg,#0f2460 0%,#1a6fff 50%,#7c3aed 100%);
+    html,body{height:100%;padding-bottom:0!important;}
+    .split{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;}
+    /* RIGHT = real photo */
+    .s-photo{position:relative;overflow:hidden;}
+    .s-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+    .s-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(160deg,rgba(15,36,96,.80) 0%,rgba(124,58,237,.55) 60%,rgba(13,148,136,.4) 100%);
       display:flex;flex-direction:column;align-items:center;justify-content:center;
-      padding:48px 36px;
-      position:relative;overflow:hidden;
+      padding:40px 36px;
     }
-    .split-right::before{
-      content:'';position:absolute;inset:0;
-      background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-    .split-right::after{
-      content:'';position:absolute;
-      width:400px;height:400px;border-radius:50%;
-      background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 70%);
-      top:-100px;left:-100px;
-    }
-    .brand-panel{position:relative;z-index:2;text-align:center;color:#fff;}
-    .brand-logo{
-      display:inline-flex;align-items:center;gap:12px;
-      margin-bottom:36px;
-    }
-    .brand-logo .b-icon{
-      width:56px;height:56px;background:rgba(255,255,255,.15);
-      border:2px solid rgba(255,255,255,.25);border-radius:16px;
-      display:flex;align-items:center;justify-content:center;
-      font-size:1.7rem;color:#fff;backdrop-filter:blur(8px);
-    }
-    .brand-logo .b-text{font-size:2rem;font-weight:900;color:#fff;}
-    .brand-logo .b-text span{color:#86efac;}
-    .brand-visual{
-      width:200px;height:200px;margin:0 auto 32px;
-      background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.15);
-      border-radius:28px;display:flex;align-items:center;justify-content:center;
-      font-size:5.5rem;backdrop-filter:blur(8px);
-    }
-    .brand-tagline{font-size:1.3rem;font-weight:800;margin-bottom:10px;}
-    .brand-sub{font-size:.9rem;color:rgba(255,255,255,.72);line-height:1.7;max-width:280px;margin:0 auto 32px;}
-    .brand-perks{display:flex;flex-direction:column;gap:12px;text-align:right;}
-    .perk{display:flex;align-items:center;gap:10px;font-size:.88rem;color:rgba(255,255,255,.9);}
-    .perk-icon{
-      width:34px;height:34px;border-radius:9px;
-      background:rgba(255,255,255,.12);
-      display:flex;align-items:center;justify-content:center;
-      font-size:1rem;flex-shrink:0;
-    }
-
-    /* ─── LEFT PANEL (form) ─── */
-    .split-left{
-      background:#fff;
-      display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
-      padding:32px 40px 48px;
-      overflow-y:auto;
-    }
-    .form-header{width:100%;max-width:420px;margin-bottom:20px;}
-    .form-header h1{font-size:1.5rem;font-weight:900;color:#1e293b;margin-bottom:6px;}
-    .form-header p{font-size:.875rem;color:#64748b;}
-    .form-header a{color:var(--primary);font-weight:700;text-decoration:none;}
-
-    /* Role tabs */
-    .role-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;width:100%;max-width:420px;}
-    .role-tab{
-      padding:12px 8px;border:1.5px solid #e2e8f0;border-radius:10px;
-      text-align:center;cursor:pointer;transition:all .18s;background:#f8fafc;
-    }
-    .role-tab i{display:block;font-size:1.3rem;margin-bottom:5px;}
-    .role-tab span{font-size:.78rem;font-weight:700;color:#64748b;}
-    .role-tab.active{border-color:var(--primary);background:#eff6ff;}
-    .role-tab.active span{color:var(--primary);}
-    .role-tab.active i{color:var(--primary);}
-
-    /* Form */
-    .auth-form{width:100%;max-width:420px;}
-    .fg{margin-bottom:13px;}
-    .fg label{display:block;font-size:.8rem;font-weight:700;color:#374151;margin-bottom:6px;}
-    .field-wrap{position:relative;}
-    .field-wrap i.fi{position:absolute;top:50%;transform:translateY(-50%);right:12px;color:#94a3b8;font-size:.95rem;pointer-events:none;}
-    .field-wrap input,.field-wrap select{
-      width:100%;padding:10px 38px 10px 12px;
-      border:1.5px solid #e2e8f0;border-radius:9px;
-      font-family:'Cairo',sans-serif;font-size:.88rem;color:#1e293b;
-      background:#f8fafc;outline:none;
-      transition:border-color .2s,box-shadow .2s,background .2s;
-    }
-    .field-wrap input:focus,.field-wrap select:focus{
-      border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);background:#fff;
-    }
-    .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-    /* strength bar */
-    .strength-track{height:4px;border-radius:2px;background:#e2e8f0;margin-top:6px;overflow:hidden;}
-    .strength-fill{height:100%;border-radius:2px;transition:all .3s;width:0;}
-    .strength-txt{font-size:.7rem;color:#94a3b8;margin-top:4px;}
-    /* terms */
-    .terms-row{display:flex;align-items:flex-start;gap:8px;font-size:.8rem;color:#64748b;margin-bottom:14px;}
-    .terms-row input{width:15px;height:15px;accent-color:var(--primary);flex-shrink:0;margin-top:2px;}
+    .brand-wrap{text-align:center;color:#fff;}
+    .brand-logo-row{display:inline-flex;align-items:center;gap:12px;margin-bottom:28px;}
+    .brand-icon{width:52px;height:52px;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.28);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;backdrop-filter:blur(8px);}
+    .brand-name{font-size:1.9rem;font-weight:900;color:#fff;}
+    .brand-name span{color:#86efac;}
+    .brand-tagline{font-size:1.2rem;font-weight:800;margin-bottom:10px;}
+    .brand-desc{font-size:.88rem;color:rgba(255,255,255,.8);line-height:1.7;max-width:300px;margin:0 auto 28px;}
+    .feat-list{display:flex;flex-direction:column;gap:10px;}
+    .feat-item{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:10px 14px;backdrop-filter:blur(6px);}
+    .feat-item i{color:#86efac;font-size:1.1rem;flex-shrink:0;}
+    .feat-item span{font-size:.85rem;color:#fff;font-weight:600;}
+    /* LEFT = form */
+    .s-form{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:32px 44px 48px;overflow-y:auto;}
+    .form-inner{width:100%;max-width:400px;}
+    .form-logo{display:flex;align-items:center;gap:9px;justify-content:center;margin-bottom:18px;}
+    .form-logo .li{width:42px;height:42px;background:linear-gradient(135deg,var(--primary),#4f8ef7);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.25rem;}
+    .form-logo .lt{font-size:1.45rem;font-weight:900;color:var(--text);}
+    .form-logo .lt span{color:var(--primary);}
+    h1.form-title{font-size:1.3rem;font-weight:900;color:var(--text);text-align:center;margin-bottom:5px;}
+    .form-sub{font-size:.85rem;color:var(--text-muted);text-align:center;margin-bottom:18px;}
+    .form-sub a{color:var(--primary);font-weight:700;text-decoration:none;}
+    .role-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
+    .rtab{padding:11px 6px;border:1.5px solid var(--border);border-radius:9px;text-align:center;cursor:pointer;transition:all .18s;background:#f8fafc;}
+    .rtab i{display:block;font-size:1.25rem;margin-bottom:4px;}
+    .rtab span{font-size:.76rem;font-weight:700;color:var(--text-muted);}
+    .rtab.active{border-color:var(--primary);background:#eff6ff;}
+    .rtab.active span,.rtab.active i{color:var(--primary);}
+    .fg{margin-bottom:12px;}
+    .fg label{display:block;font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:5px;}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .fw{position:relative;}
+    .fw .fi{position:absolute;top:50%;transform:translateY(-50%);right:12px;color:var(--text-muted);font-size:.9rem;pointer-events:none;}
+    .fw input{width:100%;padding:10px 36px 10px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Cairo',sans-serif;font-size:.87rem;color:var(--text);background:#f8fafc;outline:none;transition:border-color .2s,box-shadow .2s;}
+    .fw input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);background:#fff;}
+    .str-track{height:4px;border-radius:2px;background:var(--border);margin-top:5px;overflow:hidden;}
+    .str-fill{height:100%;border-radius:2px;transition:all .3s;width:0;}
+    .str-lbl{font-size:.7rem;color:var(--text-muted);margin-top:4px;}
+    .terms-row{display:flex;align-items:flex-start;gap:7px;font-size:.79rem;color:var(--text-muted);margin-bottom:12px;}
+    .terms-row input{width:14px;height:14px;accent-color:var(--primary);flex-shrink:0;margin-top:2px;}
     .terms-row a{color:var(--primary);font-weight:700;}
-    /* submit */
-    .btn-submit{
-      width:100%;padding:13px;
-      background:linear-gradient(135deg,var(--primary),#4f8ef7);
-      color:#fff;border:none;border-radius:9px;
-      font-family:'Cairo',sans-serif;font-size:.95rem;font-weight:800;
-      cursor:pointer;transition:all .2s;margin-bottom:14px;
-      display:flex;align-items:center;justify-content:center;gap:8px;
+    .btn-reg{width:100%;padding:13px;background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;border:none;border-radius:9px;font-family:'Cairo',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;transition:all .2s;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:7px;}
+    .btn-reg:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.35);}
+    .or-div{display:flex;align-items:center;gap:10px;color:var(--text-muted);font-size:.76rem;margin-bottom:10px;}
+    .or-div::before,.or-div::after{content:'';flex:1;height:1px;background:var(--border);}
+    .social-row{display:flex;gap:8px;margin-bottom:14px;}
+    .btn-soc{flex:1;padding:9px;border:1.5px solid var(--border);border-radius:8px;background:#f8fafc;cursor:pointer;font-family:'Cairo',sans-serif;font-size:.79rem;font-weight:700;color:var(--text);display:flex;align-items:center;justify-content:center;gap:7px;transition:all .18s;}
+    .btn-soc:hover{border-color:var(--primary);background:#eff6ff;}
+    .auth-sw{text-align:center;font-size:.83rem;color:var(--text-muted);}
+    .auth-sw a{color:var(--primary);font-weight:700;text-decoration:none;}
+    @media(max-width:900px){
+      .split{grid-template-columns:1fr;}
+      .s-photo{height:220px;}
+      .s-photo img{height:220px;}
+      .feat-list,.brand-desc{display:none;}
+      .s-form{padding:24px 18px 84px;}
+      .row2{grid-template-columns:1fr;}
     }
-    .btn-submit:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.35);}
-    /* divider */
-    .or-divider{display:flex;align-items:center;gap:10px;color:#94a3b8;font-size:.78rem;margin-bottom:12px;}
-    .or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:#e2e8f0;}
-    /* social */
-    .social-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
-    .btn-social{
-      padding:10px;border:1.5px solid #e2e8f0;border-radius:8px;
-      background:#f8fafc;cursor:pointer;font-family:'Cairo',sans-serif;
-      font-size:.8rem;font-weight:700;color:#374151;
-      display:flex;align-items:center;justify-content:center;gap:7px;
-      transition:all .18s;
-    }
-    .btn-social:hover{border-color:var(--primary);background:#eff6ff;}
-    .auth-footer{font-size:.83rem;color:#64748b;text-align:center;}
-    .auth-footer a{color:var(--primary);font-weight:700;}
-
-    /* ── RESPONSIVE ── */
-    @media(max-width:768px){
-      .split-page{grid-template-columns:1fr;min-height:auto;}
-      .split-right{padding:36px 24px;min-height:260px;}
-      .brand-visual{width:120px;height:120px;font-size:3.5rem;}
-      .brand-perks{display:none;}
-      .split-left{padding:28px 20px 80px;}
-      .brand-sub{font-size:.82rem;}
-    }
-    @media(max-width:420px){
-      .split-left{padding:20px 16px 80px;}
-      .form-row-2{grid-template-columns:1fr;}
+    @media(max-width:480px){
+      .s-form{padding:18px 12px 84px;}
     }
   </style>
 </head>
 <body>
+<div class="split">
 
-<div class="split-page">
-
-  <!-- ── RIGHT: Decorative Panel ── -->
-  <div class="split-right">
-    <div class="brand-panel">
-      <div class="brand-logo">
-        <div class="b-icon"><i class="bi bi-shield-fill-check"></i></div>
-        <div class="b-text">وسيط<span>ي</span></div>
-      </div>
-      <div class="brand-visual">🚀</div>
-      <div class="brand-tagline">ابدأ رحلتك الرقمية بأمان</div>
-      <div class="brand-sub">منصتك الموثوقة لبيع وشراء الحسابات والصفحات الرقمية بضمان الوساطة الكاملة</div>
-      <div class="brand-perks">
-        <div class="perk"><div class="perk-icon"><i class="bi bi-shield-fill-check"></i></div>حماية كاملة بنظام الضمان</div>
-        <div class="perk"><div class="perk-icon"><i class="bi bi-person-badge-fill"></i></div>وسطاء موثقون ومحترفون</div>
-        <div class="perk"><div class="perk-icon"><i class="bi bi-lightning-charge-fill"></i></div>إتمام الصفقات في ساعات</div>
-        <div class="perk"><div class="perk-icon"><i class="bi bi-headset"></i></div>دعم فني على مدار الساعة</div>
+  <!-- RIGHT: Real Photo -->
+  <div class="s-photo">
+    <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=900&q=80&auto=format&fit=crop" alt="فريق عمل احترافي"/>
+    <div class="s-overlay">
+      <div class="brand-wrap">
+        <div class="brand-logo-row">
+          <div class="brand-icon"><i class="bi bi-shield-fill-check"></i></div>
+          <div class="brand-name">وسيط<span>ي</span></div>
+        </div>
+        <div class="brand-tagline">ابدأ رحلتك الرقمية بأمان</div>
+        <div class="brand-desc">انضم لآلاف المستخدمين وابدأ صفقاتك مع حماية كاملة بنظام الضمان.</div>
+        <div class="feat-list">
+          <div class="feat-item"><i class="bi bi-shield-fill-check"></i><span>حماية كاملة بنظام الضمان</span></div>
+          <div class="feat-item"><i class="bi bi-lightning-charge-fill"></i><span>إتمام الصفقات في ساعات</span></div>
+          <div class="feat-item"><i class="bi bi-arrow-counterclockwise"></i><span>استرداد كامل عند أي خلاف</span></div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ── LEFT: Form Panel ── -->
-  <div class="split-left">
-    <div class="form-header">
-      <h1>إنشاء حساب جديد</h1>
-      <p>لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a></p>
-    </div>
+  <!-- LEFT: Form -->
+  <div class="s-form">
+    <div class="form-inner">
+      <div class="form-logo">
+        <div class="li"><i class="bi bi-shield-fill-check"></i></div>
+        <div class="lt">وسيط<span>ي</span></div>
+      </div>
+      <h1 class="form-title">إنشاء حساب جديد</h1>
+      <p class="form-sub">لديك حساب؟ <a href="login.html">تسجيل الدخول</a></p>
 
-    <!-- Role Tabs -->
-    <div class="role-tabs" id="roleTabs">
-      <div class="role-tab active" onclick="selectRole(this,'buyer')" id="tab-buyer">
-        <i class="bi bi-bag-check" style="color:var(--primary);"></i>
-        <span>مشترٍ</span>
+      <div class="role-tabs">
+        <div class="rtab active" onclick="setRole(this,'buyer')" id="rt-buyer">
+          <i class="bi bi-bag-check" style="color:var(--primary);"></i>
+          <span>مشترٍ</span>
+        </div>
+        <div class="rtab" onclick="setRole(this,'seller')" id="rt-seller">
+          <i class="bi bi-shop-window" style="color:#ea580c;"></i>
+          <span>بائع</span>
+        </div>
+        <div class="rtab" onclick="setRole(this,'broker')" id="rt-broker">
+          <i class="bi bi-person-badge" style="color:#7c3aed;"></i>
+          <span>وسيط</span>
+        </div>
       </div>
-      <div class="role-tab" onclick="selectRole(this,'seller')" id="tab-seller">
-        <i class="bi bi-shop-window" style="color:#ea580c;"></i>
-        <span>بائع</span>
-      </div>
-      <div class="role-tab" onclick="selectRole(this,'broker')" id="tab-broker">
-        <i class="bi bi-person-badge" style="color:#7c3aed;"></i>
-        <span>وسيط</span>
-      </div>
-    </div>
 
-    <form class="auth-form" onsubmit="doRegister(event)">
-      <div class="form-row-2">
+      <div class="row2">
         <div class="fg">
           <label>الاسم الأول</label>
-          <div class="field-wrap">
-            <i class="bi bi-person fi"></i>
-            <input type="text" placeholder="محمد" required/>
-          </div>
+          <div class="fw"><i class="bi bi-person fi"></i><input type="text" placeholder="محمد" id="fname"/></div>
         </div>
         <div class="fg">
           <label>الاسم الأخير</label>
-          <div class="field-wrap">
-            <i class="bi bi-person fi"></i>
-            <input type="text" placeholder="العمري" required/>
-          </div>
+          <div class="fw"><i class="bi bi-person fi"></i><input type="text" placeholder="العمري" id="lname"/></div>
         </div>
       </div>
-
-      <div class="fg">
-        <label>اسم المستخدم</label>
-        <div class="field-wrap">
-          <i class="bi bi-at fi"></i>
-          <input type="text" placeholder="@username" required/>
-        </div>
-      </div>
-
       <div class="fg">
         <label>البريد الإلكتروني</label>
-        <div class="field-wrap">
-          <i class="bi bi-envelope fi"></i>
-          <input type="email" placeholder="example@email.com" required/>
-        </div>
+        <div class="fw"><i class="bi bi-envelope fi"></i><input type="email" placeholder="example@email.com" id="remail"/></div>
       </div>
-
       <div class="fg">
         <label>رقم الهاتف</label>
-        <div class="field-wrap">
-          <i class="bi bi-phone fi"></i>
-          <input type="tel" placeholder="+966 5x xxx xxxx"/>
-        </div>
+        <div class="fw"><i class="bi bi-phone fi"></i><input type="tel" placeholder="+966 5x xxx xxxx"/></div>
       </div>
-
       <div class="fg">
         <label>كلمة المرور</label>
-        <div class="field-wrap">
-          <i class="bi bi-lock fi"></i>
-          <input type="password" placeholder="••••••••" id="regPass" oninput="checkStrength(this.value)" required/>
-        </div>
-        <div class="strength-track"><div class="strength-fill" id="sBar"></div></div>
-        <div class="strength-txt" id="sLabel">قوة كلمة المرور</div>
+        <div class="fw"><i class="bi bi-lock fi"></i><input type="password" placeholder="••••••••" id="rpass" oninput="chkStr(this.value)"/></div>
+        <div class="str-track"><div class="str-fill" id="sBar"></div></div>
+        <div class="str-lbl" id="sLbl">قوة كلمة المرور</div>
       </div>
-
       <div class="fg">
         <label>تأكيد كلمة المرور</label>
-        <div class="field-wrap">
-          <i class="bi bi-lock-fill fi"></i>
-          <input type="password" placeholder="••••••••" required/>
-        </div>
+        <div class="fw"><i class="bi bi-lock-fill fi"></i><input type="password" placeholder="••••••••"/></div>
       </div>
 
       <div class="terms-row">
@@ -268,57 +164,56 @@
         <label for="terms">أوافق على <a href="terms.html">شروط الاستخدام</a> و<a href="privacy.html">سياسة الخصوصية</a></label>
       </div>
 
-      <button type="submit" class="btn-submit">
+      <button class="btn-reg" onclick="doRegister()" id="btnReg">
         <i class="bi bi-person-plus-fill"></i> إنشاء الحساب
       </button>
-    </form>
 
-    <div class="or-divider">أو التسجيل عبر</div>
-    <div class="social-row" style="width:100%;max-width:420px;">
-      <button class="btn-social" onclick="showToast('التسجيل بجوجل قريباً!')">
-        <i class="bi bi-google" style="color:#ea4335;"></i> جوجل
-      </button>
-      <button class="btn-social" onclick="showToast('التسجيل بتويتر قريباً!')">
-        <i class="bi bi-twitter-x"></i> تويتر X
-      </button>
+      <div class="or-div">أو التسجيل عبر</div>
+      <div class="social-row">
+        <button class="btn-soc" onclick="showToast('التسجيل بجوجل قريباً!')"><i class="bi bi-google" style="color:#ea4335;"></i> جوجل</button>
+        <button class="btn-soc" onclick="showToast('التسجيل بتويتر قريباً!')"><i class="bi bi-twitter-x"></i> تويتر X</button>
+      </div>
+      <div class="auth-sw">لديك حساب؟ <a href="login.html">تسجيل الدخول</a></div>
     </div>
-    <div class="auth-footer">لديك حساب؟ <a href="login.html">تسجيل الدخول</a></div>
   </div>
 
 </div>
-
 <script src="../assets/script/components.js"></script>
 <script>
 var currentRole = 'buyer';
-function selectRole(el, role) {
+function setRole(el, role) {
   currentRole = role;
-  document.querySelectorAll('.role-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.rtab').forEach(function(t){ t.classList.remove('active'); });
   el.classList.add('active');
 }
-function checkStrength(val) {
+function chkStr(val) {
   var bar = document.getElementById('sBar');
-  var lbl = document.getElementById('sLabel');
-  var score = 0;
-  if (val.length >= 8) score++;
-  if (/[A-Z]/.test(val)) score++;
-  if (/[0-9]/.test(val)) score++;
-  if (/[^A-Za-z0-9]/.test(val)) score++;
-  var colors = ['#dc2626','#f59e0b','#16a34a','#16a34a'];
-  var labels = ['ضعيفة','متوسطة','قوية','قوية جداً'];
-  bar.style.width = (score * 25) + '%';
-  bar.style.background = colors[score - 1] || '#dc2626';
-  lbl.textContent = val ? (labels[score - 1] || 'ضعيفة جداً') : 'قوة كلمة المرور';
-  lbl.style.color = colors[score - 1] || '#94a3b8';
+  var lbl = document.getElementById('sLbl');
+  var s = 0;
+  if (val.length >= 8) s++;
+  if (/[A-Z]/.test(val)) s++;
+  if (/[0-9]/.test(val)) s++;
+  if (/[^A-Za-z0-9]/.test(val)) s++;
+  var c = ['#dc2626','#f59e0b','#16a34a','#16a34a'];
+  var l = ['ضعيفة','متوسطة','قوية','قوية جداً'];
+  bar.style.width = (s * 25) + '%';
+  bar.style.background = c[s-1] || '#dc2626';
+  lbl.textContent = val ? (l[s-1] || 'ضعيفة جداً') : 'قوة كلمة المرور';
+  lbl.style.color = c[s-1] || '#94a3b8';
 }
-function doRegister(e) {
-  e.preventDefault();
-  if (!document.getElementById('terms').checked) {
-    showToast('يجب الموافقة على الشروط والأحكام', 'error');
-    return;
-  }
-  showToast('تم إنشاء حسابك بنجاح! 🎉');
+function doRegister() {
+  var fname = document.getElementById('fname').value.trim();
+  var email = document.getElementById('remail').value.trim();
+  if (!fname || !email) { showToast('يرجى ملء الحقول المطلوبة', 'error'); return; }
+  if (!document.getElementById('terms').checked) { showToast('يجب الموافقة على الشروط', 'error'); return; }
+  var btn = document.getElementById('btnReg');
+  btn.innerHTML = '<i class="bi bi-hourglass-split"></i> جاري إنشاء الحساب...';
+  btn.disabled = true;
   var dest = { buyer: 'buyer-profile.html', seller: 'seller-profile.html', broker: 'broker-profile.html' };
-  setTimeout(function(){ location.href = dest[currentRole] || 'buyer-profile.html'; }, 1400);
+  setTimeout(function(){
+    showToast('تم إنشاء حسابك بنجاح! 🎉');
+    setTimeout(function(){ location.href = dest[currentRole] || 'buyer-profile.html'; }, 900);
+  }, 1200);
 }
 </script>
 </body>
