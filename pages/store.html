@@ -1,4 +1,4 @@
-﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8"/>
@@ -155,7 +155,10 @@
         </div>
         <div class="listing-footer">
           <div class="price">٢,٨٠٠ ر.س <span>/ الحساب</span></div>
-          <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
+          <div style="display:flex;gap:6px;">
+            <button class="btn-card" style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);" onclick="addToCart('قناة يوتيوب تقنية - ٤٥ألف مشترك','يوتيوب','أحمد محمد',2800,'bi-youtube','#ffe5e5','#e53e3e',this)"><i class="bi bi-cart-plus"></i></button>
+            <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
+          </div>
         </div>
       </div>
 
@@ -183,7 +186,10 @@
         </div>
         <div class="listing-footer">
           <div class="price">٥,٥٠٠ ر.س <span>/ الحساب</span></div>
-          <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
+          <div style="display:flex;gap:6px;">
+            <button class="btn-card" style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);" onclick="addToCart('صفحة إنستغرام موضة - ١٢٠ألف','إنستغرام','سارة العلي',5500,'bi-instagram','#f5e8ff','#c13584',this)"><i class="bi bi-cart-plus"></i></button>
+            <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
+          </div>
         </div>
       </div>
 
@@ -211,7 +217,10 @@
         </div>
         <div class="listing-footer">
           <div class="price">٣,٢٠٠ ر.س <span>/ الحساب</span></div>
-          <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
+          <div style="display:flex;gap:6px;">
+            <button class="btn-card" style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);" onclick="addToCart('صفحة فيسبوك طبخ - ٢٠٠ألف إعجاب','فيسبوك','منى خليل',3200,'bi-facebook','#e8f0ff','#1877f2',this)"><i class="bi bi-cart-plus"></i></button>
+            <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
+          </div>
         </div>
       </div>
 
@@ -239,7 +248,10 @@
         </div>
         <div class="listing-footer">
           <div class="price">٨,٩٠٠ ر.س <span>/ الحساب</span></div>
-          <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
+          <div style="display:flex;gap:6px;">
+            <button class="btn-card" style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);" onclick="addToCart('حساب تيك توك ترفيه - ٥٠٠ألف','تيك توك','خالد النجدي',8900,'bi-tiktok','#f0f0f0','#010101',this)"><i class="bi bi-cart-plus"></i></button>
+            <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
+          </div>
         </div>
       </div>
 
@@ -267,7 +279,10 @@
         </div>
         <div class="listing-footer">
           <div class="price">٤,١٠٠ ر.س <span>/ الحساب</span></div>
-          <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
+          <div style="display:flex;gap:6px;">
+            <button class="btn-card" style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);" onclick="addToCart('قناة تيليغرام إخبارية - ٨٠ألف','تيليغرام','فهد الحربي',4100,'bi-telegram','#e8f2ff','#0088cc',this)"><i class="bi bi-cart-plus"></i></button>
+            <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
+          </div>
         </div>
       </div>
 
@@ -295,7 +310,10 @@
         </div>
         <div class="listing-footer">
           <div class="price">١,٨٠٠ ر.س <span>/ الحساب</span></div>
-          <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
+          <div style="display:flex;gap:6px;">
+            <button class="btn-card" style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);" onclick="addToCart('حساب تويتر رياضي - ٣٠ألف','تويتر','نواف السعيد',1800,'bi-twitter-x','#e8f8ff','#000',this)"><i class="bi bi-cart-plus"></i></button>
+            <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
+          </div>
         </div>
       </div>
 
@@ -334,6 +352,30 @@ document.querySelectorAll('.pg-btn').forEach(btn => {
     this.classList.add('active');
   });
 });
+
+/* ===== Cart Functions ===== */
+function addToCart(title, platform, seller, price, icon, iconBg, iconColor, btn) {
+  var item = { title: title, platform: platform, seller: seller, price: price, icon: icon, iconBg: iconBg, iconColor: iconColor };
+  var cart = [];
+  try { cart = JSON.parse(localStorage.getItem('wsCart') || '[]'); } catch(e) {}
+  var exists = cart.some(function(c){ return c.title === item.title; });
+  if (exists) {
+    showToast('هذه الخدمة موجودة في السلة بالفعل!', 'error');
+    return;
+  }
+  cart.push(item);
+  localStorage.setItem('wsCart', JSON.stringify(cart));
+  if (window.refreshCartBadge) refreshCartBadge();
+  showToast('✅ تمت الإضافة للسلة!');
+  if (btn) {
+    btn.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
+    btn.style.background = '#f0fdf4';
+    btn.style.color = '#16a34a';
+    btn.style.borderColor = '#16a34a';
+    btn.onclick = function(){ location.href='cart.html'; };
+    btn.title = 'عرض السلة';
+  }
+}
 </script>
 </body>
 </html>
