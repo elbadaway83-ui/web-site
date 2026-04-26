@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>الوسطاء الموثقون - وسيطي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./assets/css/style.css"/>
+  <style>
+    .page-hero{background:linear-gradient(135deg,#f0f4ff,#e8f5f3);padding:48px 24px 36px;text-align:center;}
+    .page-hero h1{font-size:clamp(22px,4vw,36px);font-weight:900;color:var(--text);margin-bottom:8px;}
+    .page-hero p{color:var(--text-muted);font-size:.95rem;max-width:520px;margin:0 auto;}
+    .brokers-layout{max-width:1200px;margin:0 auto;padding:36px 24px 80px;}
+    .brokers-filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:28px;}
+    .brokers-search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:0 14px;height:44px;flex:1;max-width:340px;transition:border-color .2s;}
+    .brokers-search:focus-within{border-color:var(--primary);}
+    .brokers-search i{color:var(--text-muted);}
+    .brokers-search input{border:none;background:transparent;outline:none;font-family:var(--font);font-size:.88rem;color:var(--text);width:100%;}
+    .filter-chip{padding:8px 16px;border:1.5px solid var(--border);border-radius:20px;font-size:.82rem;font-weight:700;cursor:pointer;color:var(--text-muted);transition:all .18s;background:var(--surface);}
+    .filter-chip.active,.filter-chip:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light);}
+    .brokers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
+    .broker-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;transition:all .22s;position:relative;}
+    .broker-card:hover{border-color:var(--primary);box-shadow:var(--shadow-md);transform:translateY(-4px);}
+    .broker-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+    .broker-avatar{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,var(--primary),#4f8ef7);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.5rem;font-weight:800;flex-shrink:0;}
+    .broker-name{font-size:1rem;font-weight:800;color:var(--text);margin-bottom:3px;}
+    .broker-tag{font-size:.78rem;color:var(--text-muted);}
+    .broker-badge{position:absolute;top:16px;left:16px;}
+    .broker-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+    .b-stat{text-align:center;background:var(--bg);border-radius:8px;padding:10px 6px;}
+    .b-stat span{display:block;font-size:1rem;font-weight:800;color:var(--text);}
+    .b-stat small{font-size:.72rem;color:var(--text-muted);font-weight:500;}
+    .broker-rating{display:flex;align-items:center;gap:6px;margin-bottom:14px;font-size:.85rem;font-weight:700;color:var(--text);}
+    .stars{color:#f59e0b;letter-spacing:1px;}
+    .broker-platforms{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+    .b-platform{padding:4px 10px;border-radius:6px;font-size:.75rem;font-weight:700;}
+    .broker-actions{display:flex;gap:8px;}
+    .btn-broker{flex:1;padding:10px;border-radius:8px;font-family:var(--font);font-size:.85rem;font-weight:700;cursor:pointer;text-align:center;transition:all .18s;border:none;}
+    .btn-broker-primary{background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;}
+    .btn-broker-primary:hover{box-shadow:0 4px 14px rgba(37,99,235,.3);transform:translateY(-1px);}
+    .btn-broker-outline{background:transparent;color:var(--primary);border:1.5px solid var(--primary) !important;border:none;}
+    .btn-broker-outline:hover{background:var(--primary-light);}
+    .top-badge{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:4px 10px;border-radius:6px;font-size:.72rem;font-weight:800;}
+  </style>
+</head>
+<body>
+
+<div class="page-hero">
+  <div class="hero-badge" style="margin-bottom:14px;"><i class="bi bi-person-badge-fill"></i> الوسطاء</div>
+  <h1>وسطاؤنا الموثقون</h1>
+  <p>اختر وسيطاً موثوقاً وذو خبرة لإتمام صفقتك بأمان تام</p>
+</div>
+
+<div class="brokers-layout">
+  <!-- Filters -->
+  <div class="brokers-filters">
+    <div class="brokers-search">
+      <i class="bi bi-search"></i>
+      <input type="text" placeholder="ابحث عن وسيط..."/>
+    </div>
+    <span class="filter-chip active" onclick="filterBroker(this,'all')">الكل</span>
+    <span class="filter-chip" onclick="filterBroker(this,'top')"><i class="bi bi-star-fill" style="color:#f59e0b;"></i> الأعلى تقييماً</span>
+    <span class="filter-chip" onclick="filterBroker(this,'most')">الأكثر صفقات</span>
+    <span class="filter-chip" onclick="filterBroker(this,'new')">الجدد</span>
+    <span class="filter-chip" onclick="filterBroker(this,'available')"><span style="width:8px;height:8px;background:#16a34a;border-radius:50%;display:inline-block;"></span> متاح الآن</span>
+  </div>
+
+  <!-- Grid -->
+  <div class="brokers-grid">
+
+    <!-- Broker 1 -->
+    <div class="broker-card">
+      <div class="broker-badge"><span class="top-badge"><i class="bi bi-trophy-fill"></i> الأفضل</span></div>
+      <div class="broker-header">
+        <div class="broker-avatar">م</div>
+        <div>
+          <div class="broker-name">محمد الوسيط <i class="bi bi-patch-check-fill" style="color:var(--primary);font-size:.9rem;"></i></div>
+          <div class="broker-tag"><span style="width:8px;height:8px;background:#16a34a;border-radius:50%;display:inline-block;margin-left:4px;"></span> متاح الآن · عضو منذ ٢٠٢٣</div>
+        </div>
+      </div>
+      <div class="broker-rating">
+        <span class="stars">★★★★★</span> <span>٤.٩</span> <span style="color:var(--text-muted);font-weight:400;">(٢٣٤ تقييم)</span>
+      </div>
+      <div class="broker-stats">
+        <div class="b-stat"><span>١٨٧</span><small>صفقة</small></div>
+        <div class="b-stat"><span>٩٩٪</span><small>نجاح</small></div>
+        <div class="b-stat"><span>< ١س</span><small>رد</small></div>
+      </div>
+      <div class="broker-platforms">
+        <span class="b-platform" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i> يوتيوب</span>
+        <span class="b-platform" style="background:#f5e8ff;color:#c13584;"><i class="bi bi-instagram"></i> إنستغرام</span>
+        <span class="b-platform" style="background:#e8f0ff;color:#1877f2;"><i class="bi bi-facebook"></i> فيسبوك</span>
+      </div>
+      <div class="broker-actions">
+        <button class="btn-broker btn-broker-primary" onclick="showToast('تم إرسال طلب الوساطة لمحمد!')"><i class="bi bi-send-fill"></i> طلب وساطة</button>
+        <button class="btn-broker btn-broker-outline" style="border:1.5px solid var(--primary);color:var(--primary);background:transparent;border-radius:8px;"><i class="bi bi-eye"></i> الملف</button>
+      </div>
+    </div>
+
+    <!-- Broker 2 -->
+    <div class="broker-card">
+      <div class="broker-header">
+        <div class="broker-avatar" style="background:linear-gradient(135deg,#c13584,#e1306c);">س</div>
+        <div>
+          <div class="broker-name">سلمى الوسيطة <i class="bi bi-patch-check-fill" style="color:var(--primary);font-size:.9rem;"></i></div>
+          <div class="broker-tag"><span style="width:8px;height:8px;background:#16a34a;border-radius:50%;display:inline-block;margin-left:4px;"></span> متاحة · عضوة منذ ٢٠٢٣</div>
+        </div>
+      </div>
+      <div class="broker-rating">
+        <span class="stars">★★★★★</span> <span>٤.٨</span> <span style="color:var(--text-muted);font-weight:400;">(١٥٦ تقييم)</span>
+      </div>
+      <div class="broker-stats">
+        <div class="b-stat"><span>١٢١</span><small>صفقة</small></div>
+        <div class="b-stat"><span>٩٨٪</span><small>نجاح</small></div>
+        <div class="b-stat"><span>< ٢س</span><small>رد</small></div>
+      </div>
+      <div class="broker-platforms">
+        <span class="b-platform" style="background:#f5e8ff;color:#c13584;"><i class="bi bi-instagram"></i> إنستغرام</span>
+        <span class="b-platform" style="background:#f0f0f0;color:#010101;"><i class="bi bi-tiktok"></i> تيك توك</span>
+      </div>
+      <div class="broker-actions">
+        <button class="btn-broker btn-broker-primary" onclick="showToast('تم إرسال طلب الوساطة لسلمى!')"><i class="bi bi-send-fill"></i> طلب وساطة</button>
+        <button class="btn-broker btn-broker-outline" style="border:1.5px solid var(--primary);color:var(--primary);background:transparent;border-radius:8px;"><i class="bi bi-eye"></i> الملف</button>
+      </div>
+    </div>
+
+    <!-- Broker 3 -->
+    <div class="broker-card">
+      <div class="broker-header">
+        <div class="broker-avatar" style="background:linear-gradient(135deg,#0088cc,#00b4d8);">ع</div>
+        <div>
+          <div class="broker-name">عمر الوسيط <i class="bi bi-patch-check-fill" style="color:var(--primary);font-size:.9rem;"></i></div>
+          <div class="broker-tag"><span style="width:8px;height:8px;background:#d97706;border-radius:50%;display:inline-block;margin-left:4px;"></span> مشغول حالياً</div>
+        </div>
+      </div>
+      <div class="broker-rating">
+        <span class="stars">★★★★☆</span> <span>٤.٦</span> <span style="color:var(--text-muted);font-weight:400;">(٩٨ تقييم)</span>
+      </div>
+      <div class="broker-stats">
+        <div class="b-stat"><span>٨٤</span><small>صفقة</small></div>
+        <div class="b-stat"><span>٩٧٪</span><small>نجاح</small></div>
+        <div class="b-stat"><span>< ٣س</span><small>رد</small></div>
+      </div>
+      <div class="broker-platforms">
+        <span class="b-platform" style="background:#e8f2ff;color:#0088cc;"><i class="bi bi-telegram"></i> تيليغرام</span>
+        <span class="b-platform" style="background:#e8f8ff;color:#000;"><i class="bi bi-twitter-x"></i> تويتر</span>
+      </div>
+      <div class="broker-actions">
+        <button class="btn-broker btn-broker-primary" onclick="showToast('الوسيط مشغول حالياً، سيتم إعلامك عند توفره','error')" style="opacity:.7;"><i class="bi bi-clock"></i> قائمة انتظار</button>
+        <button class="btn-broker btn-broker-outline" style="border:1.5px solid var(--primary);color:var(--primary);background:transparent;border-radius:8px;"><i class="bi bi-eye"></i> الملف</button>
+      </div>
+    </div>
+
+    <!-- Broker 4 -->
+    <div class="broker-card">
+      <div class="broker-header">
+        <div class="broker-avatar" style="background:linear-gradient(135deg,#16a34a,#22c55e);">ف</div>
+        <div>
+          <div class="broker-name">فهد الوسيط <i class="bi bi-patch-check-fill" style="color:var(--primary);font-size:.9rem;"></i></div>
+          <div class="broker-tag"><span style="width:8px;height:8px;background:#16a34a;border-radius:50%;display:inline-block;margin-left:4px;"></span> متاح · عضو منذ ٢٠٢٤</div>
+        </div>
+      </div>
+      <div class="broker-rating">
+        <span class="stars">★★★★☆</span> <span>٤.٥</span> <span style="color:var(--text-muted);font-weight:400;">(٦٣ تقييم)</span>
+      </div>
+      <div class="broker-stats">
+        <div class="b-stat"><span>٥٢</span><small>صفقة</small></div>
+        <div class="b-stat"><span>٩٦٪</span><small>نجاح</small></div>
+        <div class="b-stat"><span>< ١س</span><small>رد</small></div>
+      </div>
+      <div class="broker-platforms">
+        <span class="b-platform" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i> يوتيوب</span>
+        <span class="b-platform" style="background:#e8f0ff;color:#1877f2;"><i class="bi bi-facebook"></i> فيسبوك</span>
+        <span class="b-platform" style="background:#e8f2ff;color:#0088cc;"><i class="bi bi-telegram"></i> تيليغرام</span>
+      </div>
+      <div class="broker-actions">
+        <button class="btn-broker btn-broker-primary" onclick="showToast('تم إرسال طلب الوساطة لفهد!')"><i class="bi bi-send-fill"></i> طلب وساطة</button>
+        <button class="btn-broker btn-broker-outline" style="border:1.5px solid var(--primary);color:var(--primary);background:transparent;border-radius:8px;"><i class="bi bi-eye"></i> الملف</button>
+      </div>
+    </div>
+
+    <!-- Broker 5 -->
+    <div class="broker-card">
+      <div class="broker-header">
+        <div class="broker-avatar" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">ن</div>
+        <div>
+          <div class="broker-name">نورا الوسيطة <i class="bi bi-patch-check-fill" style="color:var(--primary);font-size:.9rem;"></i></div>
+          <div class="broker-tag"><span style="width:8px;height:8px;background:#16a34a;border-radius:50%;display:inline-block;margin-left:4px;"></span> متاحة · عضوة منذ ٢٠٢٤</div>
+        </div>
+      </div>
+      <div class="broker-rating">
+        <span class="stars">★★★★★</span> <span>٤.٧</span> <span style="color:var(--text-muted);font-weight:400;">(٤١ تقييم)</span>
+      </div>
+      <div class="broker-stats">
+        <div class="b-stat"><span>٣٨</span><small>صفقة</small></div>
+        <div class="b-stat"><span>١٠٠٪</span><small>نجاح</small></div>
+        <div class="b-stat"><span>< ٣٠د</span><small>رد</small></div>
+      </div>
+      <div class="broker-platforms">
+        <span class="b-platform" style="background:#f5e8ff;color:#c13584;"><i class="bi bi-instagram"></i> إنستغرام</span>
+        <span class="b-platform" style="background:#f0f0f0;color:#010101;"><i class="bi bi-tiktok"></i> تيك توك</span>
+        <span class="b-platform" style="background:#e8f8ff;color:#000;"><i class="bi bi-twitter-x"></i> تويتر</span>
+      </div>
+      <div class="broker-actions">
+        <button class="btn-broker btn-broker-primary" onclick="showToast('تم إرسال طلب الوساطة لنورا!')"><i class="bi bi-send-fill"></i> طلب وساطة</button>
+        <button class="btn-broker btn-broker-outline" style="border:1.5px solid var(--primary);color:var(--primary);background:transparent;border-radius:8px;"><i class="bi bi-eye"></i> الملف</button>
+      </div>
+    </div>
+
+    <!-- Broker 6 -->
+    <div class="broker-card">
+      <div class="broker-header">
+        <div class="broker-avatar" style="background:linear-gradient(135deg,#dc2626,#f97316);">ك</div>
+        <div>
+          <div class="broker-name">كريم الوسيط <i class="bi bi-patch-check-fill" style="color:var(--primary);font-size:.9rem;"></i></div>
+          <div class="broker-tag"><span style="width:8px;height:8px;background:#16a34a;border-radius:50%;display:inline-block;margin-left:4px;"></span> متاح · عضو منذ ٢٠٢٢</div>
+        </div>
+      </div>
+      <div class="broker-rating">
+        <span class="stars">★★★★★</span> <span>٤.٩</span> <span style="color:var(--text-muted);font-weight:400;">(٣٠٢ تقييم)</span>
+      </div>
+      <div class="broker-stats">
+        <div class="b-stat"><span>٢٤٥</span><small>صفقة</small></div>
+        <div class="b-stat"><span>٩٩٪</span><small>نجاح</small></div>
+        <div class="b-stat"><span>< ١س</span><small>رد</small></div>
+      </div>
+      <div class="broker-platforms">
+        <span class="b-platform" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i> يوتيوب</span>
+        <span class="b-platform" style="background:#f5e8ff;color:#c13584;"><i class="bi bi-instagram"></i> إنستغرام</span>
+        <span class="b-platform" style="background:#e8f0ff;color:#1877f2;"><i class="bi bi-facebook"></i> فيسبوك</span>
+        <span class="b-platform" style="background:#f0f0f0;color:#010101;"><i class="bi bi-tiktok"></i> تيك توك</span>
+      </div>
+      <div class="broker-actions">
+        <button class="btn-broker btn-broker-primary" onclick="showToast('تم إرسال طلب الوساطة لكريم!')"><i class="bi bi-send-fill"></i> طلب وساطة</button>
+        <button class="btn-broker btn-broker-outline" style="border:1.5px solid var(--primary);color:var(--primary);background:transparent;border-radius:8px;"><i class="bi bi-eye"></i> الملف</button>
+      </div>
+    </div>
+
+  </div><!-- /brokers-grid -->
+</div>
+
+<script src="./assets/script/components.js"></script>
+<script>
+function filterBroker(el, type) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  showToast('تم تطبيق الفلتر');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>كيف تعمل؟ - وسيطي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./assets/css/style.css"/>
+  <style>
+    .page-hero{background:linear-gradient(135deg,var(--primary) 0%,#4f8ef7 100%);padding:72px 24px 56px;text-align:center;}
+    .page-hero h1{font-size:clamp(26px,4vw,44px);font-weight:900;color:#fff;margin-bottom:12px;}
+    .page-hero p{color:rgba(255,255,255,.8);font-size:1rem;max-width:560px;margin:0 auto;}
+    .hiw-layout{max-width:1100px;margin:0 auto;padding:56px 24px 80px;}
+    .role-section{margin-bottom:56px;}
+    .role-title{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+    .role-title .role-icon-big{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
+    .role-title h2{font-size:1.25rem;font-weight:900;color:var(--text);}
+    .role-title p{font-size:.85rem;color:var(--text-muted);}
+    .steps-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+    .hiw-step{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;position:relative;transition:all .22s;}
+    .hiw-step:hover{border-color:var(--primary);box-shadow:var(--shadow-md);transform:translateY(-3px);}
+    .step-number{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:900;color:#fff;margin-bottom:14px;}
+    .hiw-step h4{font-size:.92rem;font-weight:800;color:var(--text);margin-bottom:7px;}
+    .hiw-step p{font-size:.82rem;color:var(--text-muted);line-height:1.6;}
+    .hiw-step .step-icon{font-size:1.6rem;margin-bottom:12px;}
+    .connector{display:flex;align-items:center;justify-content:center;padding:16px 0;}
+    .connector i{font-size:1.5rem;color:var(--border);}
+    .faq-mini{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;}
+    .faq-mini h3{font-size:1.1rem;font-weight:800;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+    .faq-mini-item{padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;}
+    .faq-mini-item:last-child{border-bottom:none;}
+    .faq-mini-q{font-size:.88rem;font-weight:700;color:var(--text);display:flex;justify-content:space-between;align-items:center;}
+    .faq-mini-a{font-size:.83rem;color:var(--text-muted);line-height:1.6;margin-top:8px;display:none;}
+    .faq-mini-item.open .faq-mini-a{display:block;}
+    .faq-mini-item.open .faq-mini-q i{transform:rotate(180deg);}
+    .faq-mini-q i{transition:transform .2s;}
+    .cta-banner{background:linear-gradient(135deg,var(--primary),#4f8ef7);border-radius:20px;padding:40px 32px;text-align:center;color:#fff;margin-top:40px;}
+    .cta-banner h2{font-size:1.5rem;font-weight:900;margin-bottom:10px;}
+    .cta-banner p{opacity:.85;margin-bottom:24px;}
+    .cta-banner-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+    .btn-white{padding:12px 28px;background:#fff;color:var(--primary);border-radius:9px;font-size:.92rem;font-weight:800;display:inline-flex;align-items:center;gap:8px;transition:all .2s;}
+    .btn-white:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.15);}
+    .btn-transp{padding:12px 24px;background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5);border-radius:9px;font-size:.92rem;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:all .2s;}
+    .btn-transp:hover{border-color:#fff;background:rgba(255,255,255,.1);}
+    .section-divider{border:none;border-top:1.5px solid var(--border);margin:40px 0;}
+  </style>
+</head>
+<body>
+
+<div class="page-hero">
+  <div class="hero-badge" style="margin-bottom:16px;background:rgba(255,255,255,.15);color:#fff;"><i class="bi bi-question-circle-fill"></i> كيف تعمل؟</div>
+  <h1>دليلك الكامل لاستخدام وسيطي</h1>
+  <p>اكتشف كيف تضمن منصتنا أمان صفقتك خطوة بخطوة لكل الأطراف</p>
+</div>
+
+<div class="hiw-layout">
+
+  <!-- Buyer Steps -->
+  <div class="role-section">
+    <div class="role-title">
+      <div class="role-icon-big" style="background:var(--primary-light);color:var(--primary);"><i class="bi bi-bag-check-fill"></i></div>
+      <div>
+        <h2>إذا كنت مشترياً</h2>
+        <p>اشترِ بأمان واطمئن أن أموالك محمية</p>
+      </div>
+    </div>
+    <div class="steps-list">
+      <div class="hiw-step">
+        <div class="step-number" style="background:var(--primary);">١</div>
+        <div class="step-icon">🔍</div>
+        <h4>تصفح المتجر</h4>
+        <p>ابحث في مئات الإعلانات المصنفة حسب المنصة والسعر والتقييم.</p>
+      </div>
+      <div class="hiw-step">
+        <div class="step-number" style="background:var(--primary);">٢</div>
+        <div class="step-icon">🤝</div>
+        <h4>طلب وساطة</h4>
+        <p>اضغط "طلب وساطة" على الإعلان المناسب واختر وسيطاً موثقاً.</p>
+      </div>
+      <div class="hiw-step">
+        <div class="step-number" style="background:var(--primary);">٣</div>
+        <div class="step-icon">💰</div>
+        <h4>دفع آمن في الضمان</h4>
+        <p>أودع المبلغ في الضمان. لن يُحوَّل للبائع إلا بعد تأكيدك.</p>
+      </div>
+      <div class="hiw-step">
+        <div class="step-number" style="background:var(--primary);">٤</div>
+        <div class="step-icon">✅</div>
+        <h4>تحقق وأكّد</h4>
+        <p>افحص الحساب بدقة، وعند رضاك أكّد الاستلام لإتمام الصفقة.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider"/>
+
+  <!-- Seller Steps -->
+  <div class="role-section">
+    <div class="role-title">
+      <div class="role-icon-big" style="background:#fff7ed;color:#ea580c;"><i class="bi bi-shop-window"></i></div>
+      <div>
+        <h2>إذا كنت بائعاً</h2>
+        <p>بع حسابك بأعلى سعر وبأمان تام</p>
+      </div>
+    </div>
+    <div class="steps-list">
+      <div class="hiw-step">
+        <div class="step-number" style="background:#ea580c;">١</div>
+        <div class="step-icon">📋</div>
+        <h4>ارفع إعلانك</h4>
+        <p>أضف تفاصيل حسابك، الإحصائيات، والسعر المطلوب مجاناً.</p>
+      </div>
+      <div class="hiw-step">
+        <div class="step-number" style="background:#ea580c;">٢</div>
+        <div class="step-icon">⏳</div>
+        <h4>انتظر المشترين</h4>
+        <p>سيتواصل معك المشترون المهتمون عبر نظام الوساطة الآمن.</p>
+      </div>
+      <div class="hiw-step">
+        <div class="step-number" style="background:#ea580c;">٣</div>
+        <div class="step-icon">🔐</div>
+        <h4>غرفة الوساطة</h4>
+        <p>نقل الحساب يتم تحت إشراف الوسيط الموثق لحماية الطرفين.</p>
+      </div>
+      <div class="hiw-step">
+        <div class="step-number" style="background:#ea580c;">٤</div>
+        <div class="step-icon">💳</div>
+        <h4>استلم أموالك</h4>
+        <p>بعد تأكيد المشتري يُحوَّل المبلغ فوراً لحسابك البنكي.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider"/>
+
+  <!-- Escrow Steps -->
+  <div class="role-section">
+    <div class="role-title">
+      <div class="role-icon-big" style="background:#f5e8ff;color:#7c3aed;"><i class="bi bi-person-badge-fill"></i></div>
+      <div>
+        <h2>إذا كنت وسيطاً</h2>
+        <p>ساعد الآخرين واكسب عمولتك</p>
+      </div>
+    </div>
+    <div class="steps-list">
+      <div class="hiw-step">
+        <div class="step-number" style="background:#7c3aed;">١</div>
+        <div class="step-icon">📝</div>
+        <h4>سجّل كوسيط</h4>
+        <p>أنشئ حساباً واختر "وسيط"، ثم أكمل التحقق من هويتك.</p>
+      </div>
+      <div class="hiw-step">
+        <div class="step-number" style="background:#7c3aed;">٢</div>
+        <div class="step-icon">📩</div>
+        <h4>تلقّ الطلبات</h4>
+        <p>ستصلك طلبات الوساطة من المشترين. اقبل ما يناسبك.</p>
+      </div>
+      <div class="hiw-step">
+        <div class="step-number" style="background:#7c3aed;">٣</div>
+        <div class="step-icon">🏠</div>
+        <h4>أدر غرفة الوساطة</h4>
+        <p>نسّق بين البائع والمشتري وتأكد من نقل الحساب بشكل صحيح.</p>
+      </div>
+      <div class="hiw-step">
+        <div class="step-number" style="background:#7c3aed;">٤</div>
+        <div class="step-icon">💎</div>
+        <h4>احصل على عمولتك</h4>
+        <p>تُحوَّل عمولتك تلقائياً عند اكتمال كل صفقة ناجحة.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Mini -->
+  <div class="faq-mini">
+    <h3><i class="bi bi-question-circle-fill" style="color:var(--primary);"></i> أسئلة شائعة</h3>
+    <div class="faq-mini-item" onclick="toggleFaq(this)">
+      <div class="faq-mini-q">كم تبلغ نسبة عمولة المنصة؟ <i class="bi bi-chevron-down"></i></div>
+      <div class="faq-mini-a">تبلغ عمولة المنصة ٢-٥٪ من قيمة الصفقة حسب المبلغ الإجمالي. عمولة الوسيط تُتفق عليها بشكل منفصل.</div>
+    </div>
+    <div class="faq-mini-item" onclick="toggleFaq(this)">
+      <div class="faq-mini-q">ما هي مدة إتمام الصفقة؟ <i class="bi bi-chevron-down"></i></div>
+      <div class="faq-mini-a">تتراوح مدة الصفقة عادةً بين ٢٤-٧٢ ساعة حسب تعقيدها وسرعة التحقق من الحساب.</div>
+    </div>
+    <div class="faq-mini-item" onclick="toggleFaq(this)">
+      <div class="faq-mini-q">ماذا يحدث في حال الخلاف؟ <i class="bi bi-chevron-down"></i></div>
+      <div class="faq-mini-a">يتدخل فريق دعم وسيطي للفصل في النزاع وضمان حق الطرفين بناءً على الأدلة والتوثيق.</div>
+    </div>
+    <div class="faq-mini-item" onclick="toggleFaq(this)">
+      <div class="faq-mini-q">هل الرسوم مسترجعة إذا فشلت الصفقة؟ <i class="bi bi-chevron-down"></i></div>
+      <div class="faq-mini-a">نعم، يُسترجع كامل مبلغ المشتري في حال فشل البائع في تسليم الحساب أو ثبت وجود تحايل.</div>
+    </div>
+  </div>
+
+  <div class="cta-banner">
+    <h2>مستعد للبدء؟</h2>
+    <p>انضم اليوم وأتمّ صفقتك الأولى بأمان تام</p>
+    <div class="cta-banner-btns">
+      <a href="register.html" class="btn-white"><i class="bi bi-person-plus-fill"></i> إنشاء حساب مجاني</a>
+      <a href="store.html" class="btn-transp"><i class="bi bi-shop"></i> تصفح المتجر</a>
+    </div>
+  </div>
+
+</div>
+
+<script src="./assets/script/components.js"></script>
+<script>
+function toggleFaq(el) {
+  el.classList.toggle('open');
+}
+</script>
+</body>
+</html>

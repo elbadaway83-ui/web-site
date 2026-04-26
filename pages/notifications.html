@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>الإشعارات - وسيطي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./assets/css/style.css"/>
+  <style>
+    .page-hero{background:linear-gradient(135deg,#f0f4ff,#e8f5f3);padding:48px 24px 36px;text-align:center;}
+    .page-hero h1{font-size:clamp(22px,4vw,34px);font-weight:900;color:var(--text);margin-bottom:8px;}
+    .notif-layout{max-width:760px;margin:0 auto;padding:32px 24px 80px;}
+    .notif-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+    .notif-header h2{font-size:1rem;font-weight:800;color:var(--text);}
+    .mark-all{font-size:.82rem;font-weight:700;color:var(--primary);cursor:pointer;border:none;background:none;font-family:var(--font);}
+    .notif-tabs{display:flex;gap:4px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:4px;margin-bottom:20px;width:fit-content;}
+    .ntab{padding:8px 16px;border-radius:7px;font-size:.84rem;font-weight:700;cursor:pointer;border:none;background:transparent;color:var(--text-muted);font-family:var(--font);transition:all .18s;}
+    .ntab.active{background:var(--primary);color:#fff;}
+    .notif-list{display:flex;flex-direction:column;gap:2px;}
+    .notif-item{display:flex;align-items:flex-start;gap:14px;padding:16px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;transition:all .18s;cursor:pointer;position:relative;}
+    .notif-item.unread{border-color:rgba(37,99,235,.2);background:#fafbff;}
+    .notif-item:hover{border-color:var(--primary);box-shadow:var(--shadow);}
+    .notif-dot{width:8px;height:8px;background:var(--primary);border-radius:50%;position:absolute;top:18px;left:16px;flex-shrink:0;}
+    .notif-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+    .notif-content{flex:1;min-width:0;}
+    .notif-title{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:3px;}
+    .notif-text{font-size:.8rem;color:var(--text-muted);line-height:1.5;margin-bottom:5px;}
+    .notif-time{font-size:.72rem;color:var(--text-muted);}
+    .notif-action{padding:7px 14px;border-radius:7px;font-size:.78rem;font-weight:700;background:var(--primary-light);color:var(--primary);border:1px solid rgba(37,99,235,.15);cursor:pointer;font-family:var(--font);white-space:nowrap;flex-shrink:0;transition:all .18s;}
+    .notif-action:hover{background:var(--primary);color:#fff;}
+    .day-sep{font-size:.75rem;font-weight:700;color:var(--text-muted);padding:12px 0 6px;border-bottom:1px solid var(--border);margin-bottom:8px;}
+  </style>
+</head>
+<body>
+
+<div class="page-hero">
+  <div class="hero-badge" style="margin-bottom:14px;"><i class="bi bi-bell-fill"></i> الإشعارات</div>
+  <h1>مركز الإشعارات</h1>
+  <p>تابع جميع تحديثات صفقاتك وطلباتك</p>
+</div>
+
+<div class="notif-layout">
+  <div class="notif-header">
+    <h2>لديك <span style="color:var(--primary);">٥</span> إشعارات غير مقروءة</h2>
+    <button class="mark-all" onclick="markAllRead()"><i class="bi bi-check-all"></i> تحديد الكل كمقروء</button>
+  </div>
+
+  <div class="notif-tabs">
+    <button class="ntab active" onclick="filterNotif('all',this)">الكل (٨)</button>
+    <button class="ntab" onclick="filterNotif('unread',this)">غير مقروء (٥)</button>
+    <button class="ntab" onclick="filterNotif('deals',this)">الصفقات</button>
+    <button class="ntab" onclick="filterNotif('system',this)">النظام</button>
+  </div>
+
+  <div class="notif-list">
+    <div class="day-sep">اليوم</div>
+
+    <div class="notif-item unread" onclick="markRead(this)">
+      <div class="notif-dot"></div>
+      <div class="notif-icon" style="background:#f0fdf4;color:#16a34a;"><i class="bi bi-check-circle-fill"></i></div>
+      <div class="notif-content">
+        <div class="notif-title">تم قبول طلب الوساطة!</div>
+        <div class="notif-text">الوسيط محمد قبل طلبك لصفقة "قناة يوتيوب تقنية". يمكنك الدخول لغرفة الوساطة الآن.</div>
+        <div class="notif-time"><i class="bi bi-clock"></i> منذ ١٥ دقيقة</div>
+      </div>
+      <button class="notif-action" onclick="event.stopPropagation();location.href='escrow-room.html'">دخول الغرفة</button>
+    </div>
+
+    <div class="notif-item unread" onclick="markRead(this)">
+      <div class="notif-dot"></div>
+      <div class="notif-icon" style="background:#fff7ed;color:#ea580c;"><i class="bi bi-chat-dots-fill"></i></div>
+      <div class="notif-content">
+        <div class="notif-title">رسالة جديدة في غرفة الوساطة</div>
+        <div class="notif-text">الوسيط سلمى: "تم التحقق من الحساب بنجاح، يرجى تأكيد الاستلام."</div>
+        <div class="notif-time"><i class="bi bi-clock"></i> منذ ٤٥ دقيقة</div>
+      </div>
+      <button class="notif-action" onclick="event.stopPropagation();location.href='escrow-room.html'">عرض</button>
+    </div>
+
+    <div class="notif-item unread" onclick="markRead(this)">
+      <div class="notif-dot"></div>
+      <div class="notif-icon" style="background:var(--primary-light);color:var(--primary);"><i class="bi bi-person-badge-fill"></i></div>
+      <div class="notif-content">
+        <div class="notif-title">وسيط جديد متاح لصفقتك</div>
+        <div class="notif-text">الوسيط عمر (تقييم ٤.٦) أبدى اهتماماً بقبول صفقة "صفحة فيسبوك طبخ".</div>
+        <div class="notif-time"><i class="bi bi-clock"></i> منذ ساعتين</div>
+      </div>
+      <button class="notif-action" onclick="event.stopPropagation();location.href='brokers.html'">عرض الملف</button>
+    </div>
+
+    <div class="notif-item unread" onclick="markRead(this)">
+      <div class="notif-dot"></div>
+      <div class="notif-icon" style="background:#f0eaff;color:#7c3aed;"><i class="bi bi-cash-coin"></i></div>
+      <div class="notif-content">
+        <div class="notif-title">تم تحويل المبلغ للبائع</div>
+        <div class="notif-text">اكتملت صفقة "قناة تيليغرام إخبارية" بنجاح. تم تحويل ٤,١٠٠ ر.س لحسابك.</div>
+        <div class="notif-time"><i class="bi bi-clock"></i> منذ ٣ ساعات</div>
+      </div>
+      <button class="notif-action" onclick="event.stopPropagation();showToast('جاري تحميل التقرير...')">التقرير</button>
+    </div>
+
+    <div class="notif-item unread" onclick="markRead(this)">
+      <div class="notif-dot"></div>
+      <div class="notif-icon" style="background:#fff0f0;color:#dc2626;"><i class="bi bi-exclamation-triangle-fill"></i></div>
+      <div class="notif-content">
+        <div class="notif-title">تذكير: تأكيد الاستلام</div>
+        <div class="notif-text">تبقى لك ٢٤ ساعة لتأكيد استلام الحساب في صفقة "حساب تيك توك ترفيه" وإلا سيتم إلغاؤها تلقائياً.</div>
+        <div class="notif-time"><i class="bi bi-clock"></i> منذ ٥ ساعات</div>
+      </div>
+      <button class="notif-action" onclick="event.stopPropagation();location.href='escrow-room.html'" style="background:#fff0f0;color:#dc2626;border-color:#fecaca;">تأكيد الآن</button>
+    </div>
+
+    <div class="day-sep">أمس</div>
+
+    <div class="notif-item" onclick="markRead(this)">
+      <div class="notif-icon" style="background:var(--accent-light);color:var(--accent);"><i class="bi bi-star-fill"></i></div>
+      <div class="notif-content">
+        <div class="notif-title">تقييم جديد على ملفك</div>
+        <div class="notif-text">المستخدم خالد أضاف تقييماً ٥ نجوم لصفقتكما المكتملة. شكراً لثقتكم!</div>
+        <div class="notif-time"><i class="bi bi-clock"></i> أمس الساعة ١٠:٣٠ م</div>
+      </div>
+    </div>
+
+    <div class="notif-item" onclick="markRead(this)">
+      <div class="notif-icon" style="background:var(--bg);color:var(--text-muted);"><i class="bi bi-shield-check"></i></div>
+      <div class="notif-content">
+        <div class="notif-title">تم التحقق من هويتك</div>
+        <div class="notif-text">تهانينا! تم التحقق من هويتك بنجاح. حسابك الآن موثق ويحمل علامة الموثوقية.</div>
+        <div class="notif-time"><i class="bi bi-clock"></i> أمس الساعة ٢:١٥ م</div>
+      </div>
+    </div>
+
+    <div class="notif-item" onclick="markRead(this)">
+      <div class="notif-icon" style="background:var(--bg);color:var(--text-muted);"><i class="bi bi-megaphone-fill"></i></div>
+      <div class="notif-content">
+        <div class="notif-title">تم نشر إعلانك بنجاح</div>
+        <div class="notif-text">إعلان "قناة يوتيوب تقنية" الآن مرئي للجميع في المتجر.</div>
+        <div class="notif-time"><i class="bi bi-clock"></i> أمس الساعة ١١:٠٠ ص</div>
+      </div>
+      <button class="notif-action" onclick="event.stopPropagation();location.href='store.html'">عرض</button>
+    </div>
+  </div>
+</div>
+
+<script src="./assets/script/components.js"></script>
+<script>
+function markRead(el) {
+  el.classList.remove('unread');
+  const dot = el.querySelector('.notif-dot');
+  if (dot) dot.remove();
+}
+function markAllRead() {
+  document.querySelectorAll('.notif-item.unread').forEach(i => markRead(i));
+  showToast('تم تحديد جميع الإشعارات كمقروءة');
+}
+function filterNotif(type, btn) {
+  document.querySelectorAll('.ntab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>تسجيل الدخول - وسيطي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./assets/css/style.css"/>
+  <style>
+    body{min-height:100vh;display:flex;flex-direction:column;}
+    .auth-wrapper{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 24px 80px;background:linear-gradient(135deg,#f0f4ff 0%,#e8f5f3 100%);}
+    .auth-card{background:var(--surface);border:1.5px solid var(--border);border-radius:22px;padding:40px 36px;width:100%;max-width:440px;box-shadow:var(--shadow-lg);}
+    .auth-logo{display:flex;align-items:center;gap:9px;justify-content:center;margin-bottom:28px;}
+    .auth-logo .logo-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--primary),#4f8ef7);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.35rem;box-shadow:0 4px 14px rgba(37,99,235,.3);}
+    .auth-logo .logo-text{font-size:1.5rem;font-weight:900;color:var(--text);}
+    .auth-logo .logo-text span{color:var(--primary);}
+    .auth-title{font-size:1.35rem;font-weight:900;color:var(--text);text-align:center;margin-bottom:6px;}
+    .auth-sub{font-size:.88rem;color:var(--text-muted);text-align:center;margin-bottom:28px;}
+    .form-group{margin-bottom:16px;}
+    .form-group label{display:block;font-size:.83rem;font-weight:700;color:var(--text);margin-bottom:7px;}
+    .input-wrap{position:relative;}
+    .input-wrap i{position:absolute;top:50%;transform:translateY(-50%);right:14px;color:var(--text-muted);font-size:1rem;pointer-events:none;}
+    .input-wrap input{width:100%;padding:11px 40px 11px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:var(--font);font-size:.9rem;color:var(--text);background:var(--bg);outline:none;transition:border-color .2s,box-shadow .2s;}
+    .input-wrap input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
+    .input-wrap .eye-btn{position:absolute;top:50%;transform:translateY(-50%);left:12px;background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:1rem;pointer-events:all;}
+    .forgot{display:flex;justify-content:flex-start;margin-top:-8px;margin-bottom:12px;}
+    .forgot a{font-size:.8rem;color:var(--primary);font-weight:600;}
+    .btn-auth{width:100%;padding:13px;background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;border:none;border-radius:9px;font-family:var(--font);font-size:.95rem;font-weight:800;cursor:pointer;transition:all .2s;margin-bottom:16px;}
+    .btn-auth:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.35);}
+    .divider{display:flex;align-items:center;gap:10px;margin-bottom:16px;color:var(--text-muted);font-size:.8rem;}
+    .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+    .social-auth{display:flex;gap:10px;margin-bottom:20px;}
+    .btn-social{flex:1;padding:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface);cursor:pointer;font-family:var(--font);font-size:.82rem;font-weight:700;color:var(--text);display:flex;align-items:center;justify-content:center;gap:7px;transition:all .18s;}
+    .btn-social:hover{border-color:var(--primary);background:var(--primary-light);}
+    .auth-switch{text-align:center;font-size:.85rem;color:var(--text-muted);}
+    .auth-switch a{color:var(--primary);font-weight:700;}
+    .remember-row{display:flex;align-items:center;gap:8px;margin-bottom:16px;font-size:.83rem;color:var(--text);}
+    .remember-row input{width:16px;height:16px;accent-color:var(--primary);}
+  </style>
+</head>
+<body>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="logo-icon"><i class="bi bi-shield-fill-check"></i></div>
+      <div class="logo-text">وسيط<span>ي</span></div>
+    </div>
+    <div class="auth-title">مرحباً بعودتك!</div>
+    <div class="auth-sub">سجّل دخولك للوصول إلى حسابك وصفقاتك</div>
+
+    <div class="form-group">
+      <label>البريد الإلكتروني أو رقم الهاتف</label>
+      <div class="input-wrap">
+        <i class="bi bi-envelope"></i>
+        <input type="email" placeholder="example@email.com" id="loginEmail"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>كلمة المرور</label>
+      <div class="input-wrap">
+        <i class="bi bi-lock"></i>
+        <input type="password" placeholder="••••••••" id="loginPass"/>
+        <button class="eye-btn" onclick="togglePass('loginPass',this)"><i class="bi bi-eye"></i></button>
+      </div>
+    </div>
+
+    <div class="forgot"><a href="#">نسيت كلمة المرور؟</a></div>
+
+    <div class="remember-row">
+      <input type="checkbox" id="rememberMe" checked/>
+      <label for="rememberMe">تذكرني</label>
+    </div>
+
+    <button class="btn-auth" onclick="doLogin()"><i class="bi bi-box-arrow-in-right"></i> تسجيل الدخول</button>
+
+    <div class="divider">أو تسجيل عبر</div>
+    <div class="social-auth">
+      <button class="btn-social" onclick="showToast('تسجيل الدخول بجوجل قريباً!')"><i class="bi bi-google" style="color:#ea4335;"></i> جوجل</button>
+      <button class="btn-social" onclick="showToast('تسجيل الدخول بتويتر قريباً!')"><i class="bi bi-twitter-x"></i> تويتر X</button>
+    </div>
+
+    <div class="auth-switch">ليس لديك حساب؟ <a href="register.html">إنشاء حساب مجاني</a></div>
+  </div>
+</div>
+
+<script src="./assets/script/components.js"></script>
+<script>
+function togglePass(id, btn) {
+  const inp = document.getElementById(id);
+  const icon = btn.querySelector('i');
+  if (inp.type === 'password') {
+    inp.type = 'text';
+    icon.className = 'bi bi-eye-slash';
+  } else {
+    inp.type = 'password';
+    icon.className = 'bi bi-eye';
+  }
+}
+function doLogin() {
+  const email = document.getElementById('loginEmail').value;
+  const pass = document.getElementById('loginPass').value;
+  if (!email || !pass) { showToast('يرجى ملء جميع الحقول', 'error'); return; }
+  showToast('تم تسجيل الدخول بنجاح!');
+  setTimeout(() => location.href = 'profile.html', 1500);
+}
+</script>
+</body>
+</html>

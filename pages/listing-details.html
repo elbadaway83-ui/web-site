@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>تفاصيل الإعلان - وسيطي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./assets/css/style.css"/>
+  <style>
+    .detail-layout{max-width:1200px;margin:0 auto;padding:32px 24px 80px;display:grid;grid-template-columns:1fr 360px;gap:28px;}
+    @media(max-width:900px){.detail-layout{grid-template-columns:1fr;}}
+    .back-bar{max-width:1200px;margin:0 auto;padding:16px 24px 0;display:flex;align-items:center;gap:10px;}
+    .back-link{display:flex;align-items:center;gap:6px;font-size:.85rem;font-weight:700;color:var(--text-muted);transition:color .18s;}
+    .back-link:hover{color:var(--primary);}
+    .breadcrumb-sep{color:var(--border);}
+    .breadcrumb-cur{font-size:.85rem;font-weight:700;color:var(--text);}
+    /* Gallery */
+    .gallery-main{border-radius:var(--radius);overflow:hidden;border:1.5px solid var(--border);margin-bottom:12px;position:relative;}
+    .gallery-main img{width:100%;height:320px;object-fit:cover;}
+    .platform-badge-big{position:absolute;top:14px;right:14px;padding:8px 14px;border-radius:10px;font-size:.88rem;font-weight:800;display:flex;align-items:center;gap:7px;box-shadow:0 4px 14px rgba(0,0,0,.15);}
+    .gallery-thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+    .thumb{height:70px;border-radius:8px;overflow:hidden;border:1.5px solid var(--border);cursor:pointer;transition:all .18s;}
+    .thumb img{width:100%;height:100%;object-fit:cover;}
+    .thumb:hover,.thumb.active{border-color:var(--primary);}
+    /* Info */
+    .listing-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;}
+    .listing-title-row h1{font-size:1.3rem;font-weight:900;color:var(--text);line-height:1.3;}
+    .wishlist-btn{width:40px;height:40px;border:1.5px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;color:var(--text-muted);font-size:1.1rem;flex-shrink:0;transition:all .18s;}
+    .wishlist-btn:hover,.wishlist-btn.active{border-color:#e53e3e;color:#e53e3e;background:#fff0f0;}
+    .seller-row{display:flex;align-items:center;gap:12px;padding:14px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;margin-bottom:16px;}
+    .seller-av{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;}
+    .seller-name{font-size:.9rem;font-weight:800;color:var(--text);margin-bottom:3px;}
+    .seller-meta{font-size:.78rem;color:var(--text-muted);}
+    .seller-msg-btn{margin-right:auto;padding:8px 16px;border:1.5px solid var(--primary);border-radius:8px;font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:700;color:var(--primary);background:transparent;cursor:pointer;transition:all .18s;}
+    .seller-msg-btn:hover{background:var(--primary);color:#fff;}
+    .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+    .stat-box{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+    .stat-box i{font-size:1.2rem;margin-bottom:6px;display:block;}
+    .stat-box span{display:block;font-size:1rem;font-weight:900;color:var(--text);}
+    .stat-box small{font-size:.72rem;color:var(--text-muted);font-weight:500;}
+    .info-section{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;}
+    .info-section h3{font-size:.92rem;font-weight:800;color:var(--text);margin-bottom:14px;padding-bottom:10px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:7px;}
+    .info-section p{font-size:.87rem;color:var(--text-muted);line-height:1.8;}
+    .info-table{width:100%;border-collapse:collapse;}
+    .info-table tr td{padding:9px 0;font-size:.85rem;border-bottom:1px solid var(--border);}
+    .info-table tr:last-child td{border-bottom:none;}
+    .info-table td:first-child{color:var(--text-muted);width:40%;}
+    .info-table td:last-child{font-weight:700;color:var(--text);}
+    .reviews-list{display:flex;flex-direction:column;gap:10px;}
+    .review-item{padding:12px;background:var(--bg);border-radius:8px;}
+    .review-header{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+    .review-av{width:30px;height:30px;border-radius:8px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;}
+    .review-name{font-size:.82rem;font-weight:700;color:var(--text);}
+    .review-stars{color:#f59e0b;font-size:.8rem;margin-right:auto;}
+    .review-text{font-size:.8rem;color:var(--text-muted);line-height:1.6;}
+    /* Sidebar */
+    .price-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;position:sticky;top:84px;}
+    .price-main{font-size:2rem;font-weight:900;color:var(--text);margin-bottom:4px;}
+    .price-sub{font-size:.82rem;color:var(--text-muted);margin-bottom:18px;}
+    .nego-badge{display:inline-flex;align-items:center;gap:5px;background:var(--accent-light);color:var(--accent);padding:5px 12px;border-radius:6px;font-size:.78rem;font-weight:700;margin-bottom:16px;}
+    .btn-buy{width:100%;padding:14px;background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;transition:all .2s;}
+    .btn-buy:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.35);}
+    .btn-make-offer{width:100%;padding:12px;background:transparent;color:var(--text);border:1.5px solid var(--border);border-radius:10px;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;margin-bottom:16px;transition:all .18s;}
+    .btn-make-offer:hover{border-color:var(--primary);color:var(--primary);}
+    .guarantee-list{display:flex;flex-direction:column;gap:8px;padding:14px;background:var(--bg);border-radius:10px;margin-bottom:16px;}
+    .guarantee-item{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--text);}
+    .guarantee-item i{color:var(--accent);font-size:.9rem;}
+    .quick-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+    .qs{background:var(--bg);border-radius:8px;padding:10px;text-align:center;font-size:.75rem;}
+    .qs span{display:block;font-size:.95rem;font-weight:900;color:var(--text);}
+    .qs small{color:var(--text-muted);}
+    .report-link{font-size:.75rem;color:var(--text-muted);text-align:center;display:block;margin-top:8px;cursor:pointer;}
+    .report-link:hover{color:var(--danger);}
+    .similar-section{margin-top:48px;}
+    .similar-section h2{font-size:1.2rem;font-weight:800;color:var(--text);margin-bottom:20px;}
+    .similar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;}
+  </style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a class="back-link" href="store.html"><i class="bi bi-arrow-right"></i> المتجر</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">قناة يوتيوب تقنية - ٤٥ألف مشترك</span>
+</div>
+
+<div class="detail-layout">
+  <!-- Main Content -->
+  <div>
+    <!-- Gallery -->
+    <div class="gallery-main">
+      <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=900&q=80&auto=format&fit=crop" alt="قناة يوتيوب" id="mainImg"/>
+      <div class="platform-badge-big" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i> يوتيوب</div>
+    </div>
+    <div class="gallery-thumbs">
+      <div class="thumb active" onclick="changeImg(this,'https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=400&q=80')"><img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=200&q=80" alt="صورة ١"/></div>
+      <div class="thumb" onclick="changeImg(this,'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&q=80')"><img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=200&q=80" alt="صورة ٢"/></div>
+      <div class="thumb" onclick="changeImg(this,'https://images.unsplash.com/photo-1565464027194-7957a2295fb7?w=400&q=80')"><img src="https://images.unsplash.com/photo-1565464027194-7957a2295fb7?w=200&q=80" alt="صورة ٣"/></div>
+      <div class="thumb" onclick="changeImg(this,'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=400&q=80')"><img src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=200&q=80" alt="صورة ٤"/></div>
+    </div>
+
+    <!-- Title -->
+    <div class="listing-title-row" style="margin-top:20px;">
+      <h1>قناة يوتيوب تقنية - ٤٥,٢٠٠ مشترك</h1>
+      <button class="wishlist-btn" id="wishBtn" onclick="toggleWish()"><i class="bi bi-heart"></i></button>
+    </div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+      <span class="badge badge-blue"><i class="bi bi-patch-check-fill"></i> موثق</span>
+      <span class="badge badge-green"><i class="bi bi-shield-fill-check"></i> مضمون</span>
+      <span class="badge badge-orange"><i class="bi bi-clock"></i> في انتظار الوسيط</span>
+      <span class="badge" style="background:#f0fdf4;color:#16a34a;"><i class="bi bi-eye-fill"></i> ٢٣٤ مشاهدة</span>
+    </div>
+
+    <!-- Seller -->
+    <div class="seller-row">
+      <div class="seller-av">أ</div>
+      <div>
+        <div class="seller-name">أحمد محمد <i class="bi bi-patch-check-fill" style="color:var(--primary);font-size:.85rem;"></i></div>
+        <div class="seller-meta"><i class="bi bi-star-fill" style="color:#f59e0b;"></i> ٤.٨ · ١٢ صفقة ناجحة · عضو منذ ٢٠٢٣</div>
+      </div>
+      <button class="seller-msg-btn" onclick="showToast('سيتم فتح المحادثة قريباً!')"><i class="bi bi-chat-dots"></i> مراسلة</button>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="stats-grid">
+      <div class="stat-box"><i class="bi bi-people-fill" style="color:var(--primary);"></i><span>٤٥,٢٠٠</span><small>مشترك</small></div>
+      <div class="stat-box"><i class="bi bi-eye-fill" style="color:#ea580c;"></i><span>٣.٢م</span><small>مشاهدة</small></div>
+      <div class="stat-box"><i class="bi bi-hand-thumbs-up-fill" style="color:var(--accent);"></i><span>٧.٣٪</span><small>تفاعل</small></div>
+      <div class="stat-box"><i class="bi bi-calendar3" style="color:#7c3aed;"></i><span>٣ سنوات</span><small>عمر القناة</small></div>
+      <div class="stat-box"><i class="bi bi-film" style="color:#0088cc;"></i><span>٣٢٠</span><small>فيديو</small></div>
+      <div class="stat-box"><i class="bi bi-bar-chart-fill" style="color:#d97706;"></i><span>يومي</span><small>نشاط</small></div>
+    </div>
+
+    <!-- Description -->
+    <div class="info-section">
+      <h3><i class="bi bi-info-circle-fill" style="color:var(--primary);"></i> وصف الإعلان</h3>
+      <p>قناة يوتيوب متخصصة في مجال التقنية والبرمجة باللغة العربية. تأسست عام ٢٠٢٢ وحققت نمواً عضوياً مستمراً دون أي اشتراكات مدفوعة. المحتوى أصيل ومتنوع يشمل شروحات البرمجة، مراجعات التطبيقات، وأحدث أخبار التقنية.</p>
+      <p>القناة مناسبة للمعلنين في قطاع التقنية والتعليم الإلكتروني. لديها عقود إعلانية سابقة مع شركات تقنية كبرى. سبب البيع: الهجرة والانشغال بعمل جديد.</p>
+    </div>
+
+    <!-- Details Table -->
+    <div class="info-section">
+      <h3><i class="bi bi-list-check" style="color:var(--primary);"></i> المواصفات التفصيلية</h3>
+      <table class="info-table">
+        <tr><td>المنصة</td><td><i class="bi bi-youtube" style="color:#e53e3e;"></i> يوتيوب</td></tr>
+        <tr><td>المجال</td><td>تقنية وبرمجة</td></tr>
+        <tr><td>اللغة</td><td>العربية</td></tr>
+        <tr><td>الجمهور المستهدف</td><td>السعودية ٤٠٪ · مصر ٢٥٪ · دول خليجية ٢٠٪</td></tr>
+        <tr><td>متوسط المشاهدات / فيديو</td><td>١٠,٠٠٠ – ٣٠,٠٠٠</td></tr>
+        <tr><td>إيرادات AdSense</td><td>$٢٠٠ – $٤٠٠ شهرياً</td></tr>
+        <tr><td>حقوق الملكية الكاملة</td><td><i class="bi bi-check-circle-fill" style="color:var(--accent);"></i> مشمولة</td></tr>
+        <tr><td>كلمة مرور البريد المرتبط</td><td><i class="bi bi-check-circle-fill" style="color:var(--accent);"></i> مشمولة</td></tr>
+        <tr><td>رقم الهاتف المرتبط</td><td><i class="bi bi-check-circle-fill" style="color:var(--accent);"></i> يُسلَّم</td></tr>
+        <tr><td>تاريخ الرفع</td><td>٢٠ أبريل ٢٠٢٥</td></tr>
+      </table>
+    </div>
+
+    <!-- Reviews -->
+    <div class="info-section">
+      <h3><i class="bi bi-star-fill" style="color:#f59e0b;"></i> تقييمات البائع (١٢)</h3>
+      <div class="reviews-list">
+        <div class="review-item">
+          <div class="review-header">
+            <div class="review-av">خ</div>
+            <div class="review-name">خالد العمري</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <div class="review-text">تعامل ممتاز والحساب كما هو موصوف تماماً. الوسيط احترافي جداً وأتمّ الصفقة في وقت قياسي.</div>
+        </div>
+        <div class="review-item">
+          <div class="review-header">
+            <div class="review-av">ن</div>
+            <div class="review-name">نواف السعيد</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <div class="review-text">بائع أمين ومحترف، جميع المعلومات كانت دقيقة وشفافة. أنصح بالتعامل معه.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Similar -->
+    <div class="similar-section">
+      <h2>إعلانات مشابهة</h2>
+      <div class="similar-grid">
+        <div class="listing-card" onclick="showToast('جاري تحميل التفاصيل...')">
+          <div class="listing-img">
+            <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&q=80" alt="قناة يوتيوب"/>
+            <div class="listing-platform" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i></div>
+          </div>
+          <div class="listing-head">
+            <div class="listing-avatar" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i></div>
+            <div class="listing-meta"><h4>قناة يوتيوب طبخ - ٢٨ألف</h4><span><i class="bi bi-person-fill"></i> هند المصري</span></div>
+          </div>
+          <div class="listing-footer"><div class="price">١,٩٠٠ ر.س</div><span class="badge badge-blue">متاح</span></div>
+        </div>
+        <div class="listing-card" onclick="showToast('جاري تحميل التفاصيل...')">
+          <div class="listing-img">
+            <img src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=400&q=80" alt="قناة يوتيوب"/>
+            <div class="listing-platform" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i></div>
+          </div>
+          <div class="listing-head">
+            <div class="listing-avatar" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i></div>
+            <div class="listing-meta"><h4>قناة يوتيوب رياضية - ٦٠ألف</h4><span><i class="bi bi-person-fill"></i> بدر القحطاني</span></div>
+          </div>
+          <div class="listing-footer"><div class="price">٣,٥٠٠ ر.س</div><span class="badge badge-green">وساطة جارية</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div>
+    <div class="price-card">
+      <div class="price-main">٢,٨٠٠ ر.س</div>
+      <div class="price-sub">للحساب كاملاً مع جميع الملحقات</div>
+      <div class="nego-badge"><i class="bi bi-chat-dots-fill"></i> قابل للتفاوض</div>
+
+      <div class="quick-stats">
+        <div class="qs"><span>٢٣٤</span><small>مشاهدة</small></div>
+        <div class="qs"><span>٨</span><small>طلب وساطة</small></div>
+        <div class="qs"><span>٢</span><small>عرض سعر</small></div>
+        <div class="qs"><span>٣ أيام</span><small>منذ النشر</small></div>
+      </div>
+
+      <button class="btn-buy" onclick="requestEscrow()"><i class="bi bi-arrows-angle-contract"></i> طلب وساطة الآن</button>
+      <button class="btn-make-offer" onclick="makeOffer()"><i class="bi bi-tag"></i> تقديم عرض سعر</button>
+
+      <div class="guarantee-list">
+        <div class="guarantee-item"><i class="bi bi-shield-lock-fill"></i> أموالك محمية في الضمان</div>
+        <div class="guarantee-item"><i class="bi bi-person-badge-fill"></i> وسيط موثق يشرف على النقل</div>
+        <div class="guarantee-item"><i class="bi bi-clock-history"></i> ٤٨ ساعة للتحقق من الحساب</div>
+        <div class="guarantee-item"><i class="bi bi-arrow-counterclockwise"></i> استرداد كامل في حال الخلاف</div>
+        <div class="guarantee-item"><i class="bi bi-headset"></i> دعم فني ٢٤/٧</div>
+      </div>
+
+      <div style="border-top:1.5px solid var(--border);padding-top:14px;">
+        <div style="font-size:.78rem;color:var(--text-muted);margin-bottom:8px;"><i class="bi bi-info-circle"></i> تكاليف الصفقة التقديرية</div>
+        <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:5px;"><span style="color:var(--text-muted);">سعر الحساب</span><span style="font-weight:700;">٢,٨٠٠ ر.س</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:5px;"><span style="color:var(--text-muted);">عمولة الوساطة (٢-٣٪)</span><span style="font-weight:700;">٥٦-٨٤ ر.س</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.82rem;padding-top:8px;border-top:1px solid var(--border);"><span style="font-weight:800;">الإجمالي</span><span style="font-weight:900;color:var(--primary);">٢,٨٥٦-٢,٨٨٤ ر.س</span></div>
+      </div>
+
+      <span class="report-link" onclick="showToast('تم إرسال البلاغ للمراجعة','error')"><i class="bi bi-flag"></i> الإبلاغ عن هذا الإعلان</span>
+    </div>
+  </div>
+</div>
+
+<script src="./assets/script/components.js"></script>
+<script>
+function changeImg(thumb, src) {
+  document.getElementById('mainImg').src = src;
+  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+  thumb.classList.add('active');
+}
+function toggleWish() {
+  const btn = document.getElementById('wishBtn');
+  const icon = btn.querySelector('i');
+  btn.classList.toggle('active');
+  icon.className = btn.classList.contains('active') ? 'bi bi-heart-fill' : 'bi bi-heart';
+  showToast(btn.classList.contains('active') ? 'تمت الإضافة للمفضلة!' : 'تم الحذف من المفضلة');
+}
+function requestEscrow() {
+  showToast('جاري تحويلك لصفحة الوساطة...');
+  setTimeout(() => location.href = 'brokers.html', 1500);
+}
+function makeOffer() {
+  const price = prompt('أدخل عرض السعر (ر.س):');
+  if (price) showToast('تم إرسال عرضك بـ ' + price + ' ر.س للبائع!');
+}
+</script>
+</body>
+</html>

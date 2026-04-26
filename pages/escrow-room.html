@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>غرفة الوساطة - وسيطي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./assets/css/style.css"/>
+  <style>
+    *{box-sizing:border-box;}
+    body{margin:0;font-family:'Cairo',sans-serif;background:var(--bg);direction:rtl;}
+    .room-wrapper{display:grid;grid-template-columns:300px 1fr 280px;height:calc(100vh - 0px);min-height:600px;}
+    @media(max-width:1100px){.room-wrapper{grid-template-columns:1fr;height:auto;}}
+    /* Left Panel */
+    .room-left{background:var(--surface);border-left:1.5px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+    .room-header{padding:18px 16px;border-bottom:1.5px solid var(--border);background:linear-gradient(135deg,var(--primary),#4f8ef7);}
+    .room-id{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:4px;}
+    .room-title{font-size:1rem;font-weight:900;color:#fff;margin-bottom:8px;}
+    .room-status-bar{display:flex;align-items:center;gap:6px;font-size:.78rem;color:rgba(255,255,255,.85);}
+    .live-dot{width:8px;height:8px;background:#4ade80;border-radius:50%;animation:pulse-ring 1.5s infinite;}
+    .parties{padding:14px;}
+    .parties h4{font-size:.75rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;}
+    .party{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:var(--bg);border:1.5px solid var(--border);margin-bottom:8px;}
+    .party-avatar{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.95rem;font-weight:900;color:#fff;flex-shrink:0;}
+    .party-name{font-size:.82rem;font-weight:700;color:var(--text);}
+    .party-role{font-size:.72rem;color:var(--text-muted);}
+    .party-status{margin-right:auto;width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+    .deal-info{padding:14px;border-top:1.5px solid var(--border);}
+    .deal-info h4{font-size:.75rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;}
+    .deal-row-item{display:flex;justify-content:space-between;padding:6px 0;font-size:.82rem;border-bottom:1px solid var(--border);}
+    .deal-row-item:last-child{border-bottom:none;}
+    .deal-row-item span:first-child{color:var(--text-muted);}
+    .deal-row-item span:last-child{font-weight:700;color:var(--text);}
+    .progress-section{padding:14px;border-top:1.5px solid var(--border);}
+    .progress-section h4{font-size:.75rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;margin-bottom:12px;}
+    .prog-step{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+    .prog-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;}
+    .prog-circle.done{background:var(--accent);color:#fff;}
+    .prog-circle.active{background:var(--primary);color:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.15);}
+    .prog-circle.idle{background:var(--bg);color:var(--text-muted);border:1.5px solid var(--border);}
+    .prog-label{font-size:.8rem;font-weight:600;}
+    .prog-label.done{color:var(--accent);}
+    .prog-label.active{color:var(--primary);font-weight:800;}
+    .prog-label.idle{color:var(--text-muted);}
+    /* Center: Chat */
+    .room-chat{display:flex;flex-direction:column;background:var(--bg);}
+    .chat-header{padding:14px 20px;background:var(--surface);border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .chat-title{font-size:.92rem;font-weight:800;color:var(--text);}
+    .chat-actions{display:flex;gap:8px;}
+    .chat-action-btn{width:34px;height:34px;border:1.5px solid var(--border);border-radius:8px;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:all .18s;}
+    .chat-action-btn:hover{border-color:var(--primary);color:var(--primary);}
+    .messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;min-height:400px;max-height:calc(100vh - 240px);}
+    .msg{display:flex;gap:10px;max-width:75%;}
+    .msg.me{flex-direction:row-reverse;align-self:flex-start;}
+    .msg.other{align-self:flex-start;}
+    .msg.system{align-self:center;max-width:90%;}
+    .msg-avatar{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:900;color:#fff;flex-shrink:0;}
+    .bubble{padding:10px 14px;border-radius:12px;font-size:.86rem;line-height:1.6;}
+    .msg.other .bubble{background:var(--surface);border:1.5px solid var(--border);color:var(--text);border-top-right-radius:4px;}
+    .msg.me .bubble{background:var(--primary);color:#fff;border-top-left-radius:4px;}
+    .msg.system .bubble{background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.15);color:var(--primary);font-size:.8rem;text-align:center;border-radius:20px;padding:8px 16px;}
+    .msg-name{font-size:.72rem;font-weight:700;color:var(--text-muted);margin-bottom:3px;}
+    .msg.me .msg-name{text-align:left;}
+    .msg-time{font-size:.68rem;color:var(--text-muted);margin-top:4px;}
+    .msg.me .msg-time{text-align:left;}
+    .chat-input-area{padding:14px 20px;background:var(--surface);border-top:1.5px solid var(--border);}
+    .chat-input-row{display:flex;align-items:center;gap:10px;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:8px 14px;transition:border-color .2s;}
+    .chat-input-row:focus-within{border-color:var(--primary);}
+    .chat-input-row input{flex:1;border:none;background:transparent;outline:none;font-family:'Cairo',sans-serif;font-size:.88rem;color:var(--text);}
+    .send-btn{width:36px;height:36px;background:var(--primary);border:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;transition:all .18s;flex-shrink:0;}
+    .send-btn:hover{background:#0050dd;transform:scale(1.05);}
+    .attach-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:1rem;padding:4px;transition:color .18s;}
+    .attach-btn:hover{color:var(--primary);}
+    /* Right Panel */
+    .room-right{background:var(--surface);border-right:1.5px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+    .actions-panel{padding:14px;}
+    .actions-panel h4{font-size:.75rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;margin-bottom:12px;}
+    .action-btn{width:100%;padding:11px 14px;border-radius:9px;font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;margin-bottom:8px;transition:all .18s;border:1.5px solid transparent;}
+    .action-btn.green{background:var(--accent-light);color:var(--accent);border-color:rgba(22,163,74,.2);}
+    .action-btn.green:hover{background:var(--accent);color:#fff;}
+    .action-btn.blue{background:var(--primary-light);color:var(--primary);border-color:rgba(37,99,235,.2);}
+    .action-btn.blue:hover{background:var(--primary);color:#fff;}
+    .action-btn.red{background:#fff0f0;color:#dc2626;border-color:#fecaca;}
+    .action-btn.red:hover{background:#dc2626;color:#fff;}
+    .action-btn.yellow{background:#fffbeb;color:#d97706;border-color:#fed7aa;}
+    .action-btn.yellow:hover{background:#d97706;color:#fff;}
+    .docs-section{padding:14px;border-top:1.5px solid var(--border);}
+    .docs-section h4{font-size:.75rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;}
+    .doc-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;margin-bottom:6px;cursor:pointer;transition:all .18s;}
+    .doc-item:hover{border-color:var(--primary);background:var(--primary-light);}
+    .doc-item i{color:var(--primary);}
+    .doc-item span{font-size:.8rem;font-weight:600;color:var(--text);flex:1;}
+    .doc-item small{font-size:.7rem;color:var(--text-muted);}
+    .room-top-bar{background:var(--surface);border-bottom:1.5px solid var(--border);padding:10px 24px;display:flex;align-items:center;gap:14px;}
+    .back-btn{display:flex;align-items:center;gap:6px;font-size:.85rem;font-weight:700;color:var(--text-muted);cursor:pointer;border:1.5px solid var(--border);border-radius:8px;padding:6px 12px;background:transparent;font-family:'Cairo',sans-serif;transition:all .18s;}
+    .back-btn:hover{color:var(--primary);border-color:var(--primary);}
+    .room-breadcrumb{font-size:.82rem;color:var(--text-muted);}
+    .room-breadcrumb strong{color:var(--text);}
+    .urgent-banner{background:#fff7ed;border-bottom:2px solid #fed7aa;padding:8px 20px;display:flex;align-items:center;gap:10px;font-size:.83rem;font-weight:700;color:#92400e;}
+  </style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="room-top-bar">
+  <button class="back-btn" onclick="history.back()"><i class="bi bi-arrow-right"></i> الرجوع</button>
+  <div class="room-breadcrumb">مركز الوساطة › <strong>غرفة #WST-2025-04891</strong></div>
+  <div style="margin-right:auto;display:flex;gap:8px;">
+    <span class="badge badge-green" style="padding:6px 12px;"><i class="bi bi-shield-fill-check"></i> وساطة جارية</span>
+    <span class="badge badge-blue" style="padding:6px 12px;"><i class="bi bi-search"></i> مرحلة التحقق</span>
+  </div>
+</div>
+
+<!-- Urgent Banner -->
+<div class="urgent-banner">
+  <i class="bi bi-exclamation-triangle-fill" style="color:#d97706;"></i>
+  تبقى <strong>٣٦ ساعة</strong> لتأكيد الاستلام — المشتري لديه حتى ٢٨ أبريل ٢٠٢٥ الساعة ١٢:٠٠ ظهراً
+</div>
+
+<div class="room-wrapper">
+
+  <!-- LEFT: Parties + Deal Info -->
+  <div class="room-left">
+    <div class="room-header">
+      <div class="room-id">الغرفة #WST-2025-04891</div>
+      <div class="room-title">قناة يوتيوب تقنية - ٤٥ألف مشترك</div>
+      <div class="room-status-bar"><span class="live-dot"></span> غرفة مباشرة · ٣ أطراف متصلون</div>
+    </div>
+
+    <div class="parties">
+      <h4>أطراف الصفقة</h4>
+      <div class="party">
+        <div class="party-avatar" style="background:#ea580c;">ب</div>
+        <div><div class="party-name">أحمد محمد (البائع)</div><div class="party-role"><i class="bi bi-shop-window" style="color:#ea580c;"></i> بائع · موثق</div></div>
+        <div class="party-status" style="background:#16a34a;"></div>
+      </div>
+      <div class="party">
+        <div class="party-avatar" style="background:var(--primary);">م</div>
+        <div><div class="party-name">خالد العمري (المشتري)</div><div class="party-role"><i class="bi bi-bag-check" style="color:var(--primary);"></i> مشترٍ · موثق</div></div>
+        <div class="party-status" style="background:#16a34a;"></div>
+      </div>
+      <div class="party" style="border-color:rgba(37,99,235,.3);background:var(--primary-light);">
+        <div class="party-avatar" style="background:#7c3aed;">و</div>
+        <div><div class="party-name">محمد الوسيط</div><div class="party-role"><i class="bi bi-person-badge-fill" style="color:#7c3aed;"></i> وسيط موثق ★٤.٩</div></div>
+        <div class="party-status" style="background:#16a34a;"></div>
+      </div>
+    </div>
+
+    <div class="deal-info">
+      <h4>تفاصيل الصفقة</h4>
+      <div class="deal-row-item"><span>قيمة الصفقة</span><span style="color:var(--primary);">٢,٨٠٠ ر.س</span></div>
+      <div class="deal-row-item"><span>عمولة الوسيط</span><span>٨٤ ر.س (٣٪)</span></div>
+      <div class="deal-row-item"><span>عمولة المنصة</span><span>٥٦ ر.س (٢٪)</span></div>
+      <div class="deal-row-item"><span>صافي البائع</span><span style="color:var(--accent);">٢,٦٦٠ ر.س</span></div>
+      <div class="deal-row-item"><span>تاريخ البدء</span><span>٢٠ أبريل ٢٠٢٥</span></div>
+      <div class="deal-row-item"><span>المنصة</span><span><i class="bi bi-youtube" style="color:#e53e3e;"></i> يوتيوب</span></div>
+    </div>
+
+    <div class="progress-section">
+      <h4>مراحل الصفقة</h4>
+      <div class="prog-step"><div class="prog-circle done"><i class="bi bi-check"></i></div><span class="prog-label done">طلب الوساطة</span></div>
+      <div class="prog-step"><div class="prog-circle done"><i class="bi bi-check"></i></div><span class="prog-label done">قبول الوسيط</span></div>
+      <div class="prog-step"><div class="prog-circle done"><i class="bi bi-check"></i></div><span class="prog-label done">دفع الضمان</span></div>
+      <div class="prog-step"><div class="prog-circle done"><i class="bi bi-check"></i></div><span class="prog-label done">نقل الحساب</span></div>
+      <div class="prog-step"><div class="prog-circle active"><i class="bi bi-search"></i></div><span class="prog-label active">التحقق من الحساب ←</span></div>
+      <div class="prog-step"><div class="prog-circle idle">٦</div><span class="prog-label idle">تأكيد الاستلام</span></div>
+      <div class="prog-step"><div class="prog-circle idle">٧</div><span class="prog-label idle">تحويل المبالغ</span></div>
+    </div>
+  </div>
+
+  <!-- CENTER: Chat -->
+  <div class="room-chat">
+    <div class="chat-header">
+      <div class="chat-title"><i class="bi bi-chat-dots-fill" style="color:var(--primary);"></i> المحادثة المشتركة</div>
+      <div class="chat-actions">
+        <button class="chat-action-btn" title="البحث في المحادثة"><i class="bi bi-search"></i></button>
+        <button class="chat-action-btn" title="تثبيت رسالة"><i class="bi bi-pin-angle"></i></button>
+        <button class="chat-action-btn" title="خيارات"><i class="bi bi-three-dots"></i></button>
+      </div>
+    </div>
+
+    <div class="messages" id="chatMessages">
+      <!-- System -->
+      <div class="msg system">
+        <div class="bubble"><i class="bi bi-shield-fill-check"></i> تم إنشاء غرفة الوساطة · ٢٠ أبريل ٢٠٢٥ ١٠:٠٠ ص</div>
+      </div>
+
+      <!-- Broker -->
+      <div class="msg other">
+        <div class="msg-avatar" style="background:#7c3aed;">و</div>
+        <div>
+          <div class="msg-name">محمد الوسيط</div>
+          <div class="bubble">مرحباً بالجميع! أنا محمد وسيطكم لهذه الصفقة. سنبدأ بمرحلة التحقق من الحساب. أطلب من البائع أحمد إرسال رابط القناة وإثبات الملكية.</div>
+          <div class="msg-time">١٠:٠٢ ص</div>
+        </div>
+      </div>
+
+      <!-- Seller -->
+      <div class="msg other">
+        <div class="msg-avatar" style="background:#ea580c;">ب</div>
+        <div>
+          <div class="msg-name">أحمد محمد (البائع)</div>
+          <div class="bubble">أهلاً! هذا رابط القناة: youtube.com/c/tech-ar-channel وقد أرسلت لقطات الشاشة في قسم المستندات.</div>
+          <div class="msg-time">١٠:٠٨ ص</div>
+        </div>
+      </div>
+
+      <!-- Buyer -->
+      <div class="msg me">
+        <div class="msg-avatar" style="background:var(--primary);">م</div>
+        <div>
+          <div class="msg-name">أنت (المشتري)</div>
+          <div class="bubble">تمام، سأبدأ بمراجعة الإحصائيات. هل يمكن للبائع إرسال لقطة شاشة من لوحة تحكم يوتيوب تثبت عدد المشتركين الحقيقي؟</div>
+          <div class="msg-time">١٠:١٥ ص</div>
+        </div>
+      </div>
+
+      <!-- System -->
+      <div class="msg system">
+        <div class="bubble"><i class="bi bi-file-earmark-arrow-up"></i> البائع أرفق مستند: "لقطة_لوحة_التحكم.png" · ١٠:٢٢ ص</div>
+      </div>
+
+      <!-- Broker -->
+      <div class="msg other">
+        <div class="msg-avatar" style="background:#7c3aed;">و</div>
+        <div>
+          <div class="msg-name">محمد الوسيط</div>
+          <div class="bubble">راجعت المستندات وتتوافق مع الوصف في الإعلان. عدد المشتركين ٤٥,٢٣٧ وهذا مطابق. المشتري خالد، لديك ٤٨ ساعة للتحقق من الحساب بشكل كامل قبل تأكيد الاستلام.</div>
+          <div class="msg-time">١٠:٣٥ ص</div>
+        </div>
+      </div>
+
+      <!-- Me -->
+      <div class="msg me">
+        <div class="msg-avatar" style="background:var(--primary);">م</div>
+        <div>
+          <div class="msg-name">أنت (المشتري)</div>
+          <div class="bubble">شكراً. قمت بمراجعة القناة وكل شيء يبدو جيداً. سأكمل التحقق من إمكانية الوصول للحساب ثم أؤكد.</div>
+          <div class="msg-time">الآن</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <div class="chat-input-row">
+        <button class="attach-btn" onclick="showToast('جاري رفع الملف...')"><i class="bi bi-paperclip"></i></button>
+        <input type="text" placeholder="اكتب رسالتك هنا..." id="chatInput" onkeydown="sendOnEnter(event)"/>
+        <button class="attach-btn" onclick="showToast('الإيموجي قريباً!')"><i class="bi bi-emoji-smile"></i></button>
+        <button class="send-btn" onclick="sendMsg()"><i class="bi bi-send-fill"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Actions + Docs -->
+  <div class="room-right">
+    <div class="actions-panel">
+      <h4>إجراءات المشتري</h4>
+      <button class="action-btn green" onclick="confirmReceive()"><i class="bi bi-check-circle-fill"></i> تأكيد استلام الحساب</button>
+      <button class="action-btn yellow" onclick="requestExtend()"><i class="bi bi-clock-history"></i> طلب تمديد مدة التحقق</button>
+      <button class="action-btn red" onclick="openDispute()"><i class="bi bi-exclamation-triangle-fill"></i> رفع نزاع</button>
+      <button class="action-btn blue" onclick="callBroker()"><i class="bi bi-headset"></i> التواصل مع الدعم</button>
+    </div>
+
+    <div class="docs-section">
+      <h4>المستندات</h4>
+      <div class="doc-item" onclick="showToast('جاري تحميل المستند...')">
+        <i class="bi bi-image"></i>
+        <span>لقطة_لوحة_التحكم.png</span>
+        <small>٢.١ MB</small>
+      </div>
+      <div class="doc-item" onclick="showToast('جاري تحميل المستند...')">
+        <i class="bi bi-file-earmark-pdf"></i>
+        <span>إثبات_الملكية.pdf</span>
+        <small>٤٥٦ KB</small>
+      </div>
+      <div class="doc-item" onclick="showToast('جاري تحميل المستند...')">
+        <i class="bi bi-image"></i>
+        <span>إحصائيات_مارس.png</span>
+        <small>١.٨ MB</small>
+      </div>
+      <button style="width:100%;padding:9px;border:1.5px dashed var(--border);border-radius:8px;background:transparent;cursor:pointer;font-family:'Cairo',sans-serif;font-size:.8rem;color:var(--text-muted);margin-top:4px;" onclick="showToast('جاري رفع المستند...')">
+        <i class="bi bi-cloud-upload"></i> رفع مستند جديد
+      </button>
+    </div>
+
+    <div style="padding:14px;border-top:1.5px solid var(--border);">
+      <h4 style="font-size:.75rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">الإجراءات السريعة</h4>
+      <button class="action-btn blue" style="margin-bottom:6px;" onclick="showToast('جاري تصدير سجل المحادثة...')"><i class="bi bi-download"></i> تصدير سجل المحادثة</button>
+      <button class="action-btn blue" onclick="showToast('تم نسخ رابط الغرفة!')"><i class="bi bi-link-45deg"></i> نسخ رابط الغرفة</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="./assets/script/components.js"></script>
+<script>
+function sendMsg() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const messages = document.getElementById('chatMessages');
+  const msg = document.createElement('div');
+  msg.className = 'msg me';
+  msg.innerHTML = `
+    <div class="msg-avatar" style="background:var(--primary);">م</div>
+    <div>
+      <div class="msg-name">أنت (المشتري)</div>
+      <div class="bubble">${text}</div>
+      <div class="msg-time">الآن</div>
+    </div>`;
+  messages.appendChild(msg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+}
+function sendOnEnter(e) { if (e.key === 'Enter') sendMsg(); }
+function confirmReceive() {
+  if (confirm('هل تأكيد استلام الحساب بشكل كامل؟ سيتم تحويل المبلغ للبائع فوراً.')) {
+    showToast('تم تأكيد الاستلام! جاري تحويل المبالغ...');
+    setTimeout(() => location.href = 'escrow-center.html', 2000);
+  }
+}
+function requestExtend() { showToast('تم إرسال طلب تمديد للوسيط'); }
+function openDispute() { showToast('تم رفع النزاع للإدارة. سيتواصل معك الفريق خلال ٢ ساعة', 'error'); }
+function callBroker() { showToast('جاري الاتصال بفريق الدعم...'); }
+</script>
+</body>
+</html>

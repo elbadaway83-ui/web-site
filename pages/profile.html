@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ملفي الشخصي - وسيطي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./assets/css/style.css"/>
+  <style>
+    .profile-hero{background:linear-gradient(135deg,var(--primary) 0%,#4f8ef7 100%);padding:48px 24px 80px;position:relative;}
+    .profile-hero-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+    .avatar-wrap{position:relative;}
+    .avatar{width:90px;height:90px;border-radius:20px;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:900;color:#fff;}
+    .avatar-edit{position:absolute;bottom:-6px;left:-6px;width:28px;height:28px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:.8rem;cursor:pointer;border:2px solid var(--primary);}
+    .profile-name{font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:4px;}
+    .profile-handle{font-size:.88rem;color:rgba(255,255,255,.75);margin-bottom:8px;}
+    .profile-badges{display:flex;gap:8px;flex-wrap:wrap;}
+    .pbadge{padding:4px 12px;border-radius:6px;font-size:.75rem;font-weight:700;background:rgba(255,255,255,.15);color:#fff;display:inline-flex;align-items:center;gap:5px;}
+    .profile-stats{display:flex;gap:24px;margin-right:auto;}
+    .pstat{text-align:center;color:#fff;}
+    .pstat span{display:block;font-size:1.4rem;font-weight:900;}
+    .pstat small{font-size:.75rem;opacity:.75;}
+    .profile-body{max-width:900px;margin:-40px auto 0;padding:0 24px 80px;position:relative;z-index:10;}
+    .profile-tabs{display:flex;gap:4px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:5px;margin-bottom:24px;width:fit-content;}
+    .ptab{padding:9px 18px;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;border:none;background:transparent;color:var(--text-muted);transition:all .18s;font-family:var(--font);}
+    .ptab.active{background:var(--primary);color:#fff;}
+    .tab-panel{display:none;}.tab-panel.active{display:block;}
+    .info-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;}
+    .info-card h3{font-size:.95rem;font-weight:800;color:var(--text);margin-bottom:18px;padding-bottom:12px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:8px;}
+    .info-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    @media(max-width:600px){.info-row{grid-template-columns:1fr;}}
+    .form-group{margin-bottom:14px;}
+    .form-group label{display:block;font-size:.8rem;font-weight:700;color:var(--text-muted);margin-bottom:6px;}
+    .form-control{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--font);font-size:.88rem;color:var(--text);background:var(--bg);outline:none;transition:border-color .2s;}
+    .form-control:focus{border-color:var(--primary);}
+    .btn-save{padding:11px 24px;background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;border:none;border-radius:9px;font-family:var(--font);font-size:.9rem;font-weight:700;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:8px;}
+    .btn-save:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(37,99,235,.3);}
+    .my-ads-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;}
+    .ad-mini{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px;transition:all .18s;}
+    .ad-mini:hover{border-color:var(--primary);box-shadow:var(--shadow);}
+    .ad-mini-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+    .ad-mini-name{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:3px;}
+    .ad-mini-price{font-size:.82rem;font-weight:800;color:var(--primary);}
+    .security-item{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--border);}
+    .security-item:last-child{border-bottom:none;}
+    .sec-info h4{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:3px;}
+    .sec-info p{font-size:.78rem;color:var(--text-muted);}
+    .btn-sec{padding:8px 16px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--font);font-size:.8rem;font-weight:700;cursor:pointer;color:var(--text);background:transparent;transition:all .18s;}
+    .btn-sec:hover{border-color:var(--primary);color:var(--primary);}
+    .btn-danger{border-color:#fecaca !important;color:#dc2626 !important;}
+    .btn-danger:hover{background:#fff5f5 !important;}
+  </style>
+</head>
+<body>
+
+<!-- Profile Hero -->
+<div class="profile-hero">
+  <div class="profile-hero-inner">
+    <div class="avatar-wrap">
+      <div class="avatar">م</div>
+      <div class="avatar-edit"><i class="bi bi-camera-fill"></i></div>
+    </div>
+    <div>
+      <div class="profile-name">محمد العمري</div>
+      <div class="profile-handle">@mohammed_omari · عضو منذ مارس ٢٠٢٣</div>
+      <div class="profile-badges">
+        <span class="pbadge"><i class="bi bi-patch-check-fill"></i> موثق</span>
+        <span class="pbadge"><i class="bi bi-shield-fill-check"></i> مشترٍ نشط</span>
+        <span class="pbadge"><i class="bi bi-star-fill"></i> تقييم ٤.٨</span>
+      </div>
+    </div>
+    <div class="profile-stats">
+      <div class="pstat"><span>١٢</span><small>صفقة ناجحة</small></div>
+      <div class="pstat"><span>٣</span><small>إعلانات نشطة</small></div>
+      <div class="pstat"><span>٩٨٪</span><small>رضا</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- Profile Body -->
+<div class="profile-body">
+  <div class="profile-tabs">
+    <button class="ptab active" onclick="switchPTab('info',this)"><i class="bi bi-person"></i> معلوماتي</button>
+    <button class="ptab" onclick="switchPTab('ads',this)"><i class="bi bi-megaphone"></i> إعلاناتي</button>
+    <button class="ptab" onclick="switchPTab('deals',this)"><i class="bi bi-arrows-angle-contract"></i> صفقاتي</button>
+    <button class="ptab" onclick="switchPTab('security',this)"><i class="bi bi-shield-lock"></i> الأمان</button>
+  </div>
+
+  <!-- Info Tab -->
+  <div class="tab-panel active" id="tab-info">
+    <div class="info-card">
+      <h3><i class="bi bi-person-fill" style="color:var(--primary);"></i> المعلومات الشخصية</h3>
+      <div class="info-row">
+        <div class="form-group"><label>الاسم الأول</label><input class="form-control" value="محمد"/></div>
+        <div class="form-group"><label>الاسم الأخير</label><input class="form-control" value="العمري"/></div>
+        <div class="form-group"><label>اسم المستخدم</label><input class="form-control" value="@mohammed_omari"/></div>
+        <div class="form-group"><label>البريد الإلكتروني</label><input class="form-control" value="m.omari@email.com" type="email"/></div>
+        <div class="form-group"><label>رقم الهاتف</label><input class="form-control" value="+966 5x xxx xxxx"/></div>
+        <div class="form-group"><label>الدولة</label>
+          <select class="form-control"><option selected>المملكة العربية السعودية</option><option>الإمارات</option><option>مصر</option><option>الكويت</option></select>
+        </div>
+      </div>
+      <div class="form-group"><label>نبذة شخصية</label><textarea class="form-control" style="min-height:80px;resize:vertical;">مهتم بشراء وبيع الحسابات الرقمية بأمان تام.</textarea></div>
+      <button class="btn-save" onclick="showToast('تم حفظ المعلومات بنجاح!')"><i class="bi bi-save"></i> حفظ التغييرات</button>
+    </div>
+  </div>
+
+  <!-- Ads Tab -->
+  <div class="tab-panel" id="tab-ads">
+    <div class="info-card">
+      <h3><i class="bi bi-megaphone-fill" style="color:var(--primary);"></i> إعلاناتي النشطة</h3>
+      <div class="my-ads-grid">
+        <div class="ad-mini">
+          <div class="ad-mini-icon" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i></div>
+          <div><div class="ad-mini-name">قناة يوتيوب تقنية</div><div class="ad-mini-price">٢,٨٠٠ ر.س</div><span class="badge badge-blue" style="font-size:.7rem;">نشط</span></div>
+        </div>
+        <div class="ad-mini">
+          <div class="ad-mini-icon" style="background:#f5e8ff;color:#c13584;"><i class="bi bi-instagram"></i></div>
+          <div><div class="ad-mini-name">صفحة إنستغرام موضة</div><div class="ad-mini-price">٥,٥٠٠ ر.س</div><span class="badge badge-green" style="font-size:.7rem;">وساطة جارية</span></div>
+        </div>
+        <div class="ad-mini">
+          <div class="ad-mini-icon" style="background:#f0f0f0;color:#010101;"><i class="bi bi-tiktok"></i></div>
+          <div><div class="ad-mini-name">حساب تيك توك ترفيه</div><div class="ad-mini-price">٨,٩٠٠ ر.س</div><span class="badge badge-orange" style="font-size:.7rem;">قيد المراجعة</span></div>
+        </div>
+      </div>
+      <div style="margin-top:20px;">
+        <a href="post-ad.html" class="btn-save"><i class="bi bi-plus-circle-fill"></i> رفع إعلان جديد</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deals Tab -->
+  <div class="tab-panel" id="tab-deals">
+    <div class="info-card">
+      <h3><i class="bi bi-arrows-angle-contract" style="color:var(--primary);"></i> آخر الصفقات</h3>
+      <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:16px;">آخر صفقاتك المكتملة والجارية</p>
+      <a href="escrow-center.html" class="btn-save"><i class="bi bi-arrow-left"></i> إدارة جميع الصفقات</a>
+    </div>
+  </div>
+
+  <!-- Security Tab -->
+  <div class="tab-panel" id="tab-security">
+    <div class="info-card">
+      <h3><i class="bi bi-shield-lock-fill" style="color:var(--primary);"></i> إعدادات الأمان</h3>
+      <div class="security-item">
+        <div class="sec-info"><h4>كلمة المرور</h4><p>آخر تغيير منذ ٣ أشهر</p></div>
+        <button class="btn-sec" onclick="showToast('تم إرسال رابط تغيير كلمة المرور لبريدك!')">تغيير</button>
+      </div>
+      <div class="security-item">
+        <div class="sec-info"><h4>التحقق بخطوتين</h4><p>يوفر طبقة حماية إضافية</p></div>
+        <button class="btn-sec" onclick="showToast('تم تفعيل التحقق بخطوتين!')">تفعيل</button>
+      </div>
+      <div class="security-item">
+        <div class="sec-info"><h4>الجلسات النشطة</h4><p>٢ أجهزة متصلة</p></div>
+        <button class="btn-sec" onclick="showToast('تم تسجيل الخروج من جميع الأجهزة!')">إنهاء الجلسات</button>
+      </div>
+      <div class="security-item">
+        <div class="sec-info"><h4>حذف الحساب</h4><p>هذا الإجراء لا يمكن التراجع عنه</p></div>
+        <button class="btn-sec btn-danger" onclick="showToast('سيتم التواصل معك قبل الحذف','error')">حذف الحساب</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="./assets/script/components.js"></script>
+<script>
+function switchPTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

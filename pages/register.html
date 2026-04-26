@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>إنشاء حساب - وسيطي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./assets/css/style.css"/>
+  <style>
+    body{min-height:100vh;display:flex;flex-direction:column;}
+    .auth-wrapper{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 24px 80px;background:linear-gradient(135deg,#f0f4ff 0%,#e8f5f3 100%);}
+    .auth-card{background:var(--surface);border:1.5px solid var(--border);border-radius:22px;padding:40px 36px;width:100%;max-width:480px;box-shadow:var(--shadow-lg);}
+    .auth-logo{display:flex;align-items:center;gap:9px;justify-content:center;margin-bottom:24px;}
+    .auth-logo .logo-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--primary),#4f8ef7);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.35rem;}
+    .auth-logo .logo-text{font-size:1.5rem;font-weight:900;color:var(--text);}
+    .auth-logo .logo-text span{color:var(--primary);}
+    .auth-title{font-size:1.25rem;font-weight:900;color:var(--text);text-align:center;margin-bottom:5px;}
+    .auth-sub{font-size:.86rem;color:var(--text-muted);text-align:center;margin-bottom:24px;}
+    .role-select{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+    .role-opt{padding:14px 8px;border:1.5px solid var(--border);border-radius:10px;text-align:center;cursor:pointer;transition:all .18s;}
+    .role-opt i{display:block;font-size:1.4rem;margin-bottom:6px;}
+    .role-opt span{font-size:.8rem;font-weight:700;color:var(--text-muted);}
+    .role-opt.selected{border-color:var(--primary);background:var(--primary-light);}
+    .role-opt.selected span{color:var(--primary);}
+    .form-group{margin-bottom:14px;}
+    .form-group label{display:block;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:6px;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    @media(max-width:480px){.form-row{grid-template-columns:1fr;}}
+    .input-wrap{position:relative;}
+    .input-wrap i.field-icon{position:absolute;top:50%;transform:translateY(-50%);right:13px;color:var(--text-muted);font-size:.95rem;pointer-events:none;}
+    .input-wrap input,.input-wrap select{width:100%;padding:10px 38px 10px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:var(--font);font-size:.88rem;color:var(--text);background:var(--bg);outline:none;transition:border-color .2s,box-shadow .2s;}
+    .input-wrap input:focus,.input-wrap select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
+    .password-strength{height:4px;border-radius:2px;background:var(--border);margin-top:6px;overflow:hidden;}
+    .password-strength-bar{height:100%;border-radius:2px;transition:all .3s;width:0%;}
+    .strength-label{font-size:.72rem;color:var(--text-muted);margin-top:4px;}
+    .terms-check{display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--text-muted);margin-bottom:16px;}
+    .terms-check input{width:16px;height:16px;accent-color:var(--primary);flex-shrink:0;margin-top:2px;}
+    .terms-check a{color:var(--primary);font-weight:700;}
+    .btn-auth{width:100%;padding:13px;background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;border:none;border-radius:9px;font-family:var(--font);font-size:.95rem;font-weight:800;cursor:pointer;transition:all .2s;margin-bottom:14px;}
+    .btn-auth:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.35);}
+    .divider{display:flex;align-items:center;gap:10px;margin-bottom:14px;color:var(--text-muted);font-size:.8rem;}
+    .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+    .social-auth{display:flex;gap:10px;margin-bottom:18px;}
+    .btn-social{flex:1;padding:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface);cursor:pointer;font-family:var(--font);font-size:.82rem;font-weight:700;color:var(--text);display:flex;align-items:center;justify-content:center;gap:7px;transition:all .18s;}
+    .btn-social:hover{border-color:var(--primary);background:var(--primary-light);}
+    .auth-switch{text-align:center;font-size:.85rem;color:var(--text-muted);}
+    .auth-switch a{color:var(--primary);font-weight:700;}
+  </style>
+</head>
+<body>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="logo-icon"><i class="bi bi-shield-fill-check"></i></div>
+      <div class="logo-text">وسيط<span>ي</span></div>
+    </div>
+    <div class="auth-title">إنشاء حساب جديد</div>
+    <div class="auth-sub">انضم لآلاف المستخدمين وابدأ صفقاتك بأمان</div>
+
+    <!-- Role Select -->
+    <div class="form-group">
+      <label>سأنضم بصفتي</label>
+      <div class="role-select">
+        <div class="role-opt selected" onclick="selectRole(this)">
+          <i class="bi bi-bag-check" style="color:var(--primary);"></i>
+          <span>مشترٍ</span>
+        </div>
+        <div class="role-opt" onclick="selectRole(this)">
+          <i class="bi bi-shop-window" style="color:#ea580c;"></i>
+          <span>بائع</span>
+        </div>
+        <div class="role-opt" onclick="selectRole(this)">
+          <i class="bi bi-person-badge" style="color:#7c3aed;"></i>
+          <span>وسيط</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>الاسم الأول</label>
+        <div class="input-wrap">
+          <i class="bi bi-person field-icon"></i>
+          <input type="text" placeholder="محمد"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>الاسم الأخير</label>
+        <div class="input-wrap">
+          <i class="bi bi-person field-icon"></i>
+          <input type="text" placeholder="العمري"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>اسم المستخدم</label>
+      <div class="input-wrap">
+        <i class="bi bi-at field-icon"></i>
+        <input type="text" placeholder="@username"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>البريد الإلكتروني</label>
+      <div class="input-wrap">
+        <i class="bi bi-envelope field-icon"></i>
+        <input type="email" placeholder="example@email.com"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>رقم الهاتف</label>
+      <div class="input-wrap">
+        <i class="bi bi-phone field-icon"></i>
+        <input type="tel" placeholder="+966 5x xxx xxxx"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>كلمة المرور</label>
+      <div class="input-wrap">
+        <i class="bi bi-lock field-icon"></i>
+        <input type="password" placeholder="••••••••" id="regPass" oninput="checkStrength(this.value)"/>
+      </div>
+      <div class="password-strength"><div class="password-strength-bar" id="strengthBar"></div></div>
+      <div class="strength-label" id="strengthLabel">قوة كلمة المرور</div>
+    </div>
+
+    <div class="form-group">
+      <label>تأكيد كلمة المرور</label>
+      <div class="input-wrap">
+        <i class="bi bi-lock-fill field-icon"></i>
+        <input type="password" placeholder="••••••••"/>
+      </div>
+    </div>
+
+    <div class="terms-check">
+      <input type="checkbox" id="terms"/>
+      <label for="terms">أوافق على <a href="terms.html">شروط الاستخدام</a> و<a href="privacy.html">سياسة الخصوصية</a></label>
+    </div>
+
+    <button class="btn-auth" onclick="doRegister()"><i class="bi bi-person-plus-fill"></i> إنشاء الحساب</button>
+
+    <div class="divider">أو التسجيل عبر</div>
+    <div class="social-auth">
+      <button class="btn-social" onclick="showToast('التسجيل بجوجل قريباً!')"><i class="bi bi-google" style="color:#ea4335;"></i> جوجل</button>
+      <button class="btn-social" onclick="showToast('التسجيل بتويتر قريباً!')"><i class="bi bi-twitter-x"></i> تويتر X</button>
+    </div>
+
+    <div class="auth-switch">لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a></div>
+  </div>
+</div>
+
+<script src="./assets/script/components.js"></script>
+<script>
+function selectRole(el) {
+  document.querySelectorAll('.role-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function checkStrength(val) {
+  const bar = document.getElementById('strengthBar');
+  const lbl = document.getElementById('strengthLabel');
+  let score = 0;
+  if (val.length >= 8) score++;
+  if (/[A-Z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+  const colors = ['#dc2626','#f59e0b','#16a34a','#16a34a'];
+  const labels = ['ضعيفة','متوسطة','قوية','قوية جداً'];
+  bar.style.width = (score * 25) + '%';
+  bar.style.background = colors[score-1] || '#dc2626';
+  lbl.textContent = val ? (labels[score-1] || 'ضعيفة جداً') : 'قوة كلمة المرور';
+  lbl.style.color = colors[score-1] || 'var(--text-muted)';
+}
+function doRegister() {
+  if (!document.getElementById('terms').checked) {
+    showToast('يجب الموافقة على الشروط والأحكام', 'error');
+    return;
+  }
+  showToast('تم إنشاء حسابك بنجاح!');
+  setTimeout(() => location.href = 'profile.html', 1500);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>رفع إعلان جديد - وسيطي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./assets/css/style.css"/>
+  <style>
+    .page-hero{background:linear-gradient(135deg,#f0f4ff,#e8f5f3);padding:48px 24px 36px;text-align:center;}
+    .page-hero h1{font-size:clamp(22px,4vw,36px);font-weight:900;color:var(--text);margin-bottom:8px;}
+    .ad-layout{max-width:860px;margin:0 auto;padding:36px 24px 80px;}
+    .steps-bar{display:flex;align-items:center;gap:0;margin-bottom:36px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 24px;}
+    .step{display:flex;align-items:center;gap:10px;flex:1;}
+    .step-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;flex-shrink:0;}
+    .step.done .step-num{background:var(--accent);color:#fff;}
+    .step.active .step-num{background:var(--primary);color:#fff;box-shadow:0 0 0 4px rgba(37,99,235,.15);}
+    .step.idle .step-num{background:var(--bg);color:var(--text-muted);border:1.5px solid var(--border);}
+    .step-label{font-size:.82rem;font-weight:700;}
+    .step.active .step-label{color:var(--primary);}
+    .step.done .step-label{color:var(--accent);}
+    .step.idle .step-label{color:var(--text-muted);}
+    .step-line{flex:1;height:2px;background:var(--border);margin:0 8px;}
+    .step.done ~ .step-line{background:var(--accent);}
+    .form-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:28px;}
+    .form-card h2{font-size:1.1rem;font-weight:800;color:var(--text);margin-bottom:20px;padding-bottom:14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:8px;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    @media(max-width:600px){.form-row{grid-template-columns:1fr;}.steps-bar{flex-wrap:wrap;gap:8px;}}
+    .form-group{margin-bottom:18px;}
+    .form-group label{display:block;font-size:.83rem;font-weight:700;color:var(--text);margin-bottom:7px;}
+    .form-group label span{color:var(--danger);}
+    .form-control{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:var(--font);font-size:.88rem;color:var(--text);background:var(--bg);outline:none;transition:border-color .2s,box-shadow .2s;}
+    .form-control:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
+    .form-control::placeholder{color:var(--text-muted);}
+    textarea.form-control{resize:vertical;min-height:100px;}
+    .platform-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;}
+    .platform-opt{padding:12px 8px;border:1.5px solid var(--border);border-radius:10px;text-align:center;cursor:pointer;transition:all .18s;font-size:.8rem;font-weight:700;color:var(--text-muted);}
+    .platform-opt i{display:block;font-size:1.4rem;margin-bottom:6px;}
+    .platform-opt.selected,.platform-opt:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light);}
+    .upload-zone{border:2px dashed var(--border);border-radius:12px;padding:36px 24px;text-align:center;cursor:pointer;transition:all .2s;color:var(--text-muted);}
+    .upload-zone:hover{border-color:var(--primary);background:var(--primary-light);}
+    .upload-zone i{font-size:2rem;margin-bottom:8px;display:block;}
+    .upload-zone p{font-size:.85rem;font-weight:600;}
+    .upload-zone small{font-size:.75rem;}
+    .form-actions{display:flex;gap:12px;justify-content:space-between;margin-top:24px;}
+    .btn-solid{padding:12px 28px;background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;border:none;border-radius:9px;font-family:var(--font);font-size:.92rem;font-weight:700;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:8px;}
+    .btn-solid:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(37,99,235,.3);}
+    .btn-ghost{padding:12px 22px;background:transparent;color:var(--text-muted);border:1.5px solid var(--border);border-radius:9px;font-family:var(--font);font-size:.88rem;font-weight:700;cursor:pointer;transition:all .18s;}
+    .btn-ghost:hover{border-color:var(--primary);color:var(--primary);}
+    .tip-box{background:var(--primary-light);border:1px solid rgba(37,99,235,.2);border-radius:10px;padding:14px;margin-bottom:20px;font-size:.83rem;color:var(--primary);display:flex;gap:10px;align-items:flex-start;}
+  </style>
+</head>
+<body>
+
+<div class="page-hero">
+  <div class="hero-badge" style="margin-bottom:14px;"><i class="bi bi-plus-circle"></i> رفع إعلان</div>
+  <h1>أضف إعلانك وابدأ البيع</h1>
+  <p>ارفع إعلانك مجاناً وسيتواصل معك الوسيط لإتمام الصفقة بأمان</p>
+</div>
+
+<div class="ad-layout">
+  <!-- Steps -->
+  <div class="steps-bar">
+    <div class="step active" id="step1-ind">
+      <div class="step-num">١</div>
+      <div class="step-label">معلومات الحساب</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step idle" id="step2-ind">
+      <div class="step-num">٢</div>
+      <div class="step-label">التفاصيل والإحصائيات</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step idle" id="step3-ind">
+      <div class="step-num">٣</div>
+      <div class="step-label">السعر والنشر</div>
+    </div>
+  </div>
+
+  <!-- Step 1 -->
+  <div id="step1" class="form-card">
+    <h2><i class="bi bi-info-circle-fill" style="color:var(--primary);"></i> معلومات الحساب الأساسية</h2>
+    <div class="tip-box"><i class="bi bi-lightbulb-fill"></i><span>تأكد من ملء جميع البيانات بدقة لزيادة فرص بيع إعلانك بسرعة.</span></div>
+
+    <div class="form-group">
+      <label>اختر المنصة <span>*</span></label>
+      <div class="platform-grid">
+        <div class="platform-opt selected" onclick="selectPlatform(this)"><i class="bi bi-youtube" style="color:#e53e3e;"></i>يوتيوب</div>
+        <div class="platform-opt" onclick="selectPlatform(this)"><i class="bi bi-instagram" style="color:#c13584;"></i>إنستغرام</div>
+        <div class="platform-opt" onclick="selectPlatform(this)"><i class="bi bi-facebook" style="color:#1877f2;"></i>فيسبوك</div>
+        <div class="platform-opt" onclick="selectPlatform(this)"><i class="bi bi-tiktok"></i>تيك توك</div>
+        <div class="platform-opt" onclick="selectPlatform(this)"><i class="bi bi-twitter-x"></i>تويتر X</div>
+        <div class="platform-opt" onclick="selectPlatform(this)"><i class="bi bi-telegram" style="color:#0088cc;"></i>تيليغرام</div>
+        <div class="platform-opt" onclick="selectPlatform(this)"><i class="bi bi-whatsapp" style="color:#25d366;"></i>واتساب</div>
+        <div class="platform-opt" onclick="selectPlatform(this)"><i class="bi bi-linkedin" style="color:#0a66c2;"></i>لينكدإن</div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>عنوان الإعلان <span>*</span></label>
+        <input class="form-control" type="text" placeholder="مثال: قناة يوتيوب تقنية - ٤٥ألف مشترك"/>
+      </div>
+      <div class="form-group">
+        <label>نوع الحساب <span>*</span></label>
+        <select class="form-control">
+          <option>قناة</option>
+          <option>صفحة</option>
+          <option>حساب شخصي</option>
+          <option>مجموعة</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>وصف الإعلان <span>*</span></label>
+      <textarea class="form-control" placeholder="اكتب وصفاً تفصيلياً للحساب: المجال، نوع المحتوى، سبب البيع..."></textarea>
+    </div>
+
+    <div class="form-actions">
+      <span></span>
+      <button class="btn-solid" onclick="goStep(2)">التالي <i class="bi bi-arrow-left"></i></button>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div id="step2" class="form-card" style="display:none;">
+    <h2><i class="bi bi-bar-chart-fill" style="color:var(--primary);"></i> التفاصيل والإحصائيات</h2>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>عدد المتابعين / المشتركين <span>*</span></label>
+        <input class="form-control" type="number" placeholder="٤٥٢٠٠"/>
+      </div>
+      <div class="form-group">
+        <label>إجمالي المشاهدات / التفاعلات</label>
+        <input class="form-control" type="number" placeholder="٣٢٠٠٠٠٠"/>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>تاريخ إنشاء الحساب <span>*</span></label>
+        <input class="form-control" type="month"/>
+      </div>
+      <div class="form-group">
+        <label>معدل التفاعل (%)</label>
+        <input class="form-control" type="number" placeholder="٥.٣" step="0.1"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>مجال الحساب <span>*</span></label>
+      <select class="form-control">
+        <option>تقنية وبرمجة</option>
+        <option>موضة وجمال</option>
+        <option>طبخ وأغذية</option>
+        <option>رياضة</option>
+        <option>ترفيه وكوميديا</option>
+        <option>أخبار وسياسة</option>
+        <option>تعليم وثقافة</option>
+        <option>أعمال وريادة</option>
+        <option>أخرى</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>الإثباتات والمستندات</label>
+      <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+        <i class="bi bi-cloud-upload"></i>
+        <p>اضغط لرفع لقطات شاشة أو ملفات إثبات</p>
+        <small>PNG, JPG, PDF — حجم أقصى 10MB</small>
+      </div>
+      <input type="file" id="fileInput" style="display:none;" multiple accept="image/*,.pdf"/>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-ghost" onclick="goStep(1)"><i class="bi bi-arrow-right"></i> السابق</button>
+      <button class="btn-solid" onclick="goStep(3)">التالي <i class="bi bi-arrow-left"></i></button>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div id="step3" class="form-card" style="display:none;">
+    <h2><i class="bi bi-tag-fill" style="color:var(--primary);"></i> السعر والنشر</h2>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>السعر المطلوب (ر.س) <span>*</span></label>
+        <input class="form-control" type="number" placeholder="٢٨٠٠"/>
+      </div>
+      <div class="form-group">
+        <label>قابل للتفاوض؟</label>
+        <select class="form-control">
+          <option>نعم، قابل للتفاوض</option>
+          <option>لا، السعر ثابت</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>سبب البيع</label>
+      <textarea class="form-control" placeholder="اختياري: لماذا تريد بيع الحساب؟"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>شروط إضافية للمشتري</label>
+      <textarea class="form-control" placeholder="اختياري: أي شروط خاصة أو تعليمات للمشتري..."></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-ghost" onclick="goStep(2)"><i class="bi bi-arrow-right"></i> السابق</button>
+      <button class="btn-solid" onclick="submitAd()"><i class="bi bi-send-fill"></i> نشر الإعلان</button>
+    </div>
+  </div>
+</div>
+
+<script src="./assets/script/components.js"></script>
+<script>
+function selectPlatform(el){
+  document.querySelectorAll('.platform-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function goStep(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('step'+i).style.display = i===n?'block':'none';
+    const ind = document.getElementById('step'+i+'-ind');
+    ind.className = 'step '+(i<n?'done':i===n?'active':'idle');
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function submitAd(){
+  showToast('تم رفع إعلانك بنجاح! سيتم مراجعته خلال ٢٤ ساعة');
+  setTimeout(()=>location.href='index.html',2000);
+}
+</script>
+</body>
+</html>
