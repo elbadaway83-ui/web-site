@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
@@ -718,86 +718,70 @@
     function toggleChip(el) {
       el.classList.toggle('active');
     }
+    function openFilter() {
+      document.getElementById('filterPanel').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeFilter() {
+      document.getElementById('filterPanel').classList.remove('open');
+      document.body.style.overflow = '';
+    }
     function applyFilter() {
+      closeFilter();
       showToast('تم تطبيق الفلتر بنجاح');
     }
     function resetFilter() {
-      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-      document.querySelectorAll('.chip:first-child').forEach(c => c.classList.add('active'));
+      document.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('active'); });
+      document.querySelectorAll('.filter-group .chip:first-child').forEach(function(c){ c.classList.add('active'); });
       document.getElementById('priceMin').value = '';
       document.getElementById('priceMax').value = '';
       showToast('تم إعادة تعيين الفلتر');
     }
-    document.querySelectorAll('.pg-btn').forEach(btn => {
-      function toggleChip(el) { el.classList.toggle('active'); }
-      function openFilter() {
-        document.getElementById('filterPanel').classList.add('open');
-        document.body.style.overflow = 'hidden';
-      }
-      function closeFilter() {
-        document.getElementById('filterPanel').classList.remove('open');
-        document.body.style.overflow = '';
-      }
-      function applyFilter() {
-        closeFilter();
-        showToast('تم تطبيق الفلتر بنجاح');
-      }
-      function resetFilter() {
-        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-        document.querySelectorAll('.filter-group .chip:first-child').forEach(c => c.classList.add('active'));
-        document.getElementById('priceMin').value = '';
-        document.getElementById('priceMax').value = '';
-        showToast('تم إعادة تعيين الفلتر');
-      }
-      function filterCards() {
-        var q = document.getElementById('storeSearch').value.trim().toLowerCase();
-        var cards = document.querySelectorAll('#listingsGrid .listing-card');
-        var cnt = 0;
-        cards.forEach(function (c) {
-          var txt = c.textContent.toLowerCase();
-          var show = !q || txt.includes(q);
-          c.style.display = show ? '' : 'none';
-          if (show) cnt++;
-        });
-        var el = document.getElementById('visibleCount');
-        if (el) el.textContent = cnt;
-      }
-      function sortCards(val) {
-        showToast('تم الترتيب: ' + (val === 'low' ? 'الأقل سعراً' : val === 'high' ? 'الأعلى سعراً' : 'الأحدث'));
-      }
-      document.querySelectorAll('.pg-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-          document.querySelectorAll('.pg-btn').forEach(b => b.classList.remove('active'));
+    function filterCards() {
+      var q = document.getElementById('storeSearch').value.trim().toLowerCase();
+      var cards = document.querySelectorAll('#listingsGrid .listing-card');
+      var cnt = 0;
+      cards.forEach(function(c) {
+        var txt = c.textContent.toLowerCase();
+        var show = !q || txt.includes(q);
+        c.style.display = show ? '' : 'none';
+        if (show) cnt++;
+      });
+      var el = document.getElementById('visibleCount');
+      if (el) el.textContent = cnt;
+    }
+    function sortCards(val) {
+      showToast('تم الترتيب: ' + (val === 'low' ? 'الأقل سعراً' : val === 'high' ? 'الأعلى سعراً' : 'الأحدث'));
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.pg-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.pg-btn').forEach(function(b){ b.classList.remove('active'); });
           this.classList.add('active');
           showToast('جارٍ تحميل الصفحة...');
-          setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 300);
+          setTimeout(function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); }, 300);
         });
       });
-
-      /* ===== Cart Functions ===== */
-      function addToCart(title, platform, seller, price, icon, iconBg, iconColor, btn) {
-        var item = { title: title, platform: platform, seller: seller, price: price, icon: icon, iconBg: iconBg, iconColor: iconColor };
-        var cart = [];
-        try { cart = JSON.parse(localStorage.getItem('wsCart') || '[]'); } catch (e) { }
-        var exists = cart.some(function (c) { return c.title === item.title; });
-        if (exists) {
-          showToast('هذه الخدمة موجودة في السلة بالفعل!', 'error');
-          return;
-        }
-        cart.push(item);
-        localStorage.setItem('wsCart', JSON.stringify(cart));
-        if (window.refreshCartBadge) refreshCartBadge();
-        showToast('✅ تمت الإضافة للسلة!');
-        if (btn) {
-          btn.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
-          btn.style.background = '#f0fdf4';
-          btn.style.color = '#16a34a';
-          btn.style.borderColor = '#16a34a';
-          btn.onclick = function () { location.href = 'cart.html'; };
-          btn.title = 'عرض السلة';
-        }
+    });
+    function addToCart(title, platform, seller, price, icon, iconBg, iconColor, btn) {
+      var item = { title: title, platform: platform, seller: seller, price: price, icon: icon, iconBg: iconBg, iconColor: iconColor };
+      var cart = [];
+      try { cart = JSON.parse(localStorage.getItem('wsCart') || '[]'); } catch(e) {}
+      var exists = cart.some(function(c){ return c.title === item.title; });
+      if (exists) { showToast('هذه الخدمة موجودة في السلة بالفعل!', 'error'); return; }
+      cart.push(item);
+      localStorage.setItem('wsCart', JSON.stringify(cart));
+      if (window.refreshCartBadge) refreshCartBadge();
+      showToast('تمت الإضافة للسلة!');
+      if (btn) {
+        btn.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
+        btn.style.background = '#f0fdf4';
+        btn.style.color = '#16a34a';
+        btn.style.borderColor = '#16a34a';
+        btn.onclick = function(){ location.href = 'cart.html'; };
+        btn.title = 'عرض السلة';
       }
+    }
   </script>
 </body>
-
 </html>
