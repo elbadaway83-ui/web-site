@@ -1,450 +1,803 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>المتجر - وسيطي</title>
-  <meta name="description" content="تصفح مئات الإعلانات من حسابات وصفحات وقنوات معروضة بوساطة آمنة"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../assets/css/style.css"/>
+  <meta name="description" content="تصفح مئات الإعلانات من حسابات وصفحات وقنوات معروضة بوساطة آمنة" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
   <style>
-    .page-hero{background:linear-gradient(135deg,#f0f4ff 0%,#e8f5f3 100%);padding:40px 16px 28px;text-align:center;}
-    .page-hero h1{font-size:clamp(20px,4vw,36px);font-weight:900;color:var(--text);margin-bottom:8px;}
-    .page-hero p{color:var(--text-muted);font-size:.93rem;max-width:520px;margin:0 auto;}
-    .store-layout{max-width:1280px;margin:0 auto;padding:24px 16px 80px;display:grid;grid-template-columns:240px 1fr;gap:24px;}
-    @media(max-width:900px){.store-layout{grid-template-columns:1fr;}}
-    /* Filter sidebar */
-    .filter-panel{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;height:fit-content;position:sticky;top:84px;}
-    @media(max-width:900px){
-      .filter-panel{display:none;position:fixed;inset:0;z-index:200;overflow-y:auto;border-radius:0;padding:24px 16px 100px;}
-      .filter-panel.open{display:block;}
-      .filter-toggle-btn{display:flex!important;}
+    .page-hero {
+      background: linear-gradient(135deg, #f0f4ff 0%, #e8f5f3 100%);
+      padding: 40px 16px 28px;
+      text-align: center;
     }
-    .filter-toggle-btn{display:none;align-items:center;gap:8px;padding:9px 16px;border:1.5px solid var(--primary);border-radius:8px;background:var(--primary-light);color:var(--primary);font-family:var(--font);font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:14px;}
-    .filter-close-btn{display:none;width:100%;padding:12px;border:1.5px solid var(--border);border-radius:8px;background:#f8fafc;font-family:var(--font);font-size:.9rem;font-weight:700;cursor:pointer;margin-bottom:14px;color:var(--text);}
-    @media(max-width:900px){.filter-close-btn{display:block;}}
-    .filter-panel h3{font-size:.93rem;font-weight:800;color:var(--text);margin-bottom:12px;padding-bottom:8px;border-bottom:1.5px solid var(--border);}
-    .filter-group{margin-bottom:16px;}
-    .filter-group label{display:block;font-size:.8rem;font-weight:700;color:var(--text-muted);margin-bottom:7px;}
-    .filter-chips{display:flex;flex-wrap:wrap;gap:6px;}
-    .chip{padding:5px 11px;border:1.5px solid var(--border);border-radius:20px;font-size:.76rem;font-weight:600;cursor:pointer;color:var(--text-muted);transition:all .18s;background:var(--bg);}
-    .chip.active,.chip:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light);}
-    .range-row{display:flex;gap:8px;align-items:center;}
-    .range-input{width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--font);font-size:.82rem;color:var(--text);background:var(--bg);outline:none;}
-    .range-input:focus{border-color:var(--primary);}
-    .btn-filter{width:100%;padding:10px;background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;border:none;border-radius:8px;font-family:var(--font);font-size:.86rem;font-weight:700;cursor:pointer;margin-top:6px;transition:all .18s;}
-    .btn-filter:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(37,99,235,.3);}
+
+    .page-hero h1 {
+      font-size: clamp(20px, 4vw, 36px);
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .page-hero p {
+      color: var(--text-muted);
+      font-size: .93rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .store-layout {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px 16px 80px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 24px;
+    }
+
+    @media(max-width:900px) {
+      .store-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Filter sidebar */
+    .filter-panel {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      height: fit-content;
+      position: sticky;
+      top: 84px;
+    }
+
+    @media(max-width:900px) {
+      .filter-panel {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        overflow-y: auto;
+        border-radius: 0;
+        padding: 24px 16px 100px;
+      }
+
+      .filter-panel.open {
+        display: block;
+      }
+
+      .filter-toggle-btn {
+        display: flex !important;
+      }
+    }
+
+    .filter-toggle-btn {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border: 1.5px solid var(--primary);
+      border-radius: 8px;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-family: var(--font);
+      font-size: .85rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 14px;
+    }
+
+    .filter-close-btn {
+      display: none;
+      width: 100%;
+      padding: 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: #f8fafc;
+      font-family: var(--font);
+      font-size: .9rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 14px;
+      color: var(--text);
+    }
+
+    @media(max-width:900px) {
+      .filter-close-btn {
+        display: block;
+      }
+    }
+
+    .filter-panel h3 {
+      font-size: .93rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .filter-group {
+      margin-bottom: 16px;
+    }
+
+    .filter-group label {
+      display: block;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+    }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      padding: 5px 11px;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      font-size: .76rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all .18s;
+      background: var(--bg);
+    }
+
+    .chip.active,
+    .chip:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .range-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .range-input {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: var(--font);
+      font-size: .82rem;
+      color: var(--text);
+      background: var(--bg);
+      outline: none;
+    }
+
+    .range-input:focus {
+      border-color: var(--primary);
+    }
+
+    .btn-filter {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(135deg, var(--primary), #4f8ef7);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: var(--font);
+      font-size: .86rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: all .18s;
+    }
+
+    .btn-filter:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(37, 99, 235, .3);
+    }
+
     /* Store header */
-    .store-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
-    .store-count{font-size:.86rem;color:var(--text-muted);font-weight:500;}
-    .store-count strong{color:var(--text);}
-    .sort-select{padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--font);font-size:.82rem;color:var(--text);background:var(--surface);outline:none;cursor:pointer;}
-    .store-search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:0 12px;height:40px;flex:1;max-width:320px;transition:border-color .2s;}
-    .store-search:focus-within{border-color:var(--primary);}
-    .store-search i{color:var(--text-muted);}
-    .store-search input{border:none;background:transparent;outline:none;font-family:var(--font);font-size:.84rem;color:var(--text);width:100%;}
+    .store-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .store-count {
+      font-size: .86rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .store-count strong {
+      color: var(--text);
+    }
+
+    .sort-select {
+      padding: 8px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: var(--font);
+      font-size: .82rem;
+      color: var(--text);
+      background: var(--surface);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .store-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0 12px;
+      height: 40px;
+      flex: 1;
+      max-width: 320px;
+      transition: border-color .2s;
+    }
+
+    .store-search:focus-within {
+      border-color: var(--primary);
+    }
+
+    .store-search i {
+      color: var(--text-muted);
+    }
+
+    .store-search input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-family: var(--font);
+      font-size: .84rem;
+      color: var(--text);
+      width: 100%;
+    }
+
     /* Listings grid */
-    .listings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;}
-    @media(max-width:600px){.listings-grid{grid-template-columns:1fr 1fr;gap:12px;}}
-    @media(max-width:380px){.listings-grid{grid-template-columns:1fr;gap:12px;}}
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    @media(max-width:600px) {
+      .listings-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+    }
+
+    @media(max-width:380px) {
+      .listings-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
     /* Pagination */
-    .pagination{display:flex;justify-content:center;gap:8px;margin-top:32px;flex-wrap:wrap;}
-    .pg-btn{width:38px;height:38px;border:1.5px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;cursor:pointer;color:var(--text-muted);background:var(--surface);transition:all .18s;}
-    .pg-btn:hover,.pg-btn.active{border-color:var(--primary);color:var(--primary);background:var(--primary-light);}
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .pg-btn {
+      width: 38px;
+      height: 38px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .85rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-muted);
+      background: var(--surface);
+      transition: all .18s;
+    }
+
+    .pg-btn:hover,
+    .pg-btn.active {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
     /* Mobile listing card compact */
-    @media(max-width:600px){
-      .listing-card .listing-img{height:110px;}
-      .listing-card .listing-head{padding:8px 8px 4px;gap:6px;}
-      .listing-card .listing-avatar{width:28px;height:28px;font-size:.75rem;}
-      .listing-card .listing-meta h4{font-size:.75rem;}
-      .listing-card .listing-meta span{font-size:.65rem;}
-      .listing-card .listing-body{padding:0 8px 8px;}
-      .listing-card .listing-body p{font-size:.72rem;-webkit-line-clamp:2;line-clamp:2;}
-      .listing-card .listing-stats{flex-wrap:wrap;gap:4px;}
-      .listing-card .lst-stat{font-size:.65rem;padding:2px 6px;}
-      .listing-card .listing-footer{padding:8px;gap:4px;flex-wrap:wrap;}
-      .listing-card .price{font-size:.9rem;}
-      .listing-card .btn-card{padding:6px 8px;font-size:.7rem;}
+    @media(max-width:600px) {
+      .listing-card .listing-img {
+        height: 110px;
+      }
+
+      .listing-card .listing-head {
+        padding: 8px 8px 4px;
+        gap: 6px;
+      }
+
+      .listing-card .listing-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: .75rem;
+      }
+
+      .listing-card .listing-meta h4 {
+        font-size: .75rem;
+      }
+
+      .listing-card .listing-meta span {
+        font-size: .65rem;
+      }
+
+      .listing-card .listing-body {
+        padding: 0 8px 8px;
+      }
+
+      .listing-card .listing-body p {
+        font-size: .72rem;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+      }
+
+      .listing-card .listing-stats {
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      .listing-card .lst-stat {
+        font-size: .65rem;
+        padding: 2px 6px;
+      }
+
+      .listing-card .listing-footer {
+        padding: 8px;
+        gap: 4px;
+        flex-wrap: wrap;
+      }
+
+      .listing-card .price {
+        font-size: .9rem;
+      }
+
+      .listing-card .btn-card {
+        padding: 6px 8px;
+        font-size: .7rem;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<div class="page-hero">
-  <div class="hero-badge" style="margin-bottom:14px;"><i class="bi bi-shop"></i> المتجر</div>
-  <h1>تصفح جميع الإعلانات</h1>
-  <p>حسابات وصفحات وقنوات معروضة للبيع بوساطة آمنة 100%</p>
-</div>
+  <div class="page-hero">
+    <div class="hero-badge" style="margin-bottom:14px;"><i class="bi bi-shop"></i> المتجر</div>
+    <h1>تصفح جميع الإعلانات</h1>
+    <p>حسابات وصفحات وقنوات معروضة للبيع بوساطة آمنة 100%</p>
+  </div>
 
-<div class="store-layout">
-  <!-- Sidebar Filter -->
-  <aside class="filter-panel" id="filterPanel">
-    <button class="filter-close-btn" onclick="closeFilter()"><i class="bi bi-x-lg"></i> إغلاق الفلتر</button>
-    <h3><i class="bi bi-funnel-fill" style="color:var(--primary);"></i> تصفية النتائج</h3>
+  <div class="store-layout">
+    <!-- Sidebar Filter -->
+    <aside class="filter-panel" id="filterPanel">
+      <button class="filter-close-btn" onclick="closeFilter()"><i class="bi bi-x-lg"></i> إغلاق الفلتر</button>
+      <h3><i class="bi bi-funnel-fill" style="color:var(--primary);"></i> تصفية النتائج</h3>
 
-    <div class="filter-group">
-      <label>المنصة</label>
-      <div class="filter-chips">
-        <span class="chip active" onclick="toggleChip(this)">الكل</span>
-        <span class="chip" onclick="toggleChip(this)"><i class="bi bi-youtube"></i> يوتيوب</span>
-        <span class="chip" onclick="toggleChip(this)"><i class="bi bi-instagram"></i> إنستغرام</span>
-        <span class="chip" onclick="toggleChip(this)"><i class="bi bi-facebook"></i> فيسبوك</span>
-        <span class="chip" onclick="toggleChip(this)"><i class="bi bi-tiktok"></i> تيك توك</span>
-        <span class="chip" onclick="toggleChip(this)"><i class="bi bi-twitter-x"></i> تويتر</span>
-        <span class="chip" onclick="toggleChip(this)"><i class="bi bi-telegram"></i> تيليغرام</span>
-        <span class="chip" onclick="toggleChip(this)"><i class="bi bi-whatsapp"></i> واتساب</span>
-      </div>
-    </div>
-
-    <div class="filter-group">
-      <label>الحالة</label>
-      <div class="filter-chips">
-        <span class="chip active" onclick="toggleChip(this)">الكل</span>
-        <span class="chip" onclick="toggleChip(this)">متاح</span>
-        <span class="chip" onclick="toggleChip(this)">وساطة جارية</span>
-        <span class="chip" onclick="toggleChip(this)">قيد المراجعة</span>
-      </div>
-    </div>
-
-    <div class="filter-group">
-      <label>نطاق السعر (ر.س)</label>
-      <div class="range-row">
-        <input class="range-input" type="number" placeholder="من" id="priceMin"/>
-        <span style="color:var(--text-muted);font-size:.8rem;">—</span>
-        <input class="range-input" type="number" placeholder="إلى" id="priceMax"/>
-      </div>
-    </div>
-
-    <div class="filter-group">
-      <label>عدد المتابعين</label>
-      <div class="filter-chips">
-        <span class="chip active" onclick="toggleChip(this)">الكل</span>
-        <span class="chip" onclick="toggleChip(this)">أقل من ١٠ك</span>
-        <span class="chip" onclick="toggleChip(this)">١٠ك – ١٠٠ك</span>
-        <span class="chip" onclick="toggleChip(this)">١٠٠ك – ١م</span>
-        <span class="chip" onclick="toggleChip(this)">أكثر من ١م</span>
-      </div>
-    </div>
-
-    <div class="filter-group">
-      <label>الترتيب</label>
-      <div class="filter-chips">
-        <span class="chip active" onclick="toggleChip(this)">الأحدث</span>
-        <span class="chip" onclick="toggleChip(this)">الأقل سعراً</span>
-        <span class="chip" onclick="toggleChip(this)">الأعلى سعراً</span>
-        <span class="chip" onclick="toggleChip(this)">الأكثر متابعين</span>
-      </div>
-    </div>
-
-    <button class="btn-filter" onclick="applyFilter()"><i class="bi bi-search"></i> تطبيق الفلتر</button>
-    <button class="btn-filter" style="background:#f1f5f9;color:var(--text);margin-top:8px;" onclick="resetFilter()"><i class="bi bi-arrow-counterclockwise"></i> إعادة تعيين</button>
-  </aside>
-
-  <!-- Main Content -->
-  <div>
-    <!-- Mobile filter toggle -->
-    <button class="filter-toggle-btn" onclick="openFilter()"><i class="bi bi-funnel"></i> فلترة النتائج</button>
-    <div class="store-header">
-      <div class="store-search" style="max-width:100%;flex:1;">
-        <i class="bi bi-search"></i>
-        <input type="text" placeholder="ابحث في الإعلانات..." id="storeSearch" oninput="filterCards()"/>
-      </div>
-      <span class="store-count">عرض <strong id="visibleCount">٦</strong> إعلان</span>
-      <select class="sort-select" onchange="sortCards(this.value)">
-        <option value="newest">الأحدث أولاً</option>
-        <option value="low">الأقل سعراً</option>
-        <option value="high">الأعلى سعراً</option>
-      </select>
-    </div>
-
-    <div class="listings-grid" id="listingsGrid">
-
-      <!-- Card 1 -->
-      <div class="listing-card">
-        <div class="listing-img">
-          <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=400&q=80&auto=format&fit=crop" alt="قناة يوتيوب"/>
-          <div class="listing-platform" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i></div>
-        </div>
-        <div class="listing-head">
-          <div class="listing-avatar" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i></div>
-          <div class="listing-meta">
-            <h4>قناة يوتيوب تقنية - ٤٥ألف مشترك</h4>
-            <span><i class="bi bi-person-fill"></i> أحمد محمد &nbsp;·&nbsp;<span class="badge badge-blue"><i class="bi bi-patch-check-fill"></i> موثق</span></span>
-          </div>
-        </div>
-        <div class="listing-body">
-          <p>قناة متخصصة في مجال التقنية والبرمجة، نشاط منتظم، محتوى عربي أصيل.</p>
-          <div class="listing-stats">
-            <span class="lst-stat"><i class="bi bi-people-fill"></i> ٤٥,٢٠٠ مشترك</span>
-            <span class="lst-stat"><i class="bi bi-eye-fill"></i> ٣.٢م مشاهدة</span>
-            <span class="lst-stat"><i class="bi bi-calendar3"></i> ٣ سنوات</span>
-          </div>
-          <span class="badge badge-blue"><i class="bi bi-clock"></i> في انتظار الوسيط</span>
-        </div>
-        <div class="listing-footer">
-          <div class="price">٢,٨٠٠ ر.س <span>/ الحساب</span></div>
-          <div style="display:flex;gap:6px;">
-            <button class="btn-card" style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);" onclick="addToCart('قناة يوتيوب تقنية - ٤٥ألف مشترك','يوتيوب','أحمد محمد',2800,'bi-youtube','#ffe5e5','#e53e3e',this)"><i class="bi bi-cart-plus"></i></button>
-            <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
-          </div>
+      <div class="filter-group">
+        <label>المنصة</label>
+        <div class="filter-chips">
+          <span class="chip active" onclick="toggleChip(this)">الكل</span>
+          <span class="chip" onclick="toggleChip(this)"><i class="bi bi-youtube"></i> يوتيوب</span>
+          <span class="chip" onclick="toggleChip(this)"><i class="bi bi-instagram"></i> إنستغرام</span>
+          <span class="chip" onclick="toggleChip(this)"><i class="bi bi-facebook"></i> فيسبوك</span>
+          <span class="chip" onclick="toggleChip(this)"><i class="bi bi-tiktok"></i> تيك توك</span>
+          <span class="chip" onclick="toggleChip(this)"><i class="bi bi-twitter-x"></i> تويتر</span>
+          <span class="chip" onclick="toggleChip(this)"><i class="bi bi-telegram"></i> تيليغرام</span>
+          <span class="chip" onclick="toggleChip(this)"><i class="bi bi-whatsapp"></i> واتساب</span>
         </div>
       </div>
 
-      <!-- Card 2 -->
-      <div class="listing-card">
-        <div class="listing-img">
-          <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=400&q=80&auto=format&fit=crop" alt="صفحة إنستغرام"/>
-          <div class="listing-platform" style="background:#f5e8ff;color:#c13584;"><i class="bi bi-instagram"></i></div>
-        </div>
-        <div class="listing-head">
-          <div class="listing-avatar" style="background:#f5e8ff;color:#c13584;"><i class="bi bi-instagram"></i></div>
-          <div class="listing-meta">
-            <h4>صفحة إنستغرام موضة - ١٢٠ألف</h4>
-            <span><i class="bi bi-person-fill"></i> سارة العلي &nbsp;·&nbsp;<span class="badge badge-green"><i class="bi bi-shield-fill-check"></i> مضمون</span></span>
-          </div>
-        </div>
-        <div class="listing-body">
-          <p>صفحة أزياء وموضة نسائية، متابعين حقيقيين، تفاعل عالي.</p>
-          <div class="listing-stats">
-            <span class="lst-stat"><i class="bi bi-people-fill"></i> ١٢٠,٥٠٠ متابع</span>
-            <span class="lst-stat"><i class="bi bi-hand-thumbs-up-fill"></i> ٨.٥٪ تفاعل</span>
-            <span class="lst-stat"><i class="bi bi-calendar3"></i> ٢ سنة</span>
-          </div>
-          <span class="badge badge-green"><i class="bi bi-check-circle-fill"></i> وساطة جارية</span>
-        </div>
-        <div class="listing-footer">
-          <div class="price">٥,٥٠٠ ر.س <span>/ الحساب</span></div>
-          <div style="display:flex;gap:6px;">
-            <button class="btn-card" style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);" onclick="addToCart('صفحة إنستغرام موضة - ١٢٠ألف','إنستغرام','سارة العلي',5500,'bi-instagram','#f5e8ff','#c13584',this)"><i class="bi bi-cart-plus"></i></button>
-            <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
-          </div>
+      <div class="filter-group">
+        <label>الحالة</label>
+        <div class="filter-chips">
+          <span class="chip active" onclick="toggleChip(this)">الكل</span>
+          <span class="chip" onclick="toggleChip(this)">متاح</span>
+          <span class="chip" onclick="toggleChip(this)">وساطة جارية</span>
+          <span class="chip" onclick="toggleChip(this)">قيد المراجعة</span>
         </div>
       </div>
 
-      <!-- Card 3 -->
-      <div class="listing-card">
-        <div class="listing-img">
-          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80&auto=format&fit=crop" alt="صفحة فيسبوك"/>
-          <div class="listing-platform" style="background:#e8f0ff;color:#1877f2;"><i class="bi bi-facebook"></i></div>
-        </div>
-        <div class="listing-head">
-          <div class="listing-avatar" style="background:#e8f0ff;color:#1877f2;"><i class="bi bi-facebook"></i></div>
-          <div class="listing-meta">
-            <h4>صفحة فيسبوك طبخ - ٢٠٠ألف إعجاب</h4>
-            <span><i class="bi bi-person-fill"></i> منى خليل &nbsp;·&nbsp;<span class="badge badge-blue"><i class="bi bi-patch-check-fill"></i> موثق</span></span>
-          </div>
-        </div>
-        <div class="listing-body">
-          <p>صفحة وصفات وطبخ متخصصة، محتوى عربي حصري، مناسبة للمعلنين.</p>
-          <div class="listing-stats">
-            <span class="lst-stat"><i class="bi bi-people-fill"></i> ٢٠١,٠٠٠ إعجاب</span>
-            <span class="lst-stat"><i class="bi bi-calendar3"></i> ٤ سنوات</span>
-            <span class="lst-stat"><i class="bi bi-bar-chart-fill"></i> نشاط يومي</span>
-          </div>
-          <span class="badge badge-orange"><i class="bi bi-hourglass-split"></i> قيد المراجعة</span>
-        </div>
-        <div class="listing-footer">
-          <div class="price">٣,٢٠٠ ر.س <span>/ الحساب</span></div>
-          <div style="display:flex;gap:6px;">
-            <button class="btn-card" style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);" onclick="addToCart('صفحة فيسبوك طبخ - ٢٠٠ألف إعجاب','فيسبوك','منى خليل',3200,'bi-facebook','#e8f0ff','#1877f2',this)"><i class="bi bi-cart-plus"></i></button>
-            <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
-          </div>
+      <div class="filter-group">
+        <label>نطاق السعر (ر.س)</label>
+        <div class="range-row">
+          <input class="range-input" type="number" placeholder="من" id="priceMin" />
+          <span style="color:var(--text-muted);font-size:.8rem;">—</span>
+          <input class="range-input" type="number" placeholder="إلى" id="priceMax" />
         </div>
       </div>
 
-      <!-- Card 4 -->
-      <div class="listing-card">
-        <div class="listing-img">
-          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&q=80&auto=format&fit=crop" alt="تيك توك"/>
-          <div class="listing-platform" style="background:#f0f0f0;color:#010101;"><i class="bi bi-tiktok"></i></div>
-        </div>
-        <div class="listing-head">
-          <div class="listing-avatar" style="background:#f0f0f0;color:#010101;"><i class="bi bi-tiktok"></i></div>
-          <div class="listing-meta">
-            <h4>حساب تيك توك ترفيه - ٥٠٠ألف</h4>
-            <span><i class="bi bi-person-fill"></i> خالد النجدي &nbsp;·&nbsp;<span class="badge badge-green"><i class="bi bi-shield-fill-check"></i> مضمون</span></span>
-          </div>
-        </div>
-        <div class="listing-body">
-          <p>حساب ترفيهي ومضحك، فيديوهات فيروسية، ٥٠٠ألف متابع حقيقي.</p>
-          <div class="listing-stats">
-            <span class="lst-stat"><i class="bi bi-people-fill"></i> ٥٠٠,٠٠٠ متابع</span>
-            <span class="lst-stat"><i class="bi bi-play-fill"></i> ٢٥م مشاهدة</span>
-            <span class="lst-stat"><i class="bi bi-calendar3"></i> سنة ونصف</span>
-          </div>
-          <span class="badge badge-blue"><i class="bi bi-clock"></i> في انتظار الوسيط</span>
-        </div>
-        <div class="listing-footer">
-          <div class="price">٨,٩٠٠ ر.س <span>/ الحساب</span></div>
-          <div style="display:flex;gap:6px;">
-            <button class="btn-card" style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);" onclick="addToCart('حساب تيك توك ترفيه - ٥٠٠ألف','تيك توك','خالد النجدي',8900,'bi-tiktok','#f0f0f0','#010101',this)"><i class="bi bi-cart-plus"></i></button>
-            <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
-          </div>
+      <div class="filter-group">
+        <label>عدد المتابعين</label>
+        <div class="filter-chips">
+          <span class="chip active" onclick="toggleChip(this)">الكل</span>
+          <span class="chip" onclick="toggleChip(this)">أقل من ١٠ك</span>
+          <span class="chip" onclick="toggleChip(this)">١٠ك – ١٠٠ك</span>
+          <span class="chip" onclick="toggleChip(this)">١٠٠ك – ١م</span>
+          <span class="chip" onclick="toggleChip(this)">أكثر من ١م</span>
         </div>
       </div>
 
-      <!-- Card 5 -->
-      <div class="listing-card">
-        <div class="listing-img">
-          <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?w=400&q=80&auto=format&fit=crop" alt="قناة تيليغرام"/>
-          <div class="listing-platform" style="background:#e8f2ff;color:#0088cc;"><i class="bi bi-telegram"></i></div>
-        </div>
-        <div class="listing-head">
-          <div class="listing-avatar" style="background:#e8f2ff;color:#0088cc;"><i class="bi bi-telegram"></i></div>
-          <div class="listing-meta">
-            <h4>قناة تيليغرام إخبارية - ٨٠ألف</h4>
-            <span><i class="bi bi-person-fill"></i> فهد الحربي &nbsp;·&nbsp;<span class="badge badge-blue"><i class="bi bi-patch-check-fill"></i> موثق</span></span>
-          </div>
-        </div>
-        <div class="listing-body">
-          <p>قناة أخبار عاجلة ومحتوى يومي، نشاط مستمر، اشتراكات حقيقية.</p>
-          <div class="listing-stats">
-            <span class="lst-stat"><i class="bi bi-people-fill"></i> ٨٠,٠٠٠ مشترك</span>
-            <span class="lst-stat"><i class="bi bi-eye-fill"></i> ١.٥م مشاهدة</span>
-            <span class="lst-stat"><i class="bi bi-calendar3"></i> سنتان</span>
-          </div>
-          <span class="badge badge-blue"><i class="bi bi-clock"></i> في انتظار الوسيط</span>
-        </div>
-        <div class="listing-footer">
-          <div class="price">٤,١٠٠ ر.س <span>/ الحساب</span></div>
-          <div style="display:flex;gap:6px;">
-            <button class="btn-card" style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);" onclick="addToCart('قناة تيليغرام إخبارية - ٨٠ألف','تيليغرام','فهد الحربي',4100,'bi-telegram','#e8f2ff','#0088cc',this)"><i class="bi bi-cart-plus"></i></button>
-            <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
-          </div>
+      <div class="filter-group">
+        <label>الترتيب</label>
+        <div class="filter-chips">
+          <span class="chip active" onclick="toggleChip(this)">الأحدث</span>
+          <span class="chip" onclick="toggleChip(this)">الأقل سعراً</span>
+          <span class="chip" onclick="toggleChip(this)">الأعلى سعراً</span>
+          <span class="chip" onclick="toggleChip(this)">الأكثر متابعين</span>
         </div>
       </div>
 
-      <!-- Card 6 -->
-      <div class="listing-card">
-        <div class="listing-img">
-          <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&q=80&auto=format&fit=crop" alt="تويتر"/>
-          <div class="listing-platform" style="background:#e8f8ff;color:#000;"><i class="bi bi-twitter-x"></i></div>
+      <button class="btn-filter" onclick="applyFilter()"><i class="bi bi-search"></i> تطبيق الفلتر</button>
+      <button class="btn-filter" style="background:#f1f5f9;color:var(--text);margin-top:8px;" onclick="resetFilter()"><i
+          class="bi bi-arrow-counterclockwise"></i> إعادة تعيين</button>
+    </aside>
+
+    <!-- Main Content -->
+    <div>
+      <!-- Mobile filter toggle -->
+      <button class="filter-toggle-btn" onclick="openFilter()"><i class="bi bi-funnel"></i> فلترة النتائج</button>
+      <div class="store-header">
+        <div class="store-search" style="max-width:100%;flex:1;">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="ابحث في الإعلانات..." id="storeSearch" oninput="filterCards()" />
         </div>
-        <div class="listing-head">
-          <div class="listing-avatar" style="background:#e8f8ff;color:#000;"><i class="bi bi-twitter-x"></i></div>
-          <div class="listing-meta">
-            <h4>حساب تويتر رياضي - ٣٠ألف</h4>
-            <span><i class="bi bi-person-fill"></i> نواف السعيد &nbsp;·&nbsp;<span class="badge badge-orange"><i class="bi bi-hourglass"></i> جديد</span></span>
-          </div>
-        </div>
-        <div class="listing-body">
-          <p>حساب رياضي متخصص، تغطيات مباشرة، متابعين حقيقيين متفاعلين.</p>
-          <div class="listing-stats">
-            <span class="lst-stat"><i class="bi bi-people-fill"></i> ٣٠,٠٠٠ متابع</span>
-            <span class="lst-stat"><i class="bi bi-chat-fill"></i> ٥٪ تفاعل</span>
-            <span class="lst-stat"><i class="bi bi-calendar3"></i> ٣ سنوات</span>
-          </div>
-          <span class="badge badge-orange"><i class="bi bi-hourglass-split"></i> قيد المراجعة</span>
-        </div>
-        <div class="listing-footer">
-          <div class="price">١,٨٠٠ ر.س <span>/ الحساب</span></div>
-          <div style="display:flex;gap:6px;">
-            <button class="btn-card" style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);" onclick="addToCart('حساب تويتر رياضي - ٣٠ألف','تويتر','نواف السعيد',1800,'bi-twitter-x','#e8f8ff','#000',this)"><i class="bi bi-cart-plus"></i></button>
-            <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
-          </div>
-        </div>
+        <span class="store-count">عرض <strong id="visibleCount">٦</strong> إعلان</span>
+        <select class="sort-select" onchange="sortCards(this.value)">
+          <option value="newest">الأحدث أولاً</option>
+          <option value="low">الأقل سعراً</option>
+          <option value="high">الأعلى سعراً</option>
+        </select>
       </div>
 
-    </div><!-- /listings-grid -->
+      <div class="listings-grid" id="listingsGrid">
 
-    <div class="pagination">
-      <button class="pg-btn active">١</button>
-      <button class="pg-btn">٢</button>
-      <button class="pg-btn">٣</button>
-      <button class="pg-btn">٤</button>
-      <button class="pg-btn">...</button>
-      <button class="pg-btn">٢٠</button>
-      <button class="pg-btn"><i class="bi bi-arrow-left"></i></button>
+        <!-- Card 1 -->
+        <div class="listing-card">
+          <div class="listing-img">
+            <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=400&q=80&auto=format&fit=crop"
+              alt="قناة يوتيوب" />
+            <div class="listing-platform" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i></div>
+          </div>
+          <div class="listing-head">
+            <div class="listing-avatar" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i></div>
+            <div class="listing-meta">
+              <h4>قناة يوتيوب تقنية - ٤٥ألف مشترك</h4>
+              <span><i class="bi bi-person-fill"></i> أحمد محمد &nbsp;·&nbsp;<span class="badge badge-blue"><i
+                    class="bi bi-patch-check-fill"></i> موثق</span></span>
+            </div>
+          </div>
+          <div class="listing-body">
+            <p>قناة متخصصة في مجال التقنية والبرمجة، نشاط منتظم، محتوى عربي أصيل.</p>
+            <div class="listing-stats">
+              <span class="lst-stat"><i class="bi bi-people-fill"></i> ٤٥,٢٠٠ مشترك</span>
+              <span class="lst-stat"><i class="bi bi-eye-fill"></i> ٣.٢م مشاهدة</span>
+              <span class="lst-stat"><i class="bi bi-calendar3"></i> ٣ سنوات</span>
+            </div>
+            <span class="badge badge-blue"><i class="bi bi-clock"></i> في انتظار الوسيط</span>
+          </div>
+          <div class="listing-footer">
+            <div class="price">٢,٨٠٠ ر.س <span>/ الحساب</span></div>
+            <div style="display:flex;gap:6px;">
+              <button class="btn-card"
+                style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);"
+                onclick="addToCart('قناة يوتيوب تقنية - ٤٥ألف مشترك','يوتيوب','أحمد محمد',2800,'bi-youtube','#ffe5e5','#e53e3e',this)"><i
+                  class="bi bi-cart-plus"></i></button>
+              <a href="listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i> التفاصيل</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="listing-card">
+          <div class="listing-img">
+            <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=400&q=80&auto=format&fit=crop"
+              alt="صفحة إنستغرام" />
+            <div class="listing-platform" style="background:#f5e8ff;color:#c13584;"><i class="bi bi-instagram"></i>
+            </div>
+          </div>
+          <div class="listing-head">
+            <div class="listing-avatar" style="background:#f5e8ff;color:#c13584;"><i class="bi bi-instagram"></i></div>
+            <div class="listing-meta">
+              <h4>صفحة إنستغرام موضة - ١٢٠ألف</h4>
+              <span><i class="bi bi-person-fill"></i> سارة العلي &nbsp;·&nbsp;<span class="badge badge-green"><i
+                    class="bi bi-shield-fill-check"></i> مضمون</span></span>
+            </div>
+          </div>
+          <div class="listing-body">
+            <p>صفحة أزياء وموضة نسائية، متابعين حقيقيين، تفاعل عالي.</p>
+            <div class="listing-stats">
+              <span class="lst-stat"><i class="bi bi-people-fill"></i> ١٢٠,٥٠٠ متابع</span>
+              <span class="lst-stat"><i class="bi bi-hand-thumbs-up-fill"></i> ٨.٥٪ تفاعل</span>
+              <span class="lst-stat"><i class="bi bi-calendar3"></i> ٢ سنة</span>
+            </div>
+            <span class="badge badge-green"><i class="bi bi-check-circle-fill"></i> وساطة جارية</span>
+          </div>
+          <div class="listing-footer">
+            <div class="price">٥,٥٠٠ ر.س <span>/ الحساب</span></div>
+            <div style="display:flex;gap:6px;">
+              <button class="btn-card"
+                style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);"
+                onclick="addToCart('صفحة إنستغرام موضة - ١٢٠ألف','إنستغرام','سارة العلي',5500,'bi-instagram','#f5e8ff','#c13584',this)"><i
+                  class="bi bi-cart-plus"></i></button>
+              <a href="../pages/listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i>
+                التفاصيل</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="listing-card">
+          <div class="listing-img">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80&auto=format&fit=crop"
+              alt="صفحة فيسبوك" />
+            <div class="listing-platform" style="background:#e8f0ff;color:#1877f2;"><i class="bi bi-facebook"></i></div>
+          </div>
+          <div class="listing-head">
+            <div class="listing-avatar" style="background:#e8f0ff;color:#1877f2;"><i class="bi bi-facebook"></i></div>
+            <div class="listing-meta">
+              <h4>صفحة فيسبوك طبخ - ٢٠٠ألف إعجاب</h4>
+              <span><i class="bi bi-person-fill"></i> منى خليل &nbsp;·&nbsp;<span class="badge badge-blue"><i
+                    class="bi bi-patch-check-fill"></i> موثق</span></span>
+            </div>
+          </div>
+          <div class="listing-body">
+            <p>صفحة وصفات وطبخ متخصصة، محتوى عربي حصري، مناسبة للمعلنين.</p>
+            <div class="listing-stats">
+              <span class="lst-stat"><i class="bi bi-people-fill"></i> ٢٠١,٠٠٠ إعجاب</span>
+              <span class="lst-stat"><i class="bi bi-calendar3"></i> ٤ سنوات</span>
+              <span class="lst-stat"><i class="bi bi-bar-chart-fill"></i> نشاط يومي</span>
+            </div>
+            <span class="badge badge-orange"><i class="bi bi-hourglass-split"></i> قيد المراجعة</span>
+          </div>
+          <div class="listing-footer">
+            <div class="price">٣,٢٠٠ ر.س <span>/ الحساب</span></div>
+            <div style="display:flex;gap:6px;">
+              <button class="btn-card"
+                style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);"
+                onclick="addToCart('صفحة فيسبوك طبخ - ٢٠٠ألف إعجاب','فيسبوك','منى خليل',3200,'bi-facebook','#e8f0ff','#1877f2',this)"><i
+                  class="bi bi-cart-plus"></i></button>
+              <a href="../pages/listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i>
+                التفاصيل</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="listing-card">
+          <div class="listing-img">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&q=80&auto=format&fit=crop"
+              alt="تيك توك" />
+            <div class="listing-platform" style="background:#f0f0f0;color:#010101;"><i class="bi bi-tiktok"></i></div>
+          </div>
+          <div class="listing-head">
+            <div class="listing-avatar" style="background:#f0f0f0;color:#010101;"><i class="bi bi-tiktok"></i></div>
+            <div class="listing-meta">
+              <h4>حساب تيك توك ترفيه - ٥٠٠ألف</h4>
+              <span><i class="bi bi-person-fill"></i> خالد النجدي &nbsp;·&nbsp;<span class="badge badge-green"><i
+                    class="bi bi-shield-fill-check"></i> مضمون</span></span>
+            </div>
+          </div>
+          <div class="listing-body">
+            <p>حساب ترفيهي ومضحك، فيديوهات فيروسية، ٥٠٠ألف متابع حقيقي.</p>
+            <div class="listing-stats">
+              <span class="lst-stat"><i class="bi bi-people-fill"></i> ٥٠٠,٠٠٠ متابع</span>
+              <span class="lst-stat"><i class="bi bi-play-fill"></i> ٢٥م مشاهدة</span>
+              <span class="lst-stat"><i class="bi bi-calendar3"></i> سنة ونصف</span>
+            </div>
+            <span class="badge badge-blue"><i class="bi bi-clock"></i> في انتظار الوسيط</span>
+          </div>
+          <div class="listing-footer">
+            <div class="price">٨,٩٠٠ ر.س <span>/ الحساب</span></div>
+            <div style="display:flex;gap:6px;">
+              <button class="btn-card"
+                style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);"
+                onclick="addToCart('حساب تيك توك ترفيه - ٥٠٠ألف','تيك توك','خالد النجدي',8900,'bi-tiktok','#f0f0f0','#010101',this)"><i
+                  class="bi bi-cart-plus"></i></button>
+              <a href="../pages/listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i>
+                التفاصيل</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="listing-card">
+          <div class="listing-img">
+            <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?w=400&q=80&auto=format&fit=crop"
+              alt="قناة تيليغرام" />
+            <div class="listing-platform" style="background:#e8f2ff;color:#0088cc;"><i class="bi bi-telegram"></i></div>
+          </div>
+          <div class="listing-head">
+            <div class="listing-avatar" style="background:#e8f2ff;color:#0088cc;"><i class="bi bi-telegram"></i></div>
+            <div class="listing-meta">
+              <h4>قناة تيليغرام إخبارية - ٨٠ألف</h4>
+              <span><i class="bi bi-person-fill"></i> فهد الحربي &nbsp;·&nbsp;<span class="badge badge-blue"><i
+                    class="bi bi-patch-check-fill"></i> موثق</span></span>
+            </div>
+          </div>
+          <div class="listing-body">
+            <p>قناة أخبار عاجلة ومحتوى يومي، نشاط مستمر، اشتراكات حقيقية.</p>
+            <div class="listing-stats">
+              <span class="lst-stat"><i class="bi bi-people-fill"></i> ٨٠,٠٠٠ مشترك</span>
+              <span class="lst-stat"><i class="bi bi-eye-fill"></i> ١.٥م مشاهدة</span>
+              <span class="lst-stat"><i class="bi bi-calendar3"></i> سنتان</span>
+            </div>
+            <span class="badge badge-blue"><i class="bi bi-clock"></i> في انتظار الوسيط</span>
+          </div>
+          <div class="listing-footer">
+            <div class="price">٤,١٠٠ ر.س <span>/ الحساب</span></div>
+            <div style="display:flex;gap:6px;">
+              <button class="btn-card"
+                style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);"
+                onclick="addToCart('قناة تيليغرام إخبارية - ٨٠ألف','تيليغرام','فهد الحربي',4100,'bi-telegram','#e8f2ff','#0088cc',this)"><i
+                  class="bi bi-cart-plus"></i></button>
+              <a href="../pages/listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i>
+                التفاصيل</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="listing-card">
+          <div class="listing-img">
+            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&q=80&auto=format&fit=crop"
+              alt="تويتر" />
+            <div class="listing-platform" style="background:#e8f8ff;color:#000;"><i class="bi bi-twitter-x"></i></div>
+          </div>
+          <div class="listing-head">
+            <div class="listing-avatar" style="background:#e8f8ff;color:#000;"><i class="bi bi-twitter-x"></i></div>
+            <div class="listing-meta">
+              <h4>حساب تويتر رياضي - ٣٠ألف</h4>
+              <span><i class="bi bi-person-fill"></i> نواف السعيد &nbsp;·&nbsp;<span class="badge badge-orange"><i
+                    class="bi bi-hourglass"></i> جديد</span></span>
+            </div>
+          </div>
+          <div class="listing-body">
+            <p>حساب رياضي متخصص، تغطيات مباشرة، متابعين حقيقيين متفاعلين.</p>
+            <div class="listing-stats">
+              <span class="lst-stat"><i class="bi bi-people-fill"></i> ٣٠,٠٠٠ متابع</span>
+              <span class="lst-stat"><i class="bi bi-chat-fill"></i> ٥٪ تفاعل</span>
+              <span class="lst-stat"><i class="bi bi-calendar3"></i> ٣ سنوات</span>
+            </div>
+            <span class="badge badge-orange"><i class="bi bi-hourglass-split"></i> قيد المراجعة</span>
+          </div>
+          <div class="listing-footer">
+            <div class="price">١,٨٠٠ ر.س <span>/ الحساب</span></div>
+            <div style="display:flex;gap:6px;">
+              <button class="btn-card"
+                style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--primary);"
+                onclick="addToCart('حساب تويتر رياضي - ٣٠ألف','تويتر','نواف السعيد',1800,'bi-twitter-x','#e8f8ff','#000',this)"><i
+                  class="bi bi-cart-plus"></i></button>
+              <a href="../pages/listing-details.html" class="btn-card btn-card-primary"><i class="bi bi-eye"></i>
+                التفاصيل</a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /listings-grid -->
+
+      <div class="pagination">
+        <button class="pg-btn active">١</button>
+        <button class="pg-btn">٢</button>
+        <button class="pg-btn">٣</button>
+        <button class="pg-btn">٤</button>
+        <button class="pg-btn">...</button>
+        <button class="pg-btn">٢٠</button>
+        <button class="pg-btn"><i class="bi bi-arrow-left"></i></button>
+      </div>
     </div>
   </div>
-</div>
 
-<script src="../assets/script/components.js"></script>
-<script>
-function toggleChip(el) {
-  el.classList.toggle('active');
-}
-function applyFilter() {
-  showToast('تم تطبيق الفلتر بنجاح');
-}
-function resetFilter() {
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.chip:first-child').forEach(c => c.classList.add('active'));
-  document.getElementById('priceMin').value = '';
-  document.getElementById('priceMax').value = '';
-  showToast('تم إعادة تعيين الفلتر');
-}
-document.querySelectorAll('.pg-btn').forEach(btn => {
-function toggleChip(el) { el.classList.toggle('active'); }
-function openFilter() {
-  document.getElementById('filterPanel').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeFilter() {
-  document.getElementById('filterPanel').classList.remove('open');
-  document.body.style.overflow = '';
-}
-function applyFilter() {
-  closeFilter();
-  showToast('تم تطبيق الفلتر بنجاح');
-}
-function resetFilter() {
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.filter-group .chip:first-child').forEach(c => c.classList.add('active'));
-  document.getElementById('priceMin').value = '';
-  document.getElementById('priceMax').value = '';
-  showToast('تم إعادة تعيين الفلتر');
-}
-function filterCards() {
-  var q = document.getElementById('storeSearch').value.trim().toLowerCase();
-  var cards = document.querySelectorAll('#listingsGrid .listing-card');
-  var cnt = 0;
-  cards.forEach(function(c) {
-    var txt = c.textContent.toLowerCase();
-    var show = !q || txt.includes(q);
-    c.style.display = show ? '' : 'none';
-    if (show) cnt++;
-  });
-  var el = document.getElementById('visibleCount');
-  if (el) el.textContent = cnt;
-}
-function sortCards(val) {
-  showToast('تم الترتيب: ' + (val === 'low' ? 'الأقل سعراً' : val === 'high' ? 'الأعلى سعراً' : 'الأحدث'));
-}
-document.querySelectorAll('.pg-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.pg-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    showToast('جارٍ تحميل الصفحة...');
-    setTimeout(() => window.scrollTo({top:0, behavior:'smooth'}), 300);
-  });
-});
+  <script src="../assets/script/components.js"></script>
+  <script>
+    function toggleChip(el) {
+      el.classList.toggle('active');
+    }
+    function applyFilter() {
+      showToast('تم تطبيق الفلتر بنجاح');
+    }
+    function resetFilter() {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.chip:first-child').forEach(c => c.classList.add('active'));
+      document.getElementById('priceMin').value = '';
+      document.getElementById('priceMax').value = '';
+      showToast('تم إعادة تعيين الفلتر');
+    }
+    document.querySelectorAll('.pg-btn').forEach(btn => {
+      function toggleChip(el) { el.classList.toggle('active'); }
+      function openFilter() {
+        document.getElementById('filterPanel').classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeFilter() {
+        document.getElementById('filterPanel').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+      function applyFilter() {
+        closeFilter();
+        showToast('تم تطبيق الفلتر بنجاح');
+      }
+      function resetFilter() {
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.filter-group .chip:first-child').forEach(c => c.classList.add('active'));
+        document.getElementById('priceMin').value = '';
+        document.getElementById('priceMax').value = '';
+        showToast('تم إعادة تعيين الفلتر');
+      }
+      function filterCards() {
+        var q = document.getElementById('storeSearch').value.trim().toLowerCase();
+        var cards = document.querySelectorAll('#listingsGrid .listing-card');
+        var cnt = 0;
+        cards.forEach(function (c) {
+          var txt = c.textContent.toLowerCase();
+          var show = !q || txt.includes(q);
+          c.style.display = show ? '' : 'none';
+          if (show) cnt++;
+        });
+        var el = document.getElementById('visibleCount');
+        if (el) el.textContent = cnt;
+      }
+      function sortCards(val) {
+        showToast('تم الترتيب: ' + (val === 'low' ? 'الأقل سعراً' : val === 'high' ? 'الأعلى سعراً' : 'الأحدث'));
+      }
+      document.querySelectorAll('.pg-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.pg-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          showToast('جارٍ تحميل الصفحة...');
+          setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 300);
+        });
+      });
 
-/* ===== Cart Functions ===== */
-function addToCart(title, platform, seller, price, icon, iconBg, iconColor, btn) {
-  var item = { title: title, platform: platform, seller: seller, price: price, icon: icon, iconBg: iconBg, iconColor: iconColor };
-  var cart = [];
-  try { cart = JSON.parse(localStorage.getItem('wsCart') || '[]'); } catch(e) {}
-  var exists = cart.some(function(c){ return c.title === item.title; });
-  if (exists) {
-    showToast('هذه الخدمة موجودة في السلة بالفعل!', 'error');
-    return;
-  }
-  cart.push(item);
-  localStorage.setItem('wsCart', JSON.stringify(cart));
-  if (window.refreshCartBadge) refreshCartBadge();
-  showToast('✅ تمت الإضافة للسلة!');
-  if (btn) {
-    btn.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
-    btn.style.background = '#f0fdf4';
-    btn.style.color = '#16a34a';
-    btn.style.borderColor = '#16a34a';
-    btn.onclick = function(){ location.href='cart.html'; };
-    btn.title = 'عرض السلة';
-  }
-}
-</script>
+      /* ===== Cart Functions ===== */
+      function addToCart(title, platform, seller, price, icon, iconBg, iconColor, btn) {
+        var item = { title: title, platform: platform, seller: seller, price: price, icon: icon, iconBg: iconBg, iconColor: iconColor };
+        var cart = [];
+        try { cart = JSON.parse(localStorage.getItem('wsCart') || '[]'); } catch (e) { }
+        var exists = cart.some(function (c) { return c.title === item.title; });
+        if (exists) {
+          showToast('هذه الخدمة موجودة في السلة بالفعل!', 'error');
+          return;
+        }
+        cart.push(item);
+        localStorage.setItem('wsCart', JSON.stringify(cart));
+        if (window.refreshCartBadge) refreshCartBadge();
+        showToast('✅ تمت الإضافة للسلة!');
+        if (btn) {
+          btn.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
+          btn.style.background = '#f0fdf4';
+          btn.style.color = '#16a34a';
+          btn.style.borderColor = '#16a34a';
+          btn.onclick = function () { location.href = 'cart.html'; };
+          btn.title = 'عرض السلة';
+        }
+      }
+  </script>
 </body>
+
 </html>
