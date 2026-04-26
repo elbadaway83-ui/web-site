@@ -25,6 +25,11 @@
     contact:        base + 'contact.html',
     escrowRoom:     base + 'escrow-room.html',
     listingDetails: base + 'listing-details.html',
+    brokerProfile:  base + 'broker-profile.html',
+    sellerProfile:  base + 'seller-profile.html',
+    buyerProfile:   base + 'buyer-profile.html',
+    cart:           base + 'cart.html',
+    checkout:       base + 'checkout.html',
   };
 
   function currentPage() {
@@ -74,6 +79,10 @@
         <a href="${p.notifications}" class="${isActive(p.notifications)}"><i class="bi bi-bell"></i> الإشعارات</a>
       </div>
       <div class="nav-actions">
+        <a href="${p.cart}" class="nav-cart-btn" id="navCartBtn" title="السلة" style="position:relative;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-size:1.1rem;transition:all .18s;">
+          <i class="bi bi-cart3"></i>
+          <span class="cart-badge" id="navCartBadge" style="display:none;position:absolute;top:-6px;left:-6px;background:#dc2626;color:#fff;border-radius:50%;width:18px;height:18px;font-size:.65rem;font-weight:800;align-items:center;justify-content:center;">0</span>
+        </a>
         <a href="${p.login}" class="btn-outline">تسجيل الدخول</a>
         <a href="${p.register}" class="btn-primary"><i class="bi bi-person-plus"></i> إنشاء حساب</a>
       </div>
@@ -84,6 +93,7 @@
       <a href="${p.store}" class="${isActive(p.store)}"><i class="bi bi-shop"></i> المتجر</a>
       <a href="${p.escrow}" class="${isActive(p.escrow)}"><i class="bi bi-arrows-angle-contract"></i> الوساطة</a>
       <a href="${p.brokers}" class="${isActive(p.brokers)}"><i class="bi bi-person-badge"></i> الوسطاء</a>
+      <a href="${p.cart}" class="${isActive(p.cart)}"><i class="bi bi-cart3"></i> السلة <span class="cart-badge" style="display:none;background:#dc2626;color:#fff;border-radius:50%;padding:1px 6px;font-size:.7rem;font-weight:800;">0</span></a>
       <a href="${p.notifications}" class="${isActive(p.notifications)}"><i class="bi bi-bell"></i> الإشعارات</a>
       <hr/>
       <a href="${p.login}" class="btn-outline" style="text-align:center;">تسجيل الدخول</a>
@@ -155,8 +165,8 @@
       <a href="${p.home}" class="mob-link ${isActive(p.home)}"><i class="bi bi-house-door-fill"></i> الرئيسية</a>
       <a href="${p.store}" class="mob-link ${isActive(p.store)}"><i class="bi bi-shop"></i> المتجر</a>
       <a href="${p.escrow}" class="mob-link ${isActive(p.escrow)}"><i class="bi bi-arrows-angle-contract"></i> الوساطة</a>
-      <a href="${p.notifications}" class="mob-link ${isActive(p.notifications)}"><i class="bi bi-bell"></i> الإشعارات</a>
-      <a href="${p.profile}" class="mob-link ${isActive(p.profile)}"><i class="bi bi-person-circle"></i> حسابي</a>
+      <a href="${p.brokers}" class="mob-link ${isActive(p.brokers)}"><i class="bi bi-person-badge"></i> الوسطاء</a>
+      <a href="${p.login}" class="mob-link ${isActive(p.login)}"><i class="bi bi-person-circle"></i> حسابي</a>
     </div>
   </nav>`;
   }
@@ -172,6 +182,28 @@
     const footerEl = document.createElement('div');
     footerEl.innerHTML = buildFooter();
     document.body.appendChild(footerEl);
+
+    // ===== Cart Badge =====
+    function refreshCartBadge() {
+      try {
+        const cart = JSON.parse(localStorage.getItem('wsCart') || '[]');
+        const cnt = cart.length;
+        document.querySelectorAll('.cart-badge').forEach(function(el) {
+          el.textContent = cnt;
+          el.style.display = cnt > 0 ? 'inline-flex' : 'none';
+        });
+        // also style nav cart btn
+        const navBtn = document.getElementById('navCartBtn');
+        if (navBtn) {
+          navBtn.style.borderColor = cnt > 0 ? 'var(--primary)' : 'var(--border)';
+          navBtn.style.color = cnt > 0 ? 'var(--primary)' : 'var(--text)';
+        }
+      } catch(e) {}
+    }
+    refreshCartBadge();
+    window.refreshCartBadge = refreshCartBadge;
+    // refresh badge on storage change (other tabs)
+    window.addEventListener('storage', refreshCartBadge);
 
     // Hamburger
     const hamburger = document.getElementById('hamburger');

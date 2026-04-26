@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ملف المشتري - وسيطي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/style.css"/>
+  <style>
+    .profile-hero{background:linear-gradient(135deg,#0f2460 0%,#1a6fff 55%,#6366f1 100%);padding:48px 24px 80px;position:relative;overflow:hidden;}
+    .profile-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 50%,rgba(255,255,255,.06) 0%,transparent 70%);pointer-events:none;}
+    .profile-hero-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:28px;position:relative;z-index:2;}
+    .profile-avatar{width:96px;height:96px;flex-shrink:0;background:rgba(255,255,255,.15);border:3px solid rgba(255,255,255,.3);border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:2.6rem;color:#fff;font-weight:900;}
+    .profile-info{flex:1;}
+    .profile-name{font-size:1.7rem;font-weight:900;color:#fff;margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .role-tag{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:3px 12px;font-size:.78rem;font-weight:700;color:#bfdbfe;display:inline-flex;align-items:center;gap:5px;}
+    .profile-sub{font-size:.9rem;color:rgba(255,255,255,.75);margin-bottom:18px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .profile-actions{display:flex;gap:10px;flex-wrap:wrap;}
+    .btn-pa{padding:10px 20px;border-radius:9px;font-family:var(--font);font-size:.88rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .2s;border:none;text-decoration:none;}
+    .btn-pa-primary{background:#fff;color:var(--primary);}
+    .btn-pa-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2);}
+    .btn-pa-outline{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.3)!important;}
+    .btn-pa-outline:hover{background:rgba(255,255,255,.22);}
+    .profile-layout{max-width:1100px;margin:-44px auto 0;padding:0 24px 80px;display:grid;grid-template-columns:1fr 300px;gap:22px;position:relative;z-index:3;}
+    .p-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px;}
+    .p-card-title{font-size:.98rem;font-weight:800;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+    .p-card-title i{color:var(--primary);}
+    .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+    .stat-box{text-align:center;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:14px 8px;}
+    .stat-box .s-num{font-size:1.4rem;font-weight:900;color:var(--primary);display:block;}
+    .stat-box .s-lbl{font-size:.75rem;color:var(--text-muted);font-weight:600;}
+    .purchase-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+    .purchase-item:last-child{border-bottom:none;}
+    .pi-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+    .pi-info{flex:1;min-width:0;}
+    .pi-title{font-size:.88rem;font-weight:700;color:var(--text);}
+    .pi-sub{font-size:.76rem;color:var(--text-muted);}
+    .pi-price{font-size:.9rem;font-weight:800;color:var(--text);white-space:nowrap;}
+    .sidebar-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;}
+    .sidebar-card h4{font-size:.92rem;font-weight:800;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+    .sidebar-card h4 i{color:var(--primary);}
+    .info-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:.85rem;}
+    .info-row:last-child{border-bottom:none;}
+    .info-row .lbl{color:var(--text-muted);font-weight:600;display:flex;align-items:center;gap:5px;}
+    .info-row .val{font-weight:700;color:var(--text);}
+    .btn-browse{width:100%;padding:12px;background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;border:none;border-radius:9px;font-family:var(--font);font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;margin-bottom:9px;text-decoration:none;}
+    .btn-browse:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(37,99,235,.35);}
+    .btn-brokers{width:100%;padding:10px;background:transparent;color:var(--primary);border:1.5px solid var(--primary);border-radius:9px;font-family:var(--font);font-size:.86rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .18s;text-decoration:none;}
+    .btn-brokers:hover{background:var(--primary-light);}
+    @media(max-width:900px){.profile-layout{grid-template-columns:1fr;}.profile-hero-inner{flex-direction:column;text-align:center;}.profile-name,.profile-sub,.profile-actions{justify-content:center;}}
+    @media(max-width:480px){.stats-grid{grid-template-columns:repeat(3,1fr);}}
+  </style>
+</head>
+<body>
+
+<div class="profile-hero">
+  <div class="profile-hero-inner">
+    <div class="profile-avatar"><i class="bi bi-bag-check"></i></div>
+    <div class="profile-info">
+      <div class="profile-name">
+        سارة المشترية
+        <i class="bi bi-patch-check-fill" style="color:#bfdbfe;font-size:1rem;"></i>
+        <span class="role-tag"><i class="bi bi-bag-check"></i> مشترٍ موثق</span>
+      </div>
+      <div class="profile-sub">
+        <span><i class="bi bi-geo-alt"></i> جدة، السعودية</span>
+        <span>·</span>
+        <span>عضو منذ ٢٠٢٤</span>
+      </div>
+      <div class="profile-actions">
+        <a href="store.html" class="btn-pa btn-pa-primary">
+          <i class="bi bi-shop"></i> تصفح المتجر
+        </a>
+        <a href="brokers.html" class="btn-pa btn-pa-outline">
+          <i class="bi bi-person-badge"></i> الوسطاء
+        </a>
+        <a href="login.html" class="btn-pa btn-pa-outline">
+          <i class="bi bi-box-arrow-left"></i> تسجيل خروج
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="profile-layout">
+  <div>
+    <div class="p-card">
+      <div class="p-card-title"><i class="bi bi-bar-chart-fill"></i> إحصائياتي كمشترٍ</div>
+      <div class="stats-grid">
+        <div class="stat-box"><span class="s-num">٧</span><span class="s-lbl">عملية شراء</span></div>
+        <div class="stat-box"><span class="s-num">٦</span><span class="s-lbl">صفقة مكتملة</span></div>
+        <div class="stat-box"><span class="s-num">١</span><span class="s-lbl">صفقة جارية</span></div>
+        <div class="stat-box"><span class="s-num">٤.٨</span><span class="s-lbl">تقييم البائعين</span></div>
+        <div class="stat-box"><span class="s-num">٠</span><span class="s-lbl">نزاعات</span></div>
+        <div class="stat-box"><span class="s-num">١+</span><span class="s-lbl">سنة نشاط</span></div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card-title"><i class="bi bi-clock-history"></i> مشترياتي الأخيرة</div>
+      <div class="purchase-item">
+        <div class="pi-icon" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i></div>
+        <div class="pi-info"><div class="pi-title">قناة يوتيوب تقنية - ٤٥ألف مشترك</div><div class="pi-sub" style="color:var(--primary);"><i class="bi bi-arrows-angle-contract"></i> وساطة جارية</div></div>
+        <div class="pi-price">٢,٨٠٠ ر.س</div>
+      </div>
+      <div class="purchase-item">
+        <div class="pi-icon" style="background:#e8f0ff;color:#1877f2;"><i class="bi bi-facebook"></i></div>
+        <div class="pi-info"><div class="pi-title">صفحة فيسبوك طبخ - ٢٠٠ألف إعجاب</div><div class="pi-sub" style="color:var(--accent);"><i class="bi bi-check-circle-fill"></i> مكتملة</div></div>
+        <div class="pi-price">٣,٢٠٠ ر.س</div>
+      </div>
+      <div class="purchase-item">
+        <div class="pi-icon" style="background:#f5e8ff;color:#c13584;"><i class="bi bi-instagram"></i></div>
+        <div class="pi-info"><div class="pi-title">حساب إنستغرام موضة - ٨٠ألف متابع</div><div class="pi-sub" style="color:var(--accent);"><i class="bi bi-check-circle-fill"></i> مكتملة</div></div>
+        <div class="pi-price">١,٩٠٠ ر.س</div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card-title"><i class="bi bi-bookmark-star-fill"></i> الإعلانات المحفوظة</div>
+      <div class="purchase-item">
+        <div class="pi-icon" style="background:#f0f0f0;color:#010101;"><i class="bi bi-tiktok"></i></div>
+        <div class="pi-info"><div class="pi-title">حساب تيك توك ترفيهي - ٥٠٠ألف</div><div class="pi-sub">٨,٩٠٠ ر.س · محفوظ منذ يومين</div></div>
+        <a href="listing-details.html" class="btn-card btn-card-primary" style="white-space:nowrap;"><i class="bi bi-eye"></i> عرض</a>
+      </div>
+      <div class="purchase-item">
+        <div class="pi-icon" style="background:#e8f2ff;color:#0088cc;"><i class="bi bi-telegram"></i></div>
+        <div class="pi-info"><div class="pi-title">قناة تيليغرام أخبار - ١٥ألف عضو</div><div class="pi-sub">٦٠٠ ر.س · محفوظ منذ أسبوع</div></div>
+        <a href="listing-details.html" class="btn-card btn-card-primary" style="white-space:nowrap;"><i class="bi bi-eye"></i> عرض</a>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sidebar-card">
+      <h4><i class="bi bi-lightning-charge-fill"></i> إجراءات سريعة</h4>
+      <a href="store.html" class="btn-browse" id="btnBrowseStore">
+        <i class="bi bi-shop"></i> تصفح المتجر
+      </a>
+      <a href="brokers.html" class="btn-brokers" id="btnBrowseBrokers">
+        <i class="bi bi-person-badge"></i> عرض الوسطاء
+      </a>
+    </div>
+
+    <div class="sidebar-card">
+      <h4><i class="bi bi-person-fill"></i> معلومات الحساب</h4>
+      <div class="info-row"><span class="lbl"><i class="bi bi-envelope"></i> البريد</span><span class="val">sara@email.com</span></div>
+      <div class="info-row"><span class="lbl"><i class="bi bi-phone"></i> الهاتف</span><span class="val">+966 5x xxx xxxx</span></div>
+      <div class="info-row"><span class="lbl"><i class="bi bi-shield-check"></i> الحالة</span><span class="val" style="color:var(--accent);"><i class="bi bi-check-circle-fill"></i> موثق</span></div>
+      <div class="info-row"><span class="lbl"><i class="bi bi-calendar3"></i> انضمت</span><span class="val">مارس ٢٠٢٤</span></div>
+    </div>
+
+    <div class="sidebar-card" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#bfdbfe;">
+      <h4><i class="bi bi-shield-fill-check" style="color:var(--primary);"></i> أموالك محمية</h4>
+      <p style="font-size:.83rem;color:#1e3a8a;line-height:1.7;">في كل عملية شراء، أموالك محفوظة في الضمان ولا تُحول للبائع إلا بعد تأكيدك الكامل.</p>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/script/components.js"></script>
+</body>
+</html>

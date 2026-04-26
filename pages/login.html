@@ -1,4 +1,4 @@
-﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8"/>
@@ -8,103 +8,294 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../assets/css/style.css"/>
   <style>
-    body{min-height:100vh;display:flex;flex-direction:column;}
-    .auth-wrapper{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 24px 80px;background:linear-gradient(135deg,#f0f4ff 0%,#e8f5f3 100%);}
-    .auth-card{background:var(--surface);border:1.5px solid var(--border);border-radius:22px;padding:40px 36px;width:100%;max-width:440px;box-shadow:var(--shadow-lg);}
-    .auth-logo{display:flex;align-items:center;gap:9px;justify-content:center;margin-bottom:28px;}
-    .auth-logo .logo-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--primary),#4f8ef7);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.35rem;box-shadow:0 4px 14px rgba(37,99,235,.3);}
-    .auth-logo .logo-text{font-size:1.5rem;font-weight:900;color:var(--text);}
-    .auth-logo .logo-text span{color:var(--primary);}
-    .auth-title{font-size:1.35rem;font-weight:900;color:var(--text);text-align:center;margin-bottom:6px;}
-    .auth-sub{font-size:.88rem;color:var(--text-muted);text-align:center;margin-bottom:28px;}
-    .form-group{margin-bottom:16px;}
-    .form-group label{display:block;font-size:.83rem;font-weight:700;color:var(--text);margin-bottom:7px;}
-    .input-wrap{position:relative;}
-    .input-wrap i{position:absolute;top:50%;transform:translateY(-50%);right:14px;color:var(--text-muted);font-size:1rem;pointer-events:none;}
-    .input-wrap input{width:100%;padding:11px 40px 11px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:var(--font);font-size:.9rem;color:var(--text);background:var(--bg);outline:none;transition:border-color .2s,box-shadow .2s;}
-    .input-wrap input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
-    .input-wrap .eye-btn{position:absolute;top:50%;transform:translateY(-50%);left:12px;background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:1rem;pointer-events:all;}
-    .forgot{display:flex;justify-content:flex-start;margin-top:-8px;margin-bottom:12px;}
-    .forgot a{font-size:.8rem;color:var(--primary);font-weight:600;}
-    .btn-auth{width:100%;padding:13px;background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;border:none;border-radius:9px;font-family:var(--font);font-size:.95rem;font-weight:800;cursor:pointer;transition:all .2s;margin-bottom:16px;}
-    .btn-auth:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.35);}
-    .divider{display:flex;align-items:center;gap:10px;margin-bottom:16px;color:var(--text-muted);font-size:.8rem;}
-    .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
-    .social-auth{display:flex;gap:10px;margin-bottom:20px;}
-    .btn-social{flex:1;padding:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface);cursor:pointer;font-family:var(--font);font-size:.82rem;font-weight:700;color:var(--text);display:flex;align-items:center;justify-content:center;gap:7px;transition:all .18s;}
-    .btn-social:hover{border-color:var(--primary);background:var(--primary-light);}
-    .auth-switch{text-align:center;font-size:.85rem;color:var(--text-muted);}
-    .auth-switch a{color:var(--primary);font-weight:700;}
-    .remember-row{display:flex;align-items:center;gap:8px;margin-bottom:16px;font-size:.83rem;color:var(--text);}
-    .remember-row input{width:16px;height:16px;accent-color:var(--primary);}
+    body { min-height:100vh; display:flex; flex-direction:column; padding-bottom:0 !important; }
+    /* ===== Split layout ===== */
+    .auth-page {
+      flex: 1; display: flex; min-height: calc(100vh - 36px);
+    }
+    /* RIGHT = decorative image panel */
+    .auth-panel-img {
+      flex: 1;
+      background: linear-gradient(145deg, #0f2460 0%, #1a6fff 55%, #0d9488 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 48px 40px; position: relative; overflow: hidden;
+    }
+    .auth-panel-img::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 30% 40%, rgba(255,255,255,.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 70% 70%, rgba(0,194,168,.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .auth-panel-img::after {
+      content: ''; position: absolute; bottom:-60px; right:-60px;
+      width:320px; height:320px; border-radius:50%;
+      background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
+    }
+    .img-brand {
+      display:flex; align-items:center; gap:12px; margin-bottom:40px; position:relative; z-index:2;
+    }
+    .img-brand .b-icon {
+      width:52px; height:52px;
+      background:rgba(255,255,255,.15); border:1.5px solid rgba(255,255,255,.25);
+      border-radius:14px; display:flex; align-items:center; justify-content:center;
+      color:#fff; font-size:1.5rem; backdrop-filter:blur(10px);
+    }
+    .img-brand .b-name { font-size:1.7rem; font-weight:900; color:#fff; }
+    .img-brand .b-name span { color:#86efac; }
+    .img-hero { text-align:center; position:relative; z-index:2; max-width:380px; }
+    .img-hero .big-icon {
+      width:90px; height:90px;
+      background:rgba(255,255,255,.12); border:2px solid rgba(255,255,255,.2);
+      border-radius:24px; display:flex; align-items:center; justify-content:center;
+      font-size:2.8rem; color:#fff; margin:0 auto 28px;
+      backdrop-filter:blur(10px); box-shadow:0 20px 60px rgba(0,0,0,.2);
+    }
+    .img-hero h2 {
+      font-size:clamp(1.3rem,2.4vw,1.9rem); font-weight:900; color:#fff;
+      margin-bottom:12px; line-height:1.3;
+    }
+    .img-hero p { font-size:.92rem; color:rgba(255,255,255,.75); line-height:1.7; margin-bottom:32px; }
+    .img-features { display:flex; flex-direction:column; gap:12px; width:100%; max-width:310px; }
+    .img-feat {
+      display:flex; align-items:center; gap:12px;
+      background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15);
+      border-radius:12px; padding:12px 16px; backdrop-filter:blur(8px);
+    }
+    .img-feat i { font-size:1.2rem; color:#86efac; flex-shrink:0; }
+    .img-feat span { font-size:.88rem; color:rgba(255,255,255,.9); font-weight:600; }
+
+    /* LEFT = form panel */
+    .auth-panel-form {
+      width:460px; flex-shrink:0;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      padding:48px 44px; background:var(--surface);
+      overflow-y:auto;
+    }
+    .auth-form-inner { width:100%; max-width:370px; }
+    .form-logo {
+      display:flex; align-items:center; gap:9px; justify-content:center; margin-bottom:22px;
+    }
+    .form-logo .logo-icon {
+      width:44px; height:44px; background:linear-gradient(135deg,var(--primary),#4f8ef7);
+      border-radius:12px; display:flex; align-items:center; justify-content:center;
+      color:#fff; font-size:1.35rem; box-shadow:0 4px 14px rgba(37,99,235,.3);
+    }
+    .form-logo .logo-text { font-size:1.5rem; font-weight:900; color:var(--text); }
+    .form-logo .logo-text span { color:var(--primary); }
+    .form-title { font-size:1.35rem; font-weight:900; color:var(--text); text-align:center; margin-bottom:5px; }
+    .form-sub { font-size:.88rem; color:var(--text-muted); text-align:center; margin-bottom:24px; }
+
+    /* Role tabs */
+    .role-tabs {
+      display:flex; gap:5px; margin-bottom:22px;
+      background:var(--bg); border-radius:10px; padding:4px;
+    }
+    .role-tab {
+      flex:1; padding:8px 6px; border:none; border-radius:7px;
+      background:transparent; font-family:var(--font); font-size:.79rem; font-weight:700;
+      color:var(--text-muted); cursor:pointer;
+      display:flex; align-items:center; justify-content:center; gap:5px;
+      transition:all .18s;
+    }
+    .role-tab.active { background:var(--surface); color:var(--primary); box-shadow:0 1px 6px rgba(0,0,0,.08); }
+    .role-tab i { font-size:.92rem; }
+
+    .form-group { margin-bottom:16px; }
+    .form-group label { display:block; font-size:.83rem; font-weight:700; color:var(--text); margin-bottom:7px; }
+    .input-wrap { position:relative; }
+    .input-wrap .fi {
+      position:absolute; top:50%; transform:translateY(-50%);
+      right:14px; color:var(--text-muted); font-size:1rem; pointer-events:none;
+    }
+    .input-wrap input {
+      width:100%; padding:11px 42px 11px 14px;
+      border:1.5px solid var(--border); border-radius:9px;
+      font-family:var(--font); font-size:.9rem; color:var(--text);
+      background:var(--bg); outline:none;
+      transition:border-color .2s, box-shadow .2s;
+    }
+    .input-wrap input:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(37,99,235,.1); background:#fff; }
+    .eye-btn {
+      position:absolute; top:50%; transform:translateY(-50%);
+      left:12px; background:none; border:none; cursor:pointer;
+      color:var(--text-muted); font-size:1rem; padding:4px;
+      transition:color .18s;
+    }
+    .eye-btn:hover { color:var(--primary); }
+
+    .auth-row {
+      display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;
+    }
+    .remember-row { display:flex; align-items:center; gap:8px; font-size:.83rem; color:var(--text); }
+    .remember-row input { width:16px; height:16px; accent-color:var(--primary); }
+    .forgot-link { font-size:.82rem; color:var(--primary); font-weight:600; }
+    .forgot-link:hover { text-decoration:underline; }
+
+    .btn-auth {
+      width:100%; padding:13px;
+      background:linear-gradient(135deg,var(--primary),#4f8ef7);
+      color:#fff; border:none; border-radius:9px;
+      font-family:var(--font); font-size:.95rem; font-weight:800;
+      cursor:pointer; transition:all .2s; margin-bottom:18px;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+    }
+    .btn-auth:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(37,99,235,.35); }
+    .divider { display:flex; align-items:center; gap:10px; margin-bottom:14px; color:var(--text-muted); font-size:.8rem; }
+    .divider::before,.divider::after { content:''; flex:1; height:1px; background:var(--border); }
+    .social-auth { display:flex; gap:10px; margin-bottom:22px; }
+    .btn-social {
+      flex:1; padding:10px; border:1.5px solid var(--border); border-radius:8px;
+      background:var(--surface); cursor:pointer; font-family:var(--font);
+      font-size:.82rem; font-weight:700; color:var(--text);
+      display:flex; align-items:center; justify-content:center; gap:7px; transition:all .18s;
+    }
+    .btn-social:hover { border-color:var(--primary); background:var(--primary-light); color:var(--primary); }
+    .auth-switch { text-align:center; font-size:.85rem; color:var(--text-muted); }
+    .auth-switch a { color:var(--primary); font-weight:700; }
+
+    /* Responsive */
+    @media (max-width:900px) {
+      .auth-page { flex-direction:column; }
+      .auth-panel-img {
+        flex:none; min-height:240px; padding:28px 20px;
+      }
+      .img-hero p,.img-features { display:none; }
+      .img-hero .big-icon { width:60px; height:60px; font-size:1.8rem; margin-bottom:12px; }
+      .img-hero h2 { font-size:1.2rem; }
+      .img-brand { margin-bottom:20px; }
+      .auth-panel-form { width:100%; padding:32px 24px 80px; }
+    }
+    @media (max-width:480px) {
+      .auth-panel-form { padding:24px 16px 80px; }
+      .auth-form-inner { max-width:100%; }
+    }
   </style>
 </head>
 <body>
 
-<div class="auth-wrapper">
-  <div class="auth-card">
-    <div class="auth-logo">
-      <div class="logo-icon"><i class="bi bi-shield-fill-check"></i></div>
-      <div class="logo-text">وسيط<span>ي</span></div>
-    </div>
-    <div class="auth-title">مرحباً بعودتك!</div>
-    <div class="auth-sub">سجّل دخولك للوصول إلى حسابك وصفقاتك</div>
+<div class="auth-page">
 
-    <div class="form-group">
-      <label>البريد الإلكتروني أو رقم الهاتف</label>
-      <div class="input-wrap">
-        <i class="bi bi-envelope"></i>
-        <input type="email" placeholder="example@email.com" id="loginEmail"/>
+  <!-- RIGHT: Image / Brand Panel -->
+  <div class="auth-panel-img">
+    <div class="img-brand">
+      <div class="b-icon"><i class="bi bi-shield-fill-check"></i></div>
+      <div class="b-name">وسيط<span>ي</span></div>
+    </div>
+    <div class="img-hero">
+      <div class="big-icon"><i class="bi bi-shield-lock-fill"></i></div>
+      <h2>صفقاتك في أمان تام مع وسيطي</h2>
+      <p>منصة الوساطة الرقمية التي تجمع البائع والمشتري بوسيط موثوق يضمن حق الجميع.</p>
+      <div class="img-features">
+        <div class="img-feat">
+          <i class="bi bi-shield-check-fill"></i>
+          <span>أموالك محمية حتى اكتمال الصفقة</span>
+        </div>
+        <div class="img-feat">
+          <i class="bi bi-patch-check-fill"></i>
+          <span>وسطاء موثقون ومُعتمدون</span>
+        </div>
+        <div class="img-feat">
+          <i class="bi bi-headset"></i>
+          <span>دعم فني متاح ٢٤/٧</span>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div class="form-group">
-      <label>كلمة المرور</label>
-      <div class="input-wrap">
-        <i class="bi bi-lock"></i>
-        <input type="password" placeholder="••••••••" id="loginPass"/>
-        <button class="eye-btn" onclick="togglePass('loginPass',this)"><i class="bi bi-eye"></i></button>
+  <!-- LEFT: Form Panel -->
+  <div class="auth-panel-form">
+    <div class="auth-form-inner">
+      <div class="form-logo">
+        <div class="logo-icon"><i class="bi bi-shield-fill-check"></i></div>
+        <div class="logo-text">وسيط<span>ي</span></div>
       </div>
+      <div class="form-title">مرحباً بعودتك!</div>
+      <div class="form-sub">سجّل دخولك للوصول إلى حسابك وصفقاتك</div>
+
+      <!-- Role Tabs -->
+      <div class="role-tabs">
+        <button class="role-tab active" onclick="setRole(this,'buyer')" id="tab-buyer">
+          <i class="bi bi-bag-check"></i> مشترٍ
+        </button>
+        <button class="role-tab" onclick="setRole(this,'seller')" id="tab-seller">
+          <i class="bi bi-shop-window"></i> بائع
+        </button>
+        <button class="role-tab" onclick="setRole(this,'broker')" id="tab-broker">
+          <i class="bi bi-person-badge"></i> وسيط
+        </button>
+      </div>
+
+      <div class="form-group">
+        <label for="loginEmail">البريد الإلكتروني أو رقم الهاتف</label>
+        <div class="input-wrap">
+          <i class="bi bi-envelope fi"></i>
+          <input type="email" placeholder="example@email.com" id="loginEmail"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="loginPass">كلمة المرور</label>
+        <div class="input-wrap">
+          <i class="bi bi-lock fi"></i>
+          <input type="password" placeholder="••••••••" id="loginPass"/>
+          <button class="eye-btn" type="button" onclick="togglePass('loginPass',this)">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="auth-row">
+        <div class="remember-row">
+          <input type="checkbox" id="rememberMe" checked/>
+          <label for="rememberMe">تذكرني</label>
+        </div>
+        <a href="#" class="forgot-link">نسيت كلمة المرور؟</a>
+      </div>
+
+      <button class="btn-auth" onclick="doLogin()" id="btnLogin">
+        <i class="bi bi-box-arrow-in-right"></i> تسجيل الدخول
+      </button>
+
+      <div class="divider">أو تسجيل عبر</div>
+      <div class="social-auth">
+        <button class="btn-social" onclick="showToast('تسجيل الدخول بجوجل قريباً!')" id="btnGoogleLogin">
+          <i class="bi bi-google" style="color:#ea4335;"></i> جوجل
+        </button>
+        <button class="btn-social" onclick="showToast('تسجيل الدخول بتويتر قريباً!')" id="btnTwitterLogin">
+          <i class="bi bi-twitter-x"></i> تويتر X
+        </button>
+      </div>
+      <div class="auth-switch">ليس لديك حساب؟ <a href="register.html">إنشاء حساب مجاني</a></div>
     </div>
-
-    <div class="forgot"><a href="#">نسيت كلمة المرور؟</a></div>
-
-    <div class="remember-row">
-      <input type="checkbox" id="rememberMe" checked/>
-      <label for="rememberMe">تذكرني</label>
-    </div>
-
-    <button class="btn-auth" onclick="doLogin()"><i class="bi bi-box-arrow-in-right"></i> تسجيل الدخول</button>
-
-    <div class="divider">أو تسجيل عبر</div>
-    <div class="social-auth">
-      <button class="btn-social" onclick="showToast('تسجيل الدخول بجوجل قريباً!')"><i class="bi bi-google" style="color:#ea4335;"></i> جوجل</button>
-      <button class="btn-social" onclick="showToast('تسجيل الدخول بتويتر قريباً!')"><i class="bi bi-twitter-x"></i> تويتر X</button>
-    </div>
-
-    <div class="auth-switch">ليس لديك حساب؟ <a href="register.html">إنشاء حساب مجاني</a></div>
   </div>
 </div>
 
 <script src="../assets/script/components.js"></script>
 <script>
+let currentRole = 'buyer';
+function setRole(el, role) {
+  document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  currentRole = role;
+}
 function togglePass(id, btn) {
   const inp = document.getElementById(id);
   const icon = btn.querySelector('i');
-  if (inp.type === 'password') {
-    inp.type = 'text';
-    icon.className = 'bi bi-eye-slash';
-  } else {
-    inp.type = 'password';
-    icon.className = 'bi bi-eye';
-  }
+  if (inp.type === 'password') { inp.type='text'; icon.className='bi bi-eye-slash'; }
+  else { inp.type='password'; icon.className='bi bi-eye'; }
 }
 function doLogin() {
   const email = document.getElementById('loginEmail').value;
-  const pass = document.getElementById('loginPass').value;
+  const pass  = document.getElementById('loginPass').value;
   if (!email || !pass) { showToast('يرجى ملء جميع الحقول', 'error'); return; }
   showToast('تم تسجيل الدخول بنجاح!');
-  setTimeout(() => location.href = 'profile.html', 1500);
+  const dest = currentRole === 'broker' ? 'broker-profile.html'
+             : currentRole === 'seller' ? 'seller-profile.html'
+             : 'buyer-profile.html';
+  setTimeout(() => location.href = dest, 1500);
 }
 </script>
 </body>

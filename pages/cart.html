@@ -1,0 +1,262 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>سلة الخدمات - وسيطي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/style.css"/>
+  <style>
+    .page-hero{background:linear-gradient(135deg,#f0f4ff,#e8f5f3);padding:36px 24px 28px;text-align:center;}
+    .page-hero h1{font-size:clamp(20px,3.5vw,30px);font-weight:900;color:var(--text);margin-bottom:6px;}
+    .page-hero p{color:var(--text-muted);font-size:.9rem;}
+    .cart-layout{max-width:1100px;margin:0 auto;padding:32px 24px 80px;display:grid;grid-template-columns:1fr 340px;gap:24px;}
+    @media(max-width:900px){.cart-layout{grid-template-columns:1fr;}}
+
+    /* Cart Items */
+    .cart-section{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+    .cart-section-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1.5px solid var(--border);}
+    .cart-section-header h2{font-size:1rem;font-weight:800;color:var(--text);display:flex;align-items:center;gap:8px;}
+    .cart-section-header h2 i{color:var(--primary);}
+    .clear-btn{font-size:.8rem;color:var(--danger);font-weight:700;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:7px;transition:background .18s;}
+    .clear-btn:hover{background:#fff0f0;}
+
+    /* Single cart item */
+    .cart-item{display:flex;align-items:center;gap:14px;padding:18px 22px;border-bottom:1px solid var(--border);transition:background .18s;}
+    .cart-item:last-child{border-bottom:none;}
+    .cart-item:hover{background:var(--bg);}
+    .ci-thumb{width:64px;height:64px;border-radius:12px;object-fit:cover;flex-shrink:0;border:1.5px solid var(--border);}
+    .ci-thumb-icon{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;}
+    .ci-info{flex:1;min-width:0;}
+    .ci-title{font-size:.92rem;font-weight:800;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .ci-meta{font-size:.78rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .ci-price{font-size:1rem;font-weight:900;color:var(--text);white-space:nowrap;}
+    .ci-remove{width:34px;height:34px;border:1.5px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;background:none;cursor:pointer;color:var(--text-muted);font-size:.95rem;transition:all .18s;flex-shrink:0;}
+    .ci-remove:hover{border-color:var(--danger);color:var(--danger);background:#fff0f0;}
+
+    /* Empty state */
+    .cart-empty{text-align:center;padding:60px 24px;}
+    .cart-empty i{font-size:3.5rem;color:var(--border);margin-bottom:16px;display:block;}
+    .cart-empty h3{font-size:1.1rem;font-weight:800;color:var(--text);margin-bottom:8px;}
+    .cart-empty p{font-size:.88rem;color:var(--text-muted);margin-bottom:20px;}
+    .btn-go-store{display:inline-flex;align-items:center;gap:7px;padding:11px 24px;background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;border-radius:9px;font-family:var(--font);font-size:.9rem;font-weight:700;text-decoration:none;transition:all .2s;}
+    .btn-go-store:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(37,99,235,.35);}
+
+    /* Summary card */
+    .summary-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;position:sticky;top:84px;}
+    .summary-card h3{font-size:.98rem;font-weight:800;color:var(--text);margin-bottom:18px;display:flex;align-items:center;gap:7px;}
+    .summary-card h3 i{color:var(--primary);}
+    .summary-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:.87rem;}
+    .summary-row .lbl{color:var(--text-muted);}
+    .summary-row .val{font-weight:700;color:var(--text);}
+    .summary-divider{height:1px;background:var(--border);margin:14px 0;}
+    .summary-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+    .summary-total .tl{font-size:.95rem;font-weight:800;color:var(--text);}
+    .summary-total .tv{font-size:1.3rem;font-weight:900;color:var(--primary);}
+    .btn-checkout{width:100%;padding:14px;background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;border:none;border-radius:10px;font-family:var(--font);font-size:.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;margin-bottom:10px;text-decoration:none;}
+    .btn-checkout:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.35);}
+    .btn-cont-shop{width:100%;padding:11px;background:transparent;color:var(--text);border:1.5px solid var(--border);border-radius:9px;font-family:var(--font);font-size:.87rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .18s;text-decoration:none;}
+    .btn-cont-shop:hover{border-color:var(--primary);color:var(--primary);}
+    .trust-badges{display:flex;flex-direction:column;gap:7px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);}
+    .trust-badge{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--text-muted);}
+    .trust-badge i{color:var(--accent);font-size:.9rem;}
+
+    /* Promo code */
+    .promo-wrap{display:flex;gap:7px;margin-bottom:14px;}
+    .promo-input{flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--font);font-size:.85rem;color:var(--text);background:var(--bg);outline:none;transition:border-color .2s;}
+    .promo-input:focus{border-color:var(--primary);}
+    .promo-btn{padding:9px 14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-family:var(--font);font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .18s;}
+    .promo-btn:hover{background:#1557e0;}
+
+    /* Cart count badge on icon */
+    .cart-count-badge{background:var(--danger);color:#fff;border-radius:50%;width:18px;height:18px;font-size:.7rem;font-weight:800;display:inline-flex;align-items:center;justify-content:center;margin-right:2px;}
+  </style>
+</head>
+<body>
+
+<div class="page-hero">
+  <div class="hero-badge" style="margin-bottom:12px;"><i class="bi bi-cart-fill"></i> السلة</div>
+  <h1>سلة الخدمات المختارة</h1>
+  <p>راجع الخدمات قبل المتابعة للدفع الآمن</p>
+</div>
+
+<div class="cart-layout">
+  <!-- Cart Items Section -->
+  <div>
+    <div class="cart-section" id="cartSection">
+      <div class="cart-section-header">
+        <h2><i class="bi bi-cart3"></i> <span id="cartCountLabel">٣ خدمات في سلتك</span></h2>
+        <button class="clear-btn" onclick="clearCart()"><i class="bi bi-trash3"></i> إفراغ السلة</button>
+      </div>
+      <div id="cartItemsContainer">
+        <!-- Items rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div>
+    <div class="summary-card">
+      <h3><i class="bi bi-receipt"></i> ملخص الطلب</h3>
+
+      <div class="summary-row">
+        <span class="lbl">إجمالي الخدمات</span>
+        <span class="val" id="summSubtotal">٠ ر.س</span>
+      </div>
+      <div class="summary-row">
+        <span class="lbl">عمولة الوساطة (٢.٥٪)</span>
+        <span class="val" id="summFee">٠ ر.س</span>
+      </div>
+
+      <div class="promo-wrap">
+        <input type="text" class="promo-input" placeholder="كود الخصم" id="promoInput"/>
+        <button class="promo-btn" onclick="applyPromo()">تطبيق</button>
+      </div>
+
+      <div class="summary-divider"></div>
+      <div class="summary-total">
+        <span class="tl">الإجمالي الكلي</span>
+        <span class="tv" id="summTotal">٠ ر.س</span>
+      </div>
+
+      <a href="checkout.html" class="btn-checkout" id="btnCheckout">
+        <i class="bi bi-shield-lock-fill"></i> الدفع الآمن
+      </a>
+      <a href="store.html" class="btn-cont-shop">
+        <i class="bi bi-arrow-right"></i> متابعة التسوق
+      </a>
+
+      <div class="trust-badges">
+        <div class="trust-badge"><i class="bi bi-shield-fill-check"></i> أموالك محمية بضمان الوساطة</div>
+        <div class="trust-badge"><i class="bi bi-arrow-counterclockwise"></i> استرداد كامل عند أي خلاف</div>
+        <div class="trust-badge"><i class="bi bi-headset"></i> دعم فني ٢٤/٧</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/script/components.js"></script>
+<script>
+/* ===== Cart Storage ===== */
+function getCart() {
+  try { return JSON.parse(localStorage.getItem('wsCart') || '[]'); } catch(e) { return []; }
+}
+function saveCart(items) {
+  localStorage.setItem('wsCart', JSON.stringify(items));
+  updateCartBadge();
+}
+function updateCartBadge() {
+  const cart = getCart();
+  const cnt = cart.length;
+  // update any .cart-badge elements in navbar
+  document.querySelectorAll('.cart-badge').forEach(el => {
+    el.textContent = cnt;
+    el.style.display = cnt > 0 ? 'inline-flex' : 'none';
+  });
+}
+
+function toArabicNums(n) {
+  return n.toLocaleString('ar-EG');
+}
+
+function renderCart() {
+  const cart = getCart();
+  const container = document.getElementById('cartItemsContainer');
+  const label = document.getElementById('cartCountLabel');
+
+  if (cart.length === 0) {
+    container.innerHTML = `
+      <div class="cart-empty">
+        <i class="bi bi-cart-x"></i>
+        <h3>سلتك فارغة!</h3>
+        <p>لم تضف أي خدمة بعد. تصفح المتجر واختر ما يناسبك.</p>
+        <a href="store.html" class="btn-go-store"><i class="bi bi-shop"></i> تصفح المتجر</a>
+      </div>`;
+    label.textContent = 'السلة فارغة';
+    document.getElementById('btnCheckout').style.opacity = '.5';
+    document.getElementById('btnCheckout').style.pointerEvents = 'none';
+    updateSummary(0);
+    return;
+  }
+
+  document.getElementById('btnCheckout').style.opacity = '1';
+  document.getElementById('btnCheckout').style.pointerEvents = 'auto';
+
+  const arabicNums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩','١٠','١١','١٢','١٣','١٤','١٥'];
+  label.textContent = (arabicNums[cart.length] || cart.length) + ' خدمة في سلتك';
+
+  container.innerHTML = cart.map((item, idx) => `
+    <div class="cart-item" id="ci-${idx}">
+      <div class="ci-thumb-icon" style="background:${item.iconBg};color:${item.iconColor};">
+        <i class="bi ${item.icon}"></i>
+      </div>
+      <div class="ci-info">
+        <div class="ci-title">${item.title}</div>
+        <div class="ci-meta">
+          <span><i class="bi ${item.icon}" style="color:${item.iconColor};"></i> ${item.platform}</span>
+          <span>·</span>
+          <span><i class="bi bi-person-fill"></i> ${item.seller}</span>
+        </div>
+      </div>
+      <div class="ci-price">${toArabicNums(item.price)} ر.س</div>
+      <button class="ci-remove" onclick="removeItem(${idx})" title="حذف"><i class="bi bi-x-lg"></i></button>
+    </div>
+  `).join('');
+
+  const subtotal = cart.reduce((s, i) => s + i.price, 0);
+  updateSummary(subtotal);
+}
+
+function updateSummary(subtotal) {
+  const fee = Math.round(subtotal * 0.025);
+  const total = subtotal + fee;
+  document.getElementById('summSubtotal').textContent = toArabicNums(subtotal) + ' ر.س';
+  document.getElementById('summFee').textContent = toArabicNums(fee) + ' ر.س';
+  document.getElementById('summTotal').textContent = toArabicNums(total) + ' ر.س';
+}
+
+function removeItem(idx) {
+  const cart = getCart();
+  cart.splice(idx, 1);
+  saveCart(cart);
+  renderCart();
+  showToast('تم حذف الخدمة من السلة');
+}
+
+function clearCart() {
+  if (!confirm('هل أنت متأكد من إفراغ السلة؟')) return;
+  saveCart([]);
+  renderCart();
+  showToast('تم إفراغ السلة', 'error');
+}
+
+function applyPromo() {
+  const code = document.getElementById('promoInput').value.trim().toUpperCase();
+  if (code === 'WASITI10') {
+    showToast('تم تطبيق كود الخصم! خصم ١٠٪');
+  } else if (code === '') {
+    showToast('أدخل كود الخصم أولاً', 'error');
+  } else {
+    showToast('كود الخصم غير صحيح', 'error');
+  }
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', function() {
+  // If cart is empty, add demo items for first visit
+  let cart = getCart();
+  if (cart.length === 0) {
+    cart = [
+      { title: 'قناة يوتيوب تقنية - ٤٥ألف مشترك', platform: 'يوتيوب', seller: 'أحمد محمد', price: 2800, icon: 'bi-youtube', iconBg: '#ffe5e5', iconColor: '#e53e3e' },
+      { title: 'حساب إنستغرام موضة - ١٢٠ألف متابع', platform: 'إنستغرام', seller: 'سارة العلي', price: 5500, icon: 'bi-instagram', iconBg: '#f5e8ff', iconColor: '#c13584' },
+      { title: 'حساب تيك توك ترفيهي - ٥٠٠ألف', platform: 'تيك توك', seller: 'خالد النجدي', price: 8900, icon: 'bi-tiktok', iconBg: '#f0f0f0', iconColor: '#010101' },
+    ];
+    saveCart(cart);
+  }
+  renderCart();
+  updateCartBadge();
+});
+</script>
+</body>
+</html>

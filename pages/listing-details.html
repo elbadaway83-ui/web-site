@@ -1,4 +1,4 @@
-﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8"/>
@@ -224,7 +224,8 @@
         <div class="qs"><span>٣ أيام</span><small>منذ النشر</small></div>
       </div>
 
-      <button class="btn-buy" onclick="requestEscrow()"><i class="bi bi-arrows-angle-contract"></i> طلب وساطة الآن</button>
+      <button class="btn-buy" onclick="addToCart()" id="btnAddCart"><i class="bi bi-cart-plus-fill"></i> أضف للسلة</button>
+      <button class="btn-make-offer" onclick="requestEscrow()" style="background:linear-gradient(135deg,var(--accent),#22c55e);color:#fff;border:none;margin-bottom:10px;border-radius:10px;padding:12px;"><i class="bi bi-arrows-angle-contract"></i> طلب وساطة مباشر</button>
       <button class="btn-make-offer" onclick="makeOffer()"><i class="bi bi-tag"></i> تقديم عرض سعر</button>
 
       <div class="guarantee-list">
@@ -260,6 +261,34 @@ function toggleWish() {
   btn.classList.toggle('active');
   icon.className = btn.classList.contains('active') ? 'bi bi-heart-fill' : 'bi bi-heart';
   showToast(btn.classList.contains('active') ? 'تمت الإضافة للمفضلة!' : 'تم الحذف من المفضلة');
+}
+function addToCart() {
+  const item = {
+    title: 'قناة يوتيوب تقنية - ٤٥,٢٠٠ مشترك',
+    platform: 'يوتيوب',
+    seller: 'أحمد محمد',
+    price: 2800,
+    icon: 'bi-youtube',
+    iconBg: '#ffe5e5',
+    iconColor: '#e53e3e'
+  };
+  let cart = [];
+  try { cart = JSON.parse(localStorage.getItem('wsCart') || '[]'); } catch(e) {}
+  // Avoid duplicates
+  const exists = cart.some(c => c.title === item.title);
+  if (exists) { showToast('هذه الخدمة موجودة بالفعل في سلتك!', 'error'); return; }
+  cart.push(item);
+  localStorage.setItem('wsCart', JSON.stringify(cart));
+  if (window.refreshCartBadge) refreshCartBadge();
+  showToast('تمت إضافة الخدمة للسلة! 🛒');
+  const btn = document.getElementById('btnAddCart');
+  if (btn) {
+    btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> تمت الإضافة';
+    btn.style.background = 'linear-gradient(135deg,var(--accent),#22c55e)';
+    btn.style.cursor = 'default';
+    btn.onclick = function() { location.href = 'cart.html'; };
+    btn.innerHTML = '<i class="bi bi-cart-check-fill"></i> عرض السلة';
+  }
 }
 function requestEscrow() {
   showToast('جاري تحويلك لصفحة الوساطة...');

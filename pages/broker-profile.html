@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>محمد الوسيط - ملف الوسيط | وسيطي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/style.css"/>
+  <style>
+    .broker-hero{background:linear-gradient(135deg,#0f2460 0%,#1a6fff 60%,#0d9488 100%);padding:48px 24px 80px;position:relative;overflow:hidden;}
+    .broker-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 80% 50%,rgba(255,255,255,.06) 0%,transparent 70%);pointer-events:none;}
+    .broker-hero-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:28px;position:relative;z-index:2;}
+    .broker-avatar-lg{width:100px;height:100px;flex-shrink:0;background:linear-gradient(135deg,rgba(255,255,255,.2),rgba(255,255,255,.1));border:3px solid rgba(255,255,255,.3);border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;color:#fff;font-weight:900;}
+    .broker-hero-info{flex:1;}
+    .broker-hero-name{font-size:1.7rem;font-weight:900;color:#fff;display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;}
+    .verified-tag{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:3px 12px;font-size:.78rem;font-weight:700;display:inline-flex;align-items:center;gap:5px;color:#86efac;}
+    .broker-hero-tag{font-size:.9rem;color:rgba(255,255,255,.75);margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .online-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(22,163,74,.25);border:1px solid rgba(22,163,74,.4);border-radius:20px;padding:3px 10px;font-size:.78rem;font-weight:700;color:#86efac;}
+    .hero-rating{display:flex;align-items:center;gap:8px;color:#fff;font-size:.9rem;font-weight:700;margin-bottom:18px;}
+    .hero-rating i{color:#fbbf24;font-size:.88rem;}
+    .broker-hero-actions{display:flex;gap:10px;flex-wrap:wrap;}
+    .btn-hb{padding:10px 20px;border-radius:9px;font-family:var(--font);font-size:.88rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .2s;border:none;}
+    .btn-hb-primary{background:#fff;color:var(--primary);}
+    .btn-hb-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2);}
+    .btn-hb-outline{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.35)!important;}
+    .btn-hb-outline:hover{background:rgba(255,255,255,.22);}
+    .profile-layout{max-width:1100px;margin:-44px auto 0;padding:0 24px 80px;display:grid;grid-template-columns:1fr 300px;gap:22px;position:relative;z-index:3;}
+    .p-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px;}
+    .p-card-title{font-size:1rem;font-weight:800;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+    .p-card-title i{color:var(--primary);}
+    .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+    .stat-box{text-align:center;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:14px 8px;}
+    .stat-box .s-num{font-size:1.4rem;font-weight:900;color:var(--primary);display:block;}
+    .stat-box .s-lbl{font-size:.75rem;color:var(--text-muted);font-weight:600;}
+    .plat-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:20px;font-size:.82rem;font-weight:700;}
+    .platforms-grid{display:flex;flex-wrap:wrap;gap:8px;}
+    .review-item{padding:16px 0;border-bottom:1px solid var(--border);}
+    .review-item:last-child{border-bottom:none;}
+    .review-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+    .rev-avatar{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--primary),#4f8ef7);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;flex-shrink:0;}
+    .rev-name{font-size:.88rem;font-weight:800;color:var(--text);}
+    .rev-date{font-size:.76rem;color:var(--text-muted);}
+    .rev-stars i{color:#f59e0b;font-size:.8rem;}
+    .rev-text{font-size:.86rem;color:var(--text-muted);line-height:1.6;}
+    .sidebar-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;}
+    .sidebar-card h4{font-size:.93rem;font-weight:800;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+    .sidebar-card h4 i{color:var(--primary);}
+    .info-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:.86rem;}
+    .info-row:last-child{border-bottom:none;}
+    .info-row .lbl{color:var(--text-muted);font-weight:600;display:flex;align-items:center;gap:5px;}
+    .info-row .val{font-weight:700;color:var(--text);}
+    .btn-req{width:100%;padding:12px;background:linear-gradient(135deg,var(--primary),#4f8ef7);color:#fff;border:none;border-radius:9px;font-family:var(--font);font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;margin-bottom:9px;}
+    .btn-req:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(37,99,235,.35);}
+    .btn-msg{width:100%;padding:10px;background:transparent;color:var(--primary);border:1.5px solid var(--primary);border-radius:9px;font-family:var(--font);font-size:.86rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .18s;}
+    .btn-msg:hover{background:var(--primary-light);}
+    .rating-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:.82rem;}
+    .rating-bar{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+    .rating-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#fbbf24,#f59e0b);}
+    .rating-count{color:var(--text-muted);font-size:.76rem;min-width:22px;text-align:center;}
+    @media(max-width:900px){.profile-layout{grid-template-columns:1fr;}.broker-hero-inner{flex-direction:column;text-align:center;}.broker-hero-name,.broker-hero-tag,.broker-hero-actions{justify-content:center;}}
+    @media(max-width:480px){.stats-grid{grid-template-columns:repeat(3,1fr);}.broker-avatar-lg{width:76px;height:76px;font-size:2rem;}.broker-hero-name{font-size:1.35rem;}}
+  </style>
+</head>
+<body>
+
+<div class="broker-hero">
+  <div class="broker-hero-inner">
+    <div class="broker-avatar-lg">م</div>
+    <div class="broker-hero-info">
+      <div class="broker-hero-name">
+        محمد الوسيط
+        <i class="bi bi-patch-check-fill" style="color:#86efac;font-size:1.1rem;"></i>
+        <span class="verified-tag"><i class="bi bi-shield-fill-check"></i> وسيط موثق</span>
+      </div>
+      <div class="broker-hero-tag">
+        <span class="online-chip">متاح الآن</span>
+        <span>عضو منذ ٢٠٢٣</span>
+        <span>·</span>
+        <span><i class="bi bi-geo-alt"></i> السعودية</span>
+      </div>
+      <div class="hero-rating">
+        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+        <span>٤.٩</span>
+        <span style="color:rgba(255,255,255,.6);font-weight:400;">(٢٣٤ تقييم)</span>
+      </div>
+      <div class="broker-hero-actions">
+        <button class="btn-hb btn-hb-primary" onclick="showToast('تم إرسال طلب الوساطة لمحمد!')" id="btnRequestTop">
+          <i class="bi bi-send-fill"></i> طلب وساطة
+        </button>
+        <button class="btn-hb btn-hb-outline" onclick="showToast('سيتم فتح المحادثة قريباً')" id="btnMsgTop">
+          <i class="bi bi-chat-dots"></i> مراسلة
+        </button>
+        <a href="brokers.html" class="btn-hb btn-hb-outline">
+          <i class="bi bi-arrow-right"></i> العودة للوسطاء
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="profile-layout">
+  <div>
+    <div class="p-card">
+      <div class="p-card-title"><i class="bi bi-bar-chart-fill"></i> إحصائيات الوسيط</div>
+      <div class="stats-grid">
+        <div class="stat-box"><span class="s-num">١٨٧</span><span class="s-lbl">صفقة مكتملة</span></div>
+        <div class="stat-box"><span class="s-num">٩٩٪</span><span class="s-lbl">معدل نجاح</span></div>
+        <div class="stat-box"><span class="s-num">< ١س</span><span class="s-lbl">متوسط الرد</span></div>
+        <div class="stat-box"><span class="s-num">٤.٩</span><span class="s-lbl">التقييم العام</span></div>
+        <div class="stat-box"><span class="s-num">٢٣٤</span><span class="s-lbl">إجمالي التقييمات</span></div>
+        <div class="stat-box"><span class="s-num">٣+</span><span class="s-lbl">سنوات خبرة</span></div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card-title"><i class="bi bi-person-lines-fill"></i> نبذة عن الوسيط</div>
+      <p style="font-size:.9rem;color:var(--text-muted);line-height:1.8;">وسيط موثق ومتخصص في وساطة بيع وشراء الحسابات والصفحات الرقمية. خبرة تتجاوز ٣ سنوات في هذا المجال، أتممت أكثر من ١٨٧ صفقة بنسبة نجاح ٩٩٪. أحرص على ضمان حقوق جميع الأطراف وإتمام الصفقة بشفافية تامة.</p>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card-title"><i class="bi bi-grid-fill"></i> المنصات التي يتخصص بها</div>
+      <div class="platforms-grid">
+        <span class="plat-pill" style="background:#ffe5e5;color:#e53e3e;border:1.5px solid #ffc5c5;"><i class="bi bi-youtube"></i> يوتيوب</span>
+        <span class="plat-pill" style="background:#f5e8ff;color:#c13584;border:1.5px solid #e8c5ff;"><i class="bi bi-instagram"></i> إنستغرام</span>
+        <span class="plat-pill" style="background:#e8f0ff;color:#1877f2;border:1.5px solid #c5d8ff;"><i class="bi bi-facebook"></i> فيسبوك</span>
+        <span class="plat-pill" style="background:#f0f0f0;color:#010101;border:1.5px solid #ddd;"><i class="bi bi-tiktok"></i> تيك توك</span>
+        <span class="plat-pill" style="background:#e8f2ff;color:#0088cc;border:1.5px solid #c5dfff;"><i class="bi bi-telegram"></i> تيليغرام</span>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card-title"><i class="bi bi-chat-square-text-fill"></i> تقييمات العملاء</div>
+      <div style="margin-bottom:18px;">
+        <div class="rating-row"><span style="min-width:12px;">٥</span><i class="bi bi-star-fill" style="color:#f59e0b;font-size:.78rem;"></i><div class="rating-bar"><div class="rating-bar-fill" style="width:88%;"></div></div><span class="rating-count">٢٠٦</span></div>
+        <div class="rating-row"><span style="min-width:12px;">٤</span><i class="bi bi-star-fill" style="color:#f59e0b;font-size:.78rem;"></i><div class="rating-bar"><div class="rating-bar-fill" style="width:8%;"></div></div><span class="rating-count">١٨</span></div>
+        <div class="rating-row"><span style="min-width:12px;">٣</span><i class="bi bi-star-fill" style="color:#f59e0b;font-size:.78rem;"></i><div class="rating-bar"><div class="rating-bar-fill" style="width:2%;"></div></div><span class="rating-count">٥</span></div>
+        <div class="rating-row"><span style="min-width:12px;">٢</span><i class="bi bi-star-fill" style="color:#f59e0b;font-size:.78rem;"></i><div class="rating-bar"><div class="rating-bar-fill" style="width:1%;"></div></div><span class="rating-count">٣</span></div>
+        <div class="rating-row"><span style="min-width:12px;">١</span><i class="bi bi-star-fill" style="color:#f59e0b;font-size:.78rem;"></i><div class="rating-bar"><div class="rating-bar-fill" style="width:1%;"></div></div><span class="rating-count">٢</span></div>
+      </div>
+      <div class="review-item">
+        <div class="review-header">
+          <div class="rev-avatar">ع</div>
+          <div><div class="rev-name">عبدالله الشمري</div><div class="rev-date">منذ ٣ أيام</div><div class="rev-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div></div>
+        </div>
+        <p class="rev-text">تجربة ممتازة! محمد محترف ودقيق في عمله. أتم صفقتي في أقل من ساعة وكان متجاوباً في كل خطوة. أنصح به بشدة.</p>
+      </div>
+      <div class="review-item">
+        <div class="review-header">
+          <div class="rev-avatar" style="background:linear-gradient(135deg,#c13584,#e1306c);">ن</div>
+          <div><div class="rev-name">نورا العلي</div><div class="rev-date">منذ أسبوع</div><div class="rev-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div></div>
+        </div>
+        <p class="rev-text">وسيط ثقة ١٠٠٪! ساعدني في شراء قناة يوتيوب وحمى حقي طوال الصفقة.</p>
+      </div>
+      <div class="review-item">
+        <div class="review-header">
+          <div class="rev-avatar" style="background:linear-gradient(135deg,#16a34a,#22c55e);">خ</div>
+          <div><div class="rev-name">خالد الدوسري</div><div class="rev-date">منذ أسبوعين</div><div class="rev-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i></div></div>
+        </div>
+        <p class="rev-text">جيد جداً وأمين، الصفقة اكتملت بنجاح. بشكل عام تجربة إيجابية.</p>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sidebar-card">
+      <h4><i class="bi bi-lightning-charge-fill"></i> إجراء سريع</h4>
+      <button class="btn-req" onclick="showToast('تم إرسال طلب الوساطة لمحمد!')" id="btnRequestBroker">
+        <i class="bi bi-send-fill"></i> طلب وساطة الآن
+      </button>
+      <button class="btn-msg" onclick="showToast('سيتم فتح المحادثة قريباً')" id="btnMsgBroker">
+        <i class="bi bi-chat-dots-fill"></i> مراسلة الوسيط
+      </button>
+    </div>
+
+    <div class="sidebar-card">
+      <h4><i class="bi bi-info-circle-fill"></i> معلومات الوسيط</h4>
+      <div class="info-row"><span class="lbl"><i class="bi bi-clock"></i> وقت الرد</span><span class="val" style="color:var(--accent);">أقل من ساعة</span></div>
+      <div class="info-row"><span class="lbl"><i class="bi bi-cash-coin"></i> العمولة</span><span class="val">٢–٣٪</span></div>
+      <div class="info-row"><span class="lbl"><i class="bi bi-shield-check"></i> التوثيق</span><span class="val" style="color:var(--accent);"><i class="bi bi-check-circle-fill"></i> موثق</span></div>
+      <div class="info-row"><span class="lbl"><i class="bi bi-calendar3"></i> انضم منذ</span><span class="val">يناير ٢٠٢٣</span></div>
+      <div class="info-row"><span class="lbl"><i class="bi bi-globe"></i> اللغات</span><span class="val">العربية، الإنجليزية</span></div>
+    </div>
+
+    <div class="sidebar-card" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border-color:#fde68a;">
+      <h4><i class="bi bi-trophy-fill" style="color:#f59e0b;"></i> وسيط الشهر</h4>
+      <p style="font-size:.83rem;color:#92400e;line-height:1.7;">محمد حاصل على لقب أفضل وسيط لشهر أبريل ٢٠٢٥ بفضل نسبة نجاحه العالية ورضا العملاء.</p>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/script/components.js"></script>
+</body>
+</html>
