@@ -4,20 +4,754 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>وسيطي - منصة الوساطة الآمنة</title>
-
-  <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" />
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1a6fff;
+      --primary-light: #e8f0ff;
+      --primary-mid: #5a9aff;
+      --accent: #00c2a8;
+      --accent-light: #e0faf7;
+      --warn: #ff7a1a;
+      --warn-light: #fff3e8;
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --surface2: #f0f4fb;
+      --border: #e2e8f4;
+      --text: #1a2340;
+      --text-muted: #7a8aaa;
+      --text-light: #b0bccc;
+      --shadow-sm: 0 2px 8px rgba(26,111,255,0.07);
+      --shadow: 0 6px 24px rgba(26,111,255,0.10);
+      --shadow-lg: 0 16px 48px rgba(26,111,255,0.13);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
 
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="./assets/css/style.css" />
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      direction: rtl;
+    }
+
+    /* ===== TICKER ===== */
+    .ticker-bar {
+      background: linear-gradient(90deg, var(--primary), #0050dd);
+      color: #fff;
+      padding: 8px 0;
+      overflow: hidden;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .ticker-inner {
+      display: flex;
+      gap: 60px;
+      animation: tickerMove 30s linear infinite;
+      white-space: nowrap;
+      width: max-content;
+    }
+    .ticker-inner span { display: flex; align-items: center; gap: 6px; }
+    .ticker-inner i { font-size: 14px; opacity: 0.85; }
+    @keyframes tickerMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      background: var(--surface);
+      border-bottom: 1.5px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      gap: 20px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+    }
+    .logo-text { font-size: 22px; font-weight: 800; color: var(--text); }
+    .logo-text span { color: var(--primary); }
+
+    .nav-search {
+      flex: 1;
+      max-width: 420px;
+      position: relative;
+    }
+    .nav-search input {
+      width: 100%;
+      padding: 10px 18px 10px 44px;
+      border: 1.5px solid var(--border);
+      border-radius: 50px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 14px;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .nav-search input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26,111,255,0.10);
+    }
+    .nav-search i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: all .18s;
+    }
+    .nav-links a:hover { background: var(--primary-light); color: var(--primary); }
+    .nav-links a.active { background: var(--primary-light); color: var(--primary); }
+    .nav-links a i { font-size: 16px; }
+
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .btn-outline {
+      padding: 8px 20px;
+      border: 1.5px solid var(--primary);
+      border-radius: 50px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--primary);
+      background: transparent;
+      cursor: pointer;
+      transition: all .18s;
+      text-decoration: none;
+    }
+    .btn-outline:hover { background: var(--primary); color: #fff; }
+    .btn-primary {
+      padding: 8px 22px;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-mid));
+      cursor: pointer;
+      transition: all .18s;
+      text-decoration: none;
+      box-shadow: 0 3px 10px rgba(26,111,255,0.25);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(26,111,255,0.32); }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, #f0f4ff 0%, #e8f5f3 50%, #f5f7fa 100%);
+      padding: 72px 24px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 20% 50%, rgba(26,111,255,0.07) 0%, transparent 70%),
+                  radial-gradient(ellipse 60% 50% at 80% 40%, rgba(0,194,168,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      border: 1px solid rgba(26,111,255,0.15);
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: var(--primary); }
+    .hero h1 .accent { color: var(--accent); }
+    .hero p {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .hero-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .btn-hero {
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all .2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-hero-primary {
+      background: linear-gradient(135deg, var(--primary), #0050dd);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(26,111,255,0.30);
+    }
+    .btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(26,111,255,0.38); }
+    .btn-hero-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-hero-secondary:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* Stats row */
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 48px;
+      flex-wrap: wrap;
+    }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 28px; font-weight: 900; color: var(--primary); display: block; }
+    .stat-lbl { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+
+    /* ===== HOW IT WORKS ===== */
+    .section { max-width: 1280px; margin: 0 auto; padding: 56px 24px; }
+    .sec-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .sec-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 36px; }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 20px;
+    }
+    .step-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      text-align: center;
+      position: relative;
+      transition: all .22s;
+    }
+    .step-card:hover { border-color: var(--primary); box-shadow: var(--shadow); transform: translateY(-4px); }
+    .step-num {
+      position: absolute;
+      top: -14px;
+      right: 22px;
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 26px;
+    }
+    .step-icon.blue { background: var(--primary-light); color: var(--primary); }
+    .step-icon.green { background: var(--accent-light); color: var(--accent); }
+    .step-icon.orange { background: var(--warn-light); color: var(--warn); }
+    .step-icon.purple { background: #f0eaff; color: #7c3aed; }
+    .step-icon.teal { background: #e0f8f4; color: #0d9488; }
+    .step-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .step-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===== CATEGORIES ===== */
+    .categories-bg { background: var(--surface); border-top: 1.5px solid var(--border); border-bottom: 1.5px solid var(--border); }
+    .cats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+    }
+    .cat-card {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      text-decoration: none;
+      background: var(--bg);
+      display: block;
+    }
+    .cat-card:hover { border-color: var(--primary); background: var(--primary-light); transform: translateY(-3px); box-shadow: var(--shadow); }
+    .cat-card:hover .cat-icon { background: var(--primary); color: #fff; }
+    .cat-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 24px;
+      transition: all .2s;
+    }
+    .cat-card h3 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .cat-card span { font-size: 12px; color: var(--text-muted); }
+
+    /* ===== FEATURED LISTINGS ===== */
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .listing-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all .22s;
+      cursor: pointer;
+    }
+    .listing-card:hover { border-color: var(--primary-mid); box-shadow: var(--shadow); transform: translateY(-4px); }
+    .listing-head {
+      padding: 18px 18px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .listing-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .listing-meta h4 { font-size: 14.5px; font-weight: 700; margin-bottom: 2px; }
+    .listing-meta span { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+    .badge-blue { background: var(--primary-light); color: var(--primary); }
+    .badge-green { background: var(--accent-light); color: var(--accent); }
+    .badge-orange { background: var(--warn-light); color: var(--warn); }
+    .badge-purple { background: #f0eaff; color: #7c3aed; }
+    .listing-body { padding: 14px 18px; }
+    .listing-body p { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
+    .listing-stats {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .lst-stat { display: flex; align-items: center; gap: 5px; font-size: 12.5px; color: var(--text-muted); }
+    .lst-stat i { font-size: 13px; color: var(--primary); }
+    .listing-footer {
+      padding: 12px 18px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .price { font-size: 18px; font-weight: 800; color: var(--primary); }
+    .price span { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+    .btn-card {
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all .18s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-card-primary { background: var(--primary); color: #fff; }
+    .btn-card-primary:hover { background: #0050dd; }
+
+    /* ===== ROLES SECTION ===== */
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .role-card {
+      border-radius: var(--radius);
+      padding: 30px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .22s, box-shadow .22s;
+    }
+    .role-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .role-card.seller { background: linear-gradient(135deg, #e8f0ff, #d0e3ff); border: 1.5px solid #b5d0ff; }
+    .role-card.buyer { background: linear-gradient(135deg, #e0faf7, #c8f5ee); border: 1.5px solid #a0edd9; }
+    .role-card.escrow { background: linear-gradient(135deg, #fff3e8, #ffe5cc); border: 1.5px solid #ffc999; }
+    .role-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 16px;
+    }
+    .role-card.seller .role-icon { background: var(--primary); color: #fff; }
+    .role-card.buyer .role-icon { background: var(--accent); color: #fff; }
+    .role-card.escrow .role-icon { background: var(--warn); color: #fff; }
+    .role-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+    .role-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.65; margin-bottom: 18px; }
+    .role-features { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    .role-features li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .role-features li i { font-size: 14px; color: var(--accent); }
+
+    /* ===== ESCROW FLOW ===== */
+    .flow-bg { background: linear-gradient(135deg, #f0f4ff, #e8f5f3); border-top: 1.5px solid var(--border); border-bottom: 1.5px solid var(--border); }
+    .flow-track {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      padding: 12px 0 8px;
+      scrollbar-width: none;
+    }
+    .flow-track::-webkit-scrollbar { display: none; }
+    .flow-step {
+      flex-shrink: 0;
+      text-align: center;
+      padding: 20px 24px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      min-width: 160px;
+      position: relative;
+      transition: all .2s;
+    }
+    .flow-step:hover { border-color: var(--primary); box-shadow: var(--shadow); }
+    .flow-step .ficon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      font-size: 20px;
+    }
+    .flow-step h4 { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+    .flow-step p { font-size: 11.5px; color: var(--text-muted); }
+    .flow-arrow {
+      font-size: 22px;
+      color: var(--primary-mid);
+      flex-shrink: 0;
+      padding: 0 8px;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-left: 5px;
+    }
+    .dot-pending { background: #f59e0b; }
+    .dot-escrow { background: var(--primary); }
+    .dot-verify { background: #8b5cf6; }
+    .dot-done { background: var(--accent); }
+    .dot-dispute { background: #ef4444; }
+
+    /* ===== TRUST SECTION ===== */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .trust-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .trust-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .trust-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .trust-card p { font-size: 12.5px; color: var(--text-muted); line-height: 1.55; }
+
+    /* ===== CTA ===== */
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary), #0050dd);
+      border-radius: var(--radius);
+      padding: 52px 32px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      margin: 0 24px;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 10% 50%, rgba(255,255,255,0.07) 0%, transparent 60%),
+                  radial-gradient(ellipse 50% 70% at 90% 40%, rgba(0,194,168,0.15) 0%, transparent 60%);
+    }
+    .cta-section h2 { font-size: 28px; font-weight: 900; margin-bottom: 10px; position: relative; }
+    .cta-section p { font-size: 15px; opacity: 0.85; margin-bottom: 28px; position: relative; }
+    .cta-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; position: relative; }
+    .btn-cta-white {
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      background: #fff;
+      color: var(--primary);
+      border: none;
+      cursor: pointer;
+      transition: all .18s;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+    }
+    .btn-cta-white:hover { background: #eef2ff; transform: translateY(-1px); }
+    .btn-cta-outline {
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: all .18s;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+    }
+    .btn-cta-outline:hover { border-color: #fff; background: rgba(255,255,255,0.10); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--surface);
+      border-top: 1.5px solid var(--border);
+      margin-top: 60px;
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 48px 24px 24px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 36px;
+    }
+    .footer-brand p { font-size: 13.5px; color: var(--text-muted); line-height: 1.7; margin: 12px 0 20px; }
+    .social-links { display: flex; gap: 10px; }
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 16px;
+      text-decoration: none;
+      transition: all .18s;
+    }
+    .social-link:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+    .footer-col h4 { font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col ul li a {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color .16s;
+    }
+    .footer-col ul li a:hover { color: var(--primary); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom span { font-size: 13px; color: var(--text-light); }
+
+    /* ===== MOBILE NAV ===== */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border-top: 1.5px solid var(--border);
+      z-index: 200;
+      padding: 10px 0 env(safe-area-inset-bottom, 10px);
+    }
+    .mobile-nav-inner { display: flex; justify-content: space-around; }
+    .mob-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 10px;
+      transition: color .15s;
+    }
+    .mob-link i { font-size: 20px; }
+    .mob-link.active, .mob-link:hover { color: var(--primary); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .mobile-nav { display: block; }
+      body { padding-bottom: 80px; }
+      .hero { padding: 48px 16px 40px; }
+      .nav-search { display: none; }
+      .cta-section { margin: 0 12px; padding: 36px 20px; }
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp .5s ease both; }
+    .delay-1 { animation-delay: .1s; }
+    .delay-2 { animation-delay: .2s; }
+    .delay-3 { animation-delay: .3s; }
+    .delay-4 { animation-delay: .4s; }
+
+    /* Section header util */
+    .sec-header { margin-bottom: 32px; }
+    .sec-header .sec-title { margin-bottom: 4px; }
+    .view-all {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+    }
+    .view-all:hover { text-decoration: underline; }
+    .sec-header-row { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  </style>
 </head>
 <body>
 
-<!-- ===== TICKER BAR ===== -->
+<!-- Ticker Bar -->
 <div class="ticker-bar">
   <div class="ticker-inner">
     <span><i class="bi bi-shield-check"></i> وساطة آمنة 100% لجميع المعاملات</span>
@@ -33,7 +767,7 @@
   </div>
 </div>
 
-<!-- ===== NAVBAR ===== -->
+<!-- Navbar -->
 <nav>
   <div class="nav-inner">
     <a class="logo" href="#">
@@ -57,62 +791,40 @@
       <a href="#" class="btn-outline">تسجيل الدخول</a>
       <a href="#" class="btn-primary"><i class="bi bi-person-plus"></i> إنشاء حساب</a>
     </div>
-
-    <button class="hamburger" id="hamburger" aria-label="القائمة">
-      <i class="bi bi-list"></i>
-    </button>
-  </div>
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#" class="active"><i class="bi bi-house-door"></i> الرئيسية</a>
-    <a href="#"><i class="bi bi-shop"></i> المتجر</a>
-    <a href="#"><i class="bi bi-arrows-angle-contract"></i> الوساطة</a>
-    <a href="#"><i class="bi bi-bell"></i> الإشعارات</a>
-    <hr />
-    <a href="#" class="btn-outline" style="text-align:center;">تسجيل الدخول</a>
-    <a href="#" class="btn-primary" style="text-align:center;"><i class="bi bi-person-plus"></i> إنشاء حساب</a>
   </div>
 </nav>
 
-<!-- ===== HERO ===== -->
+<!-- Hero -->
 <section class="hero">
-  <!-- Hero Background Image -->
-  <div class="hero-bg-img">
-    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&q=80&auto=format&fit=crop" alt="hero background" />
-    <div class="hero-overlay"></div>
+  <div class="hero-badge fade-up"><i class="bi bi-shield-check"></i> منصة الوساطة الرقمية الآمنة #1</div>
+  <h1 class="fade-up delay-1">بع، اشترِ، أو تَوسَّط<br/><span>بكل أمان وثقة</span></h1>
+  <p class="fade-up delay-2">منصة تجمع البائعين والمشترين بوسيط موثوق يضمن حق الطرفين. حساباتك، صفحاتك، وقنواتك في أمان تام.</p>
+  <div class="hero-actions fade-up delay-3">
+    <a href="#" class="btn-hero btn-hero-primary"><i class="bi bi-arrows-angle-contract"></i> ابدأ وساطة الآن</a>
+    <a href="#" class="btn-hero btn-hero-secondary"><i class="bi bi-shop"></i> تصفح المتجر</a>
   </div>
 
-  <div class="hero-content">
-    <div class="hero-badge fade-up"><i class="bi bi-shield-check"></i> منصة الوساطة الرقمية الآمنة #1</div>
-    <h1 class="fade-up delay-1">بع، اشترِ، أو تَوسَّط<br /><span>بكل أمان وثقة</span></h1>
-    <p class="fade-up delay-2">منصة تجمع البائعين والمشترين بوسيط موثوق يضمن حق الطرفين. حساباتك، صفحاتك، وقنواتك في أمان تام.</p>
-    <div class="hero-actions fade-up delay-3">
-      <a href="#" class="btn-hero btn-hero-primary"><i class="bi bi-arrows-angle-contract"></i> ابدأ وساطة الآن</a>
-      <a href="#" class="btn-hero btn-hero-secondary"><i class="bi bi-shop"></i> تصفح المتجر</a>
+  <div class="hero-stats fade-up delay-4">
+    <div class="stat-item">
+      <span class="stat-num">٥٢٠٠+</span>
+      <span class="stat-lbl">صفقة ناجحة</span>
     </div>
-
-    <div class="hero-stats fade-up delay-4">
-      <div class="stat-item">
-        <span class="stat-num">٥٢٠٠+</span>
-        <span class="stat-lbl">صفقة ناجحة</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">١٨٠٠+</span>
-        <span class="stat-lbl">مستخدم موثوق</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">٩٩٪</span>
-        <span class="stat-lbl">معدل رضا العملاء</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">٢٤/٧</span>
-        <span class="stat-lbl">دعم مستمر</span>
-      </div>
+    <div class="stat-item">
+      <span class="stat-num">١٨٠٠+</span>
+      <span class="stat-lbl">مستخدم موثوق</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">٩٩٪</span>
+      <span class="stat-lbl">معدل رضا العملاء</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">٢٤/٧</span>
+      <span class="stat-lbl">دعم مستمر</span>
     </div>
   </div>
 </section>
 
-<!-- ===== CATEGORIES ===== -->
+<!-- Categories -->
 <div class="categories-bg">
   <div class="section">
     <div class="sec-header-row sec-header">
@@ -167,7 +879,7 @@
   </div>
 </div>
 
-<!-- ===== FEATURED LISTINGS ===== -->
+<!-- Featured Listings -->
 <div class="section">
   <div class="sec-header-row sec-header">
     <div>
@@ -180,17 +892,11 @@
 
     <!-- Card 1 -->
     <div class="listing-card">
-      <div class="listing-img">
-        <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=400&q=80&auto=format&fit=crop" alt="قناة يوتيوب" />
-        <div class="listing-platform" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i></div>
-      </div>
       <div class="listing-head">
         <div class="listing-avatar" style="background:#ffe5e5;color:#e53e3e;"><i class="bi bi-youtube"></i></div>
         <div class="listing-meta">
           <h4>قناة يوتيوب تقنية - ٤٥ألف مشترك</h4>
-          <span><i class="bi bi-person-fill"></i> أحمد محمد &nbsp;·&nbsp;
-            <span class="badge badge-blue"><i class="bi bi-patch-check-fill"></i> موثق</span>
-          </span>
+          <span><i class="bi bi-person-fill"></i> أحمد محمد &nbsp;·&nbsp; <span class="badge badge-blue"><i class="bi bi-patch-check-fill"></i> موثق</span></span>
         </div>
       </div>
       <div class="listing-body">
@@ -210,17 +916,11 @@
 
     <!-- Card 2 -->
     <div class="listing-card">
-      <div class="listing-img">
-        <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=400&q=80&auto=format&fit=crop" alt="صفحة إنستغرام" />
-        <div class="listing-platform" style="background:#f5e8ff;color:#c13584;"><i class="bi bi-instagram"></i></div>
-      </div>
       <div class="listing-head">
         <div class="listing-avatar" style="background:#f5e8ff;color:#c13584;"><i class="bi bi-instagram"></i></div>
         <div class="listing-meta">
           <h4>صفحة إنستغرام موضة - ١٢٠ألف</h4>
-          <span><i class="bi bi-person-fill"></i> سارة العلي &nbsp;·&nbsp;
-            <span class="badge badge-green"><i class="bi bi-shield-fill-check"></i> مضمون</span>
-          </span>
+          <span><i class="bi bi-person-fill"></i> سارة العلي &nbsp;·&nbsp; <span class="badge badge-green"><i class="bi bi-shield-fill-check"></i> مضمون</span></span>
         </div>
       </div>
       <div class="listing-body">
@@ -240,17 +940,11 @@
 
     <!-- Card 3 -->
     <div class="listing-card">
-      <div class="listing-img">
-        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80&auto=format&fit=crop" alt="صفحة فيسبوك طبخ" />
-        <div class="listing-platform" style="background:#e8f0ff;color:#1877f2;"><i class="bi bi-facebook"></i></div>
-      </div>
       <div class="listing-head">
         <div class="listing-avatar" style="background:#e8f0ff;color:#1877f2;"><i class="bi bi-facebook"></i></div>
         <div class="listing-meta">
           <h4>صفحة فيسبوك طبخ - ٢٠٠ألف إعجاب</h4>
-          <span><i class="bi bi-person-fill"></i> منى خليل &nbsp;·&nbsp;
-            <span class="badge badge-blue"><i class="bi bi-patch-check-fill"></i> موثق</span>
-          </span>
+          <span><i class="bi bi-person-fill"></i> منى خليل &nbsp;·&nbsp; <span class="badge badge-blue"><i class="bi bi-patch-check-fill"></i> موثق</span></span>
         </div>
       </div>
       <div class="listing-body">
@@ -270,17 +964,11 @@
 
     <!-- Card 4 -->
     <div class="listing-card">
-      <div class="listing-img">
-        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&q=80&auto=format&fit=crop" alt="حساب تيك توك" />
-        <div class="listing-platform" style="background:#fff0e8;color:#ff4500;"><i class="bi bi-tiktok"></i></div>
-      </div>
       <div class="listing-head">
         <div class="listing-avatar" style="background:#fff0e8;color:#ff4500;"><i class="bi bi-tiktok"></i></div>
         <div class="listing-meta">
           <h4>حساب تيك توك ترفيه - ٥٠٠ألف</h4>
-          <span><i class="bi bi-person-fill"></i> خالد النجدي &nbsp;·&nbsp;
-            <span class="badge badge-green"><i class="bi bi-shield-fill-check"></i> مضمون</span>
-          </span>
+          <span><i class="bi bi-person-fill"></i> خالد النجدي &nbsp;·&nbsp; <span class="badge badge-green"><i class="bi bi-shield-fill-check"></i> مضمون</span></span>
         </div>
       </div>
       <div class="listing-body">
@@ -301,7 +989,7 @@
   </div>
 </div>
 
-<!-- ===== USER ROLES ===== -->
+<!-- User Roles -->
 <div style="background:var(--surface);border-top:1.5px solid var(--border);border-bottom:1.5px solid var(--border);">
   <div class="section">
     <div class="sec-header">
@@ -309,11 +997,7 @@
       <div class="sec-sub">اختر دورك وابدأ رحلتك بكل ثقة</div>
     </div>
     <div class="roles-grid">
-
       <div class="role-card seller">
-        <div class="role-img">
-          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=300&q=80&auto=format&fit=crop" alt="بائع" />
-        </div>
         <div class="role-icon"><i class="bi bi-shop-window"></i></div>
         <h3>أنا بائع</h3>
         <p>عندك حساب أو صفحة أو خدمة وتريد بيعها بأمان وبأفضل سعر.</p>
@@ -324,11 +1008,7 @@
           <li><i class="bi bi-check-circle-fill"></i> حماية من النزاعات</li>
         </ul>
       </div>
-
       <div class="role-card buyer">
-        <div class="role-img">
-          <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=300&q=80&auto=format&fit=crop" alt="مشترٍ" />
-        </div>
         <div class="role-icon"><i class="bi bi-bag-check"></i></div>
         <h3>أنا مشترٍ</h3>
         <p>تريد شراء حساباً أو خدمة وتضمن أنك ستحصل على ما دفعت مقابله.</p>
@@ -339,11 +1019,7 @@
           <li><i class="bi bi-check-circle-fill"></i> دعم في حال النزاع</li>
         </ul>
       </div>
-
       <div class="role-card escrow">
-        <div class="role-img">
-          <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=300&q=80&auto=format&fit=crop" alt="وسيط" />
-        </div>
         <div class="role-icon"><i class="bi bi-person-badge"></i></div>
         <h3>أنا وسيط</h3>
         <p>تمتلك خبرة وتريد مساعدة الطرفين وكسب عمولة مقابل خدمتك الموثوقة.</p>
@@ -354,12 +1030,11 @@
           <li><i class="bi bi-check-circle-fill"></i> سجل وساطات موثق</li>
         </ul>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- ===== ESCROW FLOW ===== -->
+<!-- Escrow Flow -->
 <div class="flow-bg">
   <div class="section">
     <div class="sec-header">
@@ -367,46 +1042,40 @@
       <div class="sec-sub">كيف تسير الوساطة من البداية للنهاية</div>
     </div>
     <div class="flow-track">
-
       <div class="flow-step">
         <div class="ficon" style="background:var(--warn-light);color:var(--warn);"><i class="bi bi-cart-plus-fill"></i></div>
         <h4><span class="status-dot dot-pending"></span> طلب شراء</h4>
         <p>المشتري يختار ويطلب الخدمة</p>
       </div>
       <div class="flow-arrow"><i class="bi bi-arrow-left"></i></div>
-
       <div class="flow-step">
         <div class="ficon" style="background:var(--primary-light);color:var(--primary);"><i class="bi bi-person-badge-fill"></i></div>
         <h4><span class="status-dot dot-pending"></span> مراجعة الوسيط</h4>
         <p>الوسيط يقبل ويبدأ التنسيق</p>
       </div>
       <div class="flow-arrow"><i class="bi bi-arrow-left"></i></div>
-
       <div class="flow-step">
         <div class="ficon" style="background:#e8f0ff;color:var(--primary);"><i class="bi bi-chat-dots-fill"></i></div>
         <h4><span class="status-dot dot-escrow"></span> غرفة الوساطة</h4>
         <p>البائع + المشتري + الوسيط</p>
       </div>
       <div class="flow-arrow"><i class="bi bi-arrow-left"></i></div>
-
       <div class="flow-step">
         <div class="ficon" style="background:#f0eaff;color:#7c3aed;"><i class="bi bi-search"></i></div>
         <h4><span class="status-dot dot-verify"></span> التحقق</h4>
         <p>المشتري يفحص الحساب</p>
       </div>
       <div class="flow-arrow"><i class="bi bi-arrow-left"></i></div>
-
       <div class="flow-step">
         <div class="ficon" style="background:var(--accent-light);color:var(--accent);"><i class="bi bi-check-circle-fill"></i></div>
         <h4><span class="status-dot dot-done"></span> اكتمال الصفقة</h4>
         <p>الوسيط يحول المستحقات</p>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- ===== TRUST FEATURES ===== -->
+<!-- Trust Features -->
 <div class="section">
   <div class="sec-header">
     <div class="sec-title">لماذا وسيطي؟</div>
@@ -458,29 +1127,22 @@
   </div>
 </div>
 
-<!-- ===== CTA ===== -->
+<!-- CTA -->
 <div style="padding-bottom:56px;">
   <div class="cta-section">
-    <div class="cta-bg-img">
-      <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1400&q=80&auto=format&fit=crop" alt="cta background" />
-      <div class="cta-overlay"></div>
-    </div>
-    <div class="cta-content">
-      <h2>جاهز تبدأ أول صفقة آمنة؟</h2>
-      <p>انضم لآلاف المستخدمين الذين يثقون بوسيطي لإتمام صفقاتهم بأمان تام</p>
-      <div class="cta-actions">
-        <a href="#" class="btn-cta-white"><i class="bi bi-person-plus-fill"></i> إنشاء حساب مجاني</a>
-        <a href="#" class="btn-cta-outline"><i class="bi bi-arrows-angle-contract"></i> ابدأ وساطة الآن</a>
-      </div>
+    <h2>جاهز تبدأ أول صفقة آمنة؟</h2>
+    <p>انضم لآلاف المستخدمين الذين يثقون بوسيطي لإتمام صفقاتهم بأمان تام</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-cta-white"><i class="bi bi-person-plus-fill"></i> إنشاء حساب مجاني</a>
+      <a href="#" class="btn-cta-outline"><i class="bi bi-arrows-angle-contract"></i> ابدأ وساطة الآن</a>
     </div>
   </div>
 </div>
 
-<!-- ===== FOOTER ===== -->
+<!-- Footer -->
 <footer>
   <div class="footer-inner">
     <div class="footer-grid">
-
       <div class="footer-brand">
         <div class="logo" style="margin-bottom:4px;">
           <div class="logo-icon"><i class="bi bi-shield-fill-check"></i></div>
@@ -495,7 +1157,6 @@
           <a href="#" class="social-link"><i class="bi bi-tiktok"></i></a>
         </div>
       </div>
-
       <div class="footer-col">
         <h4>المنصة</h4>
         <ul>
@@ -506,7 +1167,6 @@
           <li><a href="#">الوسطاء</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
         <h4>الفئات</h4>
         <ul>
@@ -517,7 +1177,6 @@
           <li><a href="#">تويتر X</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
         <h4>الدعم</h4>
         <ul>
@@ -528,7 +1187,6 @@
           <li><a href="#">تواصل معنا</a></li>
         </ul>
       </div>
-
     </div>
     <div class="footer-bottom">
       <span>© ٢٠٢٥ وسيطي. جميع الحقوق محفوظة.</span>
@@ -537,7 +1195,7 @@
   </div>
 </footer>
 
-<!-- ===== MOBILE BOTTOM NAV ===== -->
+<!-- Mobile Bottom Nav -->
 <nav class="mobile-nav">
   <div class="mobile-nav-inner">
     <a href="#" class="mob-link active"><i class="bi bi-house-door-fill"></i> الرئيسية</a>
@@ -548,8 +1206,42 @@
   </div>
 </nav>
 
-<!-- JavaScript -->
-<script src="./assets/script/script.js"></script>
+<script>
+  // Animate stats counter
+  function animateCounter(el, target, suffix = '') {
+    let start = 0;
+    const duration = 1800;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { start = target; clearInterval(timer); }
+      el.textContent = Math.floor(start).toLocaleString('ar-EG') + suffix;
+    }, 16);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const nums = e.target.querySelectorAll('.stat-num');
+        const data = [5200, 1800, 99, 247];
+        const suffixes = ['+', '+', '٪', ''];
+        nums.forEach((n, i) => animateCounter(n, data[i], suffixes[i]));
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const statsEl = document.querySelector('.hero-stats');
+  if (statsEl) observer.observe(statsEl);
+
+  // Listing card hover effect
+  document.querySelectorAll('.listing-card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.style.transform = 'scale(0.98)';
+      setTimeout(() => card.style.transform = '', 120);
+    });
+  });
+</script>
 
 </body>
 </html>
