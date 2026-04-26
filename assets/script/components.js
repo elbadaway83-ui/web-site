@@ -42,19 +42,20 @@
   }
 
   /* ===== TICKER ===== */
+  const tickerItems = `
+    <span><i class="bi bi-shield-check"></i> وساطة آمنة 100% لجميع المعاملات</span>
+    <span><i class="bi bi-lightning-charge"></i> تفعيل فوري بعد اكتمال الوساطة</span>
+    <span><i class="bi bi-headset"></i> دعم فني متاح 24/7</span>
+    <span><i class="bi bi-people"></i> انضم لآلاف المستخدمين الموثوقين</span>
+    <span><i class="bi bi-lock"></i> أموالك محمية حتى تأكيد الاستلام</span>
+    <span><i class="bi bi-star-fill"></i> أكثر من 5000 صفقة ناجحة</span>
+    <span><i class="bi bi-patch-check-fill"></i> وسطاء موثقون بشهادات رسمية</span>
+  `;
   const tickerHTML = `
   <div class="ticker-bar">
     <div class="ticker-inner">
-      <span><i class="bi bi-shield-check"></i> وساطة آمنة 100% لجميع المعاملات</span>
-      <span><i class="bi bi-lightning-charge"></i> تفعيل فوري بعد اكتمال الوساطة</span>
-      <span><i class="bi bi-headset"></i> دعم فني متاح 24/7</span>
-      <span><i class="bi bi-people"></i> انضم لآلاف المستخدمين الموثوقين</span>
-      <span><i class="bi bi-lock"></i> أموالك محمية حتى تأكيد الاستلام</span>
-      <span><i class="bi bi-shield-check"></i> وساطة آمنة 100% لجميع المعاملات</span>
-      <span><i class="bi bi-lightning-charge"></i> تفعيل فوري بعد اكتمال الوساطة</span>
-      <span><i class="bi bi-headset"></i> دعم فني متاح 24/7</span>
-      <span><i class="bi bi-people"></i> انضم لآلاف المستخدمين الموثوقين</span>
-      <span><i class="bi bi-lock"></i> أموالك محمية حتى تأكيد الاستلام</span>
+      ${tickerItems}
+      ${tickerItems}
     </div>
   </div>`;
 

@@ -81,10 +81,19 @@ button { cursor: pointer; font-family: var(--font); }
 }
 .ticker-inner {
   display: inline-flex;
-  gap: 48px;
-  animation: ticker-scroll 28s linear infinite;
+  /* width: max-content is key — both halves fill screen, translateX(-50%) = seamless */
+  width: max-content;
+  gap: 0;
+  animation: ticker-scroll 30s linear infinite;
+  will-change: transform;
 }
-.ticker-inner span { display: inline-flex; align-items: center; gap: 7px; }
+.ticker-inner span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 36px;
+  border-right: 1px solid rgba(255,255,255,.2);
+}
 .ticker-inner i { font-size: 1rem; opacity: .85; }
 
 /* ===== Navbar ===== */
