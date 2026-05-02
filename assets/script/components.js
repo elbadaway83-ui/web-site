@@ -67,7 +67,7 @@
     <div class="nav-inner">
       <a class="logo" href="${p.home}">
         <div class="logo-icon"><i class="bi bi-shield-fill-check"></i></div>
-        <div class="logo-text">وسيط<span>ي</span></div>
+        <div class="logo-text"><span>El</span>awaady</div>
       </a>
       <div class="nav-search">
         <i class="bi bi-search"></i>
@@ -117,7 +117,7 @@
         <div class="footer-brand">
           <div class="logo" style="margin-bottom:4px;">
             <div class="logo-icon"><i class="bi bi-shield-fill-check"></i></div>
-            <div class="logo-text">وسيط<span>ي</span></div>
+            <div class="logo-text"><span>El</span>awaady</div>
           </div>
           <p>منصة الوساطة الرقمية الآمنة التي تجمع البائعين والمشترين بوسيط موثوق يضمن حق الجميع.</p>
           <div class="social-links">
@@ -159,8 +159,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© ٢٠٢٥ وسيطي. جميع الحقوق محفوظة.</span>
-        <span>مصنوع بـ <i class="bi bi-heart-fill" style="color:#e53e3e;"></i> لتجارة رقمية آمنة</span>
+        <span>© ٢٠٢٥ Elawaady جميع الحقوق محفوظة.</span>
       </div>
     </div>
   </footer>
